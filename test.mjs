@@ -179,6 +179,12 @@ suite('signals.evaluate：live 剔除 / raw 标记 / 汇总分组');
   ok(r3.notes.some((n) => n.tag === '口径'), '不复权 → 口径警告');
   const s = summarize([r2]);
   ok(s.overbought.length === 1 && s.oversold.length === 0, 'summarize 超买分组');
+  ok(s.obReturn.length === 0 && s.osReturn.length === 0, '无回归事件时不误报');
+  // 回归信号分组：前一根超买、本根回正常 → obReturn；通道事件单独归 events
+  const mk = (cross, tunnelEvent) => ({ ticker: 'X' + cross + (tunnelEvent || ''), rsi6: { state: 'neutral', cross }, tunnels: tunnelEvent ? [{ key: '主通道', event: tunnelEvent }] : [] });
+  const s3 = summarize([mk('out_ob'), mk('out_os'), mk(null, 'break_up'), mk(null)]);
+  ok(s3.obReturn.length === 1 && s3.osReturn.length === 1, 'summarize 回归信号分组（超买回落/超卖回升）', { ob: s3.obReturn.length, os: s3.osReturn.length });
+  ok(s3.events.length === 1, 'events 只留通道穿越');
   const down = Array.from({ length: 60 }, (_, i) => ['e' + String(i).padStart(3, '0'), 0, 300 - i, 0, 0, 0]);
   const s2 = summarize([evaluate(meta, { bars: down, adj: 'hfq', source: 'eastmoney' }, cfg, 'e059')]);
   ok(s2.oversold.length === 1, 'summarize 超卖分组');
@@ -217,7 +223,7 @@ suite('report.html：生成物内联脚本可解析（防模板转义破坏页�
     meta: { marketDate: '2026-09-24', generatedAt: 'x', generatedAtLocal: 'x', runAtEt: 'x', topN: 100, extraNote: ' + SPMO', candidatesAsOf: 'x', universeNote: 'x', srcEast: 1, srcTx: 0, srcFail: 0, eastError: null, liveCount: 0 },
     cfg: { rsi: { period: 6, overbought: 70, oversold: 30 }, tunnels: [{ key: '短通道', n: [12, 36] }, { key: '主通道', n: [144, 169] }, { key: '长通道', n: [576, 676] }] },
     spmo: mkRow('SPMO', null), rows: [mkRow('AAA', 1), mkRow('BBB', 2)],
-    summary: { overbought: [mkRow('AAA', 1)], oversold: [], events: [mkRow('AAA', 1)] },
+    summary: { overbought: [mkRow('AAA', 1)], oversold: [], obReturn: [mkRow('BBB', 2)], osReturn: [], events: [mkRow('AAA', 1)] },
     failed: [],
     outputs: [],
   };
