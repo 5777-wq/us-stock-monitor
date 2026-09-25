@@ -1,0 +1,46 @@
+# 美股监控：SP500 实时市值前 100 + SPMO · 日线 RSI6 超买超卖 + Vegas 三通道
+# 每周一~五 21:30 UTC（= 美东 17:30，无论夏冬令时都在收盘后）自动跑，
+# 把 out/report.html + out/latest.json + out/cache 提交回仓库。
+# 数据源在 Actions 网络里直连可用（东财 push2his / 腾讯），无需密钥。
+name: us-monitor
+
+on:
+  schedule:
+    - cron: "30 21 * * 1-5"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: us-monitor
+  cancel-in-progress: false
+
+jobs:
+  monitor:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Run monitor (101 tickers)
+        run: node monitor.mjs --quiet
+
+      - name: Offline test gate
+        run: node test.mjs
+
+      - name: Commit report if changed
+        run: |
+          git config user.name "us-monitor-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add out/
+          if git diff --cached --quiet; then
+            echo "报告无变化，跳过提交"
+          else
+            git commit -m "monitor: $(date -u +%F) 收盘报告 [skip ci]"
+            git push
+          fi

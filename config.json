@@ -1,0 +1,32 @@
+{
+  "universe": {
+    "topN": 100,
+    "candidatesFile": "data/sp500-candidates.json",
+    "quoteBatch": 60
+  },
+  "rsi": { "period": 6, "overbought": 70, "oversold": 30 },
+  "tunnels": [
+    { "key": "短通道", "n": [12, 36] },
+    { "key": "主通道", "n": [144, 169] },
+    { "key": "长通道", "n": [576, 676] }
+  ],
+  "sources": {
+    "bootstrapLmt": 2000,
+    "refreshLmt": 120
+  },
+  "report": {
+    "outDir": "out",
+    "console": true,
+    "json": true,
+    "csv": true,
+    "html": true
+  },
+  "notify": {
+    "enabled": false,
+    "onlySignals": true,
+    "serverchanSendkey": "",
+    "barkUrl": "",
+    "telegramToken": "",
+    "telegramChatId": ""
+  }
+}

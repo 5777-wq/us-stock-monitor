@@ -1,0 +1,87 @@
+# 美股监控 · SPMO 攒股 + SP500 前 100 增强
+
+零依赖 Node 脚本（无需 npm install），监控**日线收盘**两级信号：
+
+| 指标 | 规则 | 策略语境 |
+|---|---|---|
+| RSI6（Wilder，同通达信/TradingView RMA 口径） | `> 70` 超买 / `< 30` 超卖 | 超买 → 做 T 减仓观察；超卖 → 分批吸纳观察；同时记录新进/回落穿越事件 |
+| Vegas 三通道 | EMA12/36 短 · EMA144/169 主（Vegas Tunnel 本体）· EMA576/676 长 | 每天记录价格在通道上/内/下的位置，以及当日上下穿事件 |
+
+池子：**SP500 实时市值前 100 + SPMO（固定监控）**。成分快照约 130 只候选，运行时用腾讯实时总市值重排取前 100；命中华夏 SPMO 前 40 大持仓的标的会标注「SPMO 持仓 %」。
+
+## 快速开始
+
+```bash
+node monitor.mjs              # 全量 101 只（首次 2~4 分钟，之后走缓存增量，很快）
+node monitor.mjs --limit 5    # 只跑前 5 只，试跑
+node monitor.mjs --refresh-cache   # 忽略增量判断全量重拉
+node test.mjs                 # 离线测试（无网络可跑）
+```
+
+输出：
+
+- **控制台报告**——SPMO 主卡、超买榜、超卖榜、今日事件、全表；
+- `out/report.html`——自包含网页，双击即看（可传手机），点行出走势图（价格 + 三通道 + RSI6 副图），顶部 chips 按 超买/超卖/事件/SPMO重合 筛选；
+- `out/latest.json`——结构化结果（给别的工具吃）；
+- `out/report-<日期>.csv`——Excel 直开（UTF-8 BOM）；
+- `out/cache/`——K 线缓存（按日期去重合并，日常只增量拉 120 根）。
+
+## 数据口径（重要）
+
+- **主源：东财 push2his 后复权（fqt=2）**——乘性口径，含拆股与分红，约 2400+ 根，EMA576/676 收敛充分。Node fetch 被其 WAF 拒时自动退 curl 子进程；连续失败熔断换源。
+- **兜底：腾讯 K 线（不复权）**——美股是不复权原始价。近一年内有拆股的标的（如 NVDA 2024-06、NFLX 2025-11），长通道 EMA576/676 会被拆股缺口明显污染，报表会在该行打「不复权」徽标并注明。主源恢复后自动回到后复权口径。
+- RSI6 用 Wilder 平滑（与通达信 SMA(X,N,1)、TradingView RMA 同口径）；EMA 种子 = 前 n 项 SMA。与上层 OpenFinLens 看板 js/technical.js 完全同口径。
+- 盘中运行安全：只认已收盘 bar（按 ET 墙钟判定），未收盘的 live bar 单独标注「盘中参考」，不进信号。
+- 次新标的（如 GEV 2024-04 分拆）：长窗口 EMA 数据不足时如实标「暂缺」，不算异常。
+
+## 每天自动跑
+
+### 方案 A：本地 Windows 计划任务
+
+```bat
+:: 注册（每天北京时间 4:30，美股已收盘；夏令时 4:30、冬令时 5:30 后都安全）
+schtasks /Create /TN "US-Monitor" /TR "\"D:\57的vibe coding内容\global-fin-dashboard\美股监控\run-daily.bat\"" /SC DAILY /ST 04:30
+:: 删除：schtasks /Delete /TN "US-Monitor" /F
+```
+
+`run-daily.bat` 会把控制台输出追加到 `out\run.log`。
+
+### 方案 B：GitHub Actions（本仓库已内置 `.github/workflows/us-monitor.yml`）
+
+- 每周一~五 21:30 UTC（美东收盘后）自动跑，并把 `out/`（报告 + 缓存）提交回仓库；
+- `out/cache/` 一起提交：Actions 下次跑只增量拉 120 根，不再全量 bootstrap，也减少触发东财 WAF 的机会；
+- 手动触发：仓库 → Actions → us-monitor → Run workflow。
+
+### 手机上看
+
+私有仓库里直接打开 `out/report.html` → 文件视图右上角 Preview 渲染；或把仓库转 public 后开 GitHub Pages（Settings → Pages）绑自己的域名，就是一条网址。推送通知见下。
+
+## 推送通知（可选，默认关）
+
+`config.json` → `notify`，三选多：
+
+```json
+"notify": {
+  "enabled": true,
+  "onlySignals": true,
+  "serverchanSendkey": "SCT…",     // Server酱，微信接收
+  "barkUrl": "https://api.day.app/你的key",
+  "telegramToken": "123:abc", "telegramChatId": "你的chatId"
+}
+```
+
+只推有信号的日子（`onlySignals`），内容：SPMO 收盘 + 超买/超卖/事件清单。
+
+## 配置
+
+`config.json`：`universe.topN`（前几名）、`rsi.period/overbought/oversold`、`tunnels`（三通道参数，想只看 144/169 就删掉另外两条）、`report`（输出开关）、`notify`。
+
+SP500 候选池：`data/sp500-candidates.json`（快照 + 说明），指数调仓后手工增删；市值排名每次运行时用实时报价重排，不怕次序漂移。
+
+## 测试
+
+`node test.mjs`——56 条断言：EMA/RSI 手算黄金值对账、与 OpenFinLens technical.js 递推逐点互证（随机序列 40 组）、ET 收盘时钟（含夏冬令时边界）、缓存合并、市值排名、live bar 剔除、生成物内联脚本语法守卫。
+
+## 免责声明
+
+仅供个人学习与技术研究。指标只描述事实与常用读法，**不构成投资建议**；数据来自第三方公开接口，有延迟、会出错；据此交易，后果自负。

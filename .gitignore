@@ -1,0 +1,5 @@
+# 本地运行产物：缓存与日志不入库（Actions 首跑会自己 bootstrap）
+out/cache/
+out/shots/
+out/run.log
+.tmp-*
