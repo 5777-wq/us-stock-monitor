@@ -3,15 +3,15 @@
  "strategy": "SPMO 攒股 + SP500前100 增强 · 日线 RSI6 超买超卖 + Vegas 三通道",
  "meta": {
   "marketDate": "2026-09-24",
-  "generatedAt": "2026-09-25T11:05:26.817Z",
-  "generatedAtLocal": "2026/9/25 11:05:26",
-  "runAtEt": "2026-09-25 07:03 ET",
+  "generatedAt": "2026-09-25T11:30:22.128Z",
+  "generatedAtLocal": "2026/9/25 11:30:22",
+  "runAtEt": "2026-09-25 07:28 ET",
   "topN": 100,
   "extraNote": " + SPMO",
   "candidatesAsOf": "2026-09-25",
   "universeNote": "SPMO持仓快照 不可用（前40大，标记重合）",
-  "srcEast": 34,
-  "srcTx": 67,
+  "srcEast": 33,
+  "srcTx": 68,
   "srcFail": 0,
   "eastError": "Unexpected token '<', \"<html>\r\n<h\"... is not valid JSON",
   "liveCount": 0
@@ -2178,11 +2178,11 @@
    "mcapUsd": 336607044000,
    "spmoPct": null,
    "asOf": "2026-09-24",
-   "close": 14146.67,
-   "chgPct": 0.8486109200199987,
+   "close": 375.01,
+   "chgPct": 1.0019122518785784,
    "rsi6": {
-    "value": 40.75723248849303,
-    "prev": 26.93936199558655,
+    "value": 39.08624396880454,
+    "prev": 24.38115154837105,
     "state": "neutral",
     "cross": "out_os",
     "period": 6
@@ -2194,11 +2194,11 @@
       12,
       36
      ],
-     "upper": 14586.676842102966,
-     "lower": 14261.963473666201,
+     "upper": 390.2130691418055,
+     "lower": 379.12879758569994,
      "pos": "below",
      "event": null,
-     "widthPct": 2.2511519772338904
+     "widthPct": 2.8814944397225926
     },
     {
      "key": "主通道",
@@ -2206,11 +2206,11 @@
       144,
       169
      ],
-     "upper": 14176.226597529965,
-     "lower": 14068.784159862706,
-     "pos": "inside",
-     "event": "reenter_up",
-     "widthPct": 0.7607887891431464
+     "upper": 379.407164399956,
+     "lower": 376.4902050772691,
+     "pos": "below",
+     "event": null,
+     "widthPct": 0.7717871341989921
     },
     {
      "key": "长通道",
@@ -2218,27 +2218,27 @@
       576,
       676
      ],
-     "upper": 14695.681932264379,
-     "lower": 14556.9635004775,
+     "upper": 404.46649676273506,
+     "lower": 398.5829566340426,
      "pos": "below",
      "event": null,
-     "widthPct": 0.9484163208816317
+     "widthPct": 1.465299578701156
     }
    ],
    "live": null,
-   "adj": "hfq",
-   "source": "eastmoney",
+   "adj": "raw",
+   "source": "tencent",
    "bars": 2000,
    "notes": [
     {
      "tag": "RSI6",
      "level": "info",
-     "text": "RSI6 自超卖回升（前值 26.9 → 40.8）。只记录事件。"
+     "text": "RSI6 自超卖回升（前值 24.4 → 39.1）。只记录事件。"
     },
     {
-     "tag": "主通道",
-     "level": "info",
-     "text": "主通道：自下方回到通道内。"
+     "tag": "口径",
+     "level": "warn",
+     "text": "本行数据为不复权价（东财主源不可用，腾讯兜底）。近一年内有拆股的标的，长通道（EMA576/676）会明显失真，RSI6/主通道参考价值有限。"
     }
    ]
   },
