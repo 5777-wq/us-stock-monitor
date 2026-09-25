@@ -17,7 +17,7 @@
 import { existsSync, readFileSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { getSeries, eastStatus, tencentQuotes, anchorSeries } from './lib/sources.mjs';
+import { getSeries, eastStatus, yahooStatus, tencentQuotes, anchorSeries } from './lib/sources.mjs';
 import { buildUniverse } from './lib/universe.mjs';
 import { evaluate, summarize } from './lib/signals.mjs';
 import { lastClosedDate, etNow } from './lib/market.mjs';
@@ -144,9 +144,11 @@ async function main() {
     candidatesAsOf: candidatesMeta.asOf,
     universeNote: `SPMO持仓快照 ${spmoHoldings.asOf || '不可用'}（前40大，标记重合）`,
     srcEast: rows.filter((r) => r.source === 'eastmoney').length,
+    srcYahoo: rows.filter((r) => r.source === 'yahoo').length,
     srcTx: rows.filter((r) => r.source === 'tencent').length,
     srcFail: failed.length,
     eastError: es.disabled ? (es.lastError || '熔断') : null,
+    yahooError: (() => { const ys = yahooStatus(); return ys.fails && ys.lastError ? ys.lastError : null; })(),
     liveCount: rows.filter((r) => r.live).length,
   };
 

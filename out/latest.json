@@ -3,17 +3,19 @@
  "strategy": "SPMO 攒股 + SP500前100 增强 · 日线 RSI6 超买超卖 + Vegas 三通道",
  "meta": {
   "marketDate": "2026-09-24",
-  "generatedAt": "2026-09-25T12:42:36.939Z",
-  "generatedAtLocal": "2026/9/25 20:42:36",
-  "runAtEt": "2026-09-25 08:41 ET",
+  "generatedAt": "2026-09-25T12:53:50.502Z",
+  "generatedAtLocal": "2026/9/25 20:53:50",
+  "runAtEt": "2026-09-25 08:52 ET",
   "topN": 100,
   "extraNote": " + SPMO",
   "candidatesAsOf": "2026-09-25",
   "universeNote": "SPMO持仓快照 2026-09-16（前40大，标记重合）",
   "srcEast": 0,
-  "srcTx": 4,
+  "srcYahoo": 0,
+  "srcTx": 3,
   "srcFail": 0,
   "eastError": "curl(56)",
+  "yahooError": "Unexpected token '<', \"<!DOCTYPE \"... is not valid JSON",
   "liveCount": 0
  },
  "cfg": {
@@ -247,78 +249,6 @@
      "text": "本行数据为不复权价（东财主源不可用，腾讯兜底）。近一年内有拆股的标的，长通道（EMA576/676）会明显失真，RSI6/主通道参考价值有限。"
     }
    ]
-  },
-  {
-   "ticker": "GOOGL",
-   "name": "谷歌-A",
-   "rank": 3,
-   "mcapUsd": 4187040489000,
-   "spmoPct": 4.539319,
-   "asOf": "2026-09-24",
-   "close": 342.36,
-   "chgPct": 1.3409111091377435,
-   "rsi6": {
-    "value": 46.219555510056544,
-    "prev": 37.82822435983921,
-    "state": "neutral",
-    "cross": null,
-    "period": 6
-   },
-   "tunnels": [
-    {
-     "key": "短通道",
-     "n": [
-      12,
-      36
-     ],
-     "upper": 345.0094585495807,
-     "lower": 344.3762901610102,
-     "pos": "below",
-     "event": null,
-     "widthPct": 0.1836905940555759
-    },
-    {
-     "key": "主通道",
-     "n": [
-      144,
-      169
-     ],
-     "upper": 339.26910180673394,
-     "lower": 334.617268788331,
-     "pos": "above",
-     "event": "break_up",
-     "widthPct": 1.3805986354332185
-    },
-    {
-     "key": "长通道",
-     "n": [
-      576,
-      676
-     ],
-     "upper": 337.7799987472033,
-     "lower": 316.1013477246174,
-     "pos": "above",
-     "event": null,
-     "widthPct": 6.630759889254658
-    }
-   ],
-   "live": null,
-   "adj": "raw",
-   "anchored": false,
-   "source": "tencent",
-   "bars": 2000,
-   "notes": [
-    {
-     "tag": "主通道",
-     "level": "info",
-     "text": "主通道（EMA144/169）当日上穿通道（收盘自下而上）。"
-    },
-    {
-     "tag": "口径",
-     "level": "warn",
-     "text": "本行数据为不复权价（东财主源不可用，腾讯兜底）。近一年内有拆股的标的，长通道（EMA576/676）会明显失真，RSI6/主通道参考价值有限。"
-    }
-   ]
   }
  ],
  "failed": [],
@@ -327,8 +257,6 @@
   "oversold": [],
   "obReturn": [],
   "osReturn": [],
-  "events": [
-   "GOOGL"
-  ]
+  "events": []
  }
 }
