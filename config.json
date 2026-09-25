@@ -12,7 +12,8 @@
   ],
   "sources": {
     "bootstrapLmt": 2000,
-    "refreshLmt": 120
+    "refreshLmt": 120,
+    "eastProxy": ""
   },
   "report": {
     "outDir": "out",

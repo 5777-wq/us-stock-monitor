@@ -115,6 +115,7 @@ async function main() {
         cacheDir,
         bootstrapLmt: cfg.sources.bootstrapLmt,
         refreshLmt: args.refresh ? cfg.sources.bootstrapLmt : cfg.sources.refreshLmt,
+        eastProxy: cfg.sources.eastProxy || undefined,
       });
     } catch (e) { if (!quiet) console.error(`  ✗ ${e.message}`); }
     if (!series || series.bars.length < 30) { failed.push({ ...m, reason: series ? 'bars<30' : '取数失败' }); continue; }

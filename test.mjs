@@ -135,8 +135,24 @@ suite('market.mjs：ET 收盘判定（2026-09 为 EDT=UTC-4，2026-01 为 EST=UT
 }
 
 /* ---------- 缓存合并 / 排名 ---------- */
-suite('sources.mergeBars / anchorSeries / universe.rankUniverse');
+suite('sources.mergeBars / anchorSeries / parseYahoo / universe.rankUniverse');
 {
+  // Yahoo 解析：时间戳→ET 日期、null 过滤、adjclose 优先
+  const { parseYahoo } = await import('./lib/sources.mjs');
+  const sample = JSON.stringify({
+    chart: { result: [{
+      timestamp: [1758648000, 1758734400, 1758820800, 1758907200],
+      indicators: {
+        quote: [{ close: [1, null, 3, 4] }],
+        adjclose: [{ adjclose: [10, 20, 30, 40] }],
+      },
+    }] },
+  });
+  const yb = parseYahoo(sample);
+  ok(yb.length === 4 && yb.every((b) => b[2] === b[1] && b[2] === b[3] && b[2] === b[4]), 'close-only bar 结构', yb.length);
+  ok(yb.every((b) => /^\d{4}-\d{2}-\d{2}$/.test(b[0])), 'ET 日期格式');
+  ok(yb.every((b, i) => i === 0 || yb[i - 1][0] <= b[0]), '升序');
+  ok(yb[0][2] === 10, 'adjclose 优先于 close', yb[0][2]);
   // hfq 序列锚定：整条序列等比缩放，RSI/EMA 比值不变
   const scale = 77621.28 / 335.92;
   const hfqBars = Array.from({ length: 30 }, (_, i) => ['h' + String(i).padStart(2, '0'), 0, (100 + Math.sin(i / 5) * 6 + i * 0.8) * scale, 0, 0, 0]);
