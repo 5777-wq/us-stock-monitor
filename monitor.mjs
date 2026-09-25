@@ -17,7 +17,7 @@
 import { existsSync, readFileSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { getSeries, eastStatus, tencentQuotes } from './lib/sources.mjs';
+import { getSeries, eastStatus, tencentQuotes, anchorSeries } from './lib/sources.mjs';
 import { buildUniverse } from './lib/universe.mjs';
 import { evaluate, summarize } from './lib/signals.mjs';
 import { lastClosedDate, etNow } from './lib/market.mjs';
