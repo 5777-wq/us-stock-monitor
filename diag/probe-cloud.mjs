@@ -27,9 +27,14 @@ const show = async (name, url, transports = ['fetch', 'curl']) => {
 };
 
 const east = 'https://push2his.eastmoney.com/api/qt/stock/kline/get?secid=107.SPMO&klt=101&fqt=2&lmt=30&end=20500101&fields1=f1,f2,f3,f4,f5,f6&fields2=f51,f52,f53,f54,f55,f56,f57';
+const eastBig = 'https://push2his.eastmoney.com/api/qt/stock/kline/get?secid=107.SPMO&klt=101&fqt=2&lmt=2000&end=20500101&fields1=f1,f2,f3,f4,f5,f6&fields2=f51,f52,f53,f54,f55,f56,f57';
 const yahoo = 'https://query1.finance.yahoo.com/v8/finance/chart/SPMO?range=1mo&interval=1d&includeAdjustedClose=true';
+const yahooBig = 'https://query1.finance.yahoo.com/v8/finance/chart/SPMO?range=10y&interval=1d&includeAdjustedClose=true&events=div%2Csplit';
 const tx = 'https://web.ifzq.gtimg.cn/appstock/app/kline/kline?param=' + encodeURIComponent('usSPMO.AM,day,,,30,');
 
-await show('eastmoney push2his (fqt=2)', east);
-await show('yahoo v8 chart (adjclose)', yahoo);
-await show('tencent kline (raw)', tx);
+await show('east 小请求 lmt=30', east);
+await show('east 大请求 lmt=2000（全量 bootstrap 用）', eastBig);
+await show('yahoo 小请求 1mo', yahoo);
+await show('yahoo 大请求 10y（全量 bootstrap 用）', yahooBig);
+await show('tencent 2000 根（对照）', 'https://web.ifzq.gtimg.cn/appstock/app/kline/kline?param=' + encodeURIComponent('usSPMO.AM,day,,,2000,'));
+await show('tencent 30 根', tx);
