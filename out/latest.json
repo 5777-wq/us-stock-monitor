@@ -3,19 +3,19 @@
  "strategy": "SPMO 攒股 + SP500前100 增强 · 日线 RSI6 超买超卖 + Vegas 三通道",
  "meta": {
   "marketDate": "2026-09-24",
-  "generatedAt": "2026-09-25T13:09:33.384Z",
-  "generatedAtLocal": "2026/9/25 21:09:33",
-  "runAtEt": "2026-09-25 09:06 ET",
+  "generatedAt": "2026-09-25T13:11:15.140Z",
+  "generatedAtLocal": "2026/9/25 13:11:15",
+  "runAtEt": "2026-09-25 09:10 ET",
   "topN": 100,
   "extraNote": " + SPMO",
   "candidatesAsOf": "2026-09-25",
   "universeNote": "SPMO持仓快照 2026-09-16（前40大，标记重合）",
   "srcEast": 0,
-  "srcYahoo": 0,
-  "srcTx": 2,
-  "srcFail": 1,
-  "eastError": "curl(56)",
-  "yahooError": "Unexpected token '<', \"<!DOCTYPE \"... is not valid JSON",
+  "srcYahoo": 101,
+  "srcTx": 0,
+  "srcFail": 0,
+  "eastError": "Unexpected token '<', \"<html>\r\n<h\"... is not valid JSON",
+  "yahooError": null,
   "liveCount": 0
  },
  "cfg": {
@@ -48,7 +48,67 @@
    }
   ]
  },
- "spmo": null,
+ "spmo": {
+  "ticker": "SPMO",
+  "name": "标普500动量ETF-Invesco",
+  "rank": null,
+  "mcapUsd": null,
+  "spmoPct": null,
+  "asOf": "2026-09-24",
+  "close": 152.18,
+  "chgPct": 0.17113909292363338,
+  "rsi6": {
+   "value": 66.87863832718834,
+   "prev": 65.90159312627557,
+   "state": "neutral",
+   "cross": null,
+   "period": 6
+  },
+  "tunnels": [
+   {
+    "key": "短通道",
+    "n": [
+     12,
+     36
+    ],
+    "upper": 149.48348961487767,
+    "lower": 148.49947034271705,
+    "pos": "above",
+    "event": null,
+    "widthPct": 0.6604533845161189
+   },
+   {
+    "key": "主通道",
+    "n": [
+     144,
+     169
+    ],
+    "upper": 141.1805349698223,
+    "lower": 139.17296404030424,
+    "pos": "above",
+    "event": null,
+    "widthPct": 1.4321711243886082
+   },
+   {
+    "key": "长通道",
+    "n": [
+     576,
+     676
+    ],
+    "upper": 114.64026301871398,
+    "lower": 110.20215156283814,
+    "pos": "above",
+    "event": null,
+    "widthPct": 3.9477528865143037
+   }
+  ],
+  "live": null,
+  "adj": "hfq",
+  "anchored": true,
+  "source": "yahoo",
+  "bars": 2000,
+  "notes": []
+ },
  "rows": [
   {
    "ticker": "NVDA",
@@ -58,10 +118,10 @@
    "spmoPct": 8.98226,
    "asOf": "2026-09-24",
    "close": 224.58,
-   "chgPct": -0.41239856325661073,
+   "chgPct": -0.41239532545553903,
    "rsi6": {
-    "value": 56.35889647042003,
-    "prev": 59.36246042147132,
+    "value": 56.4839835068049,
+    "prev": 59.501863469368125,
     "state": "neutral",
     "cross": null,
     "period": 6
@@ -73,11 +133,11 @@
       12,
       36
      ],
-     "upper": 222.4326040471007,
-     "lower": 218.71061103825798,
+     "upper": 222.39300609239902,
+     "lower": 218.57587212656375,
      "pos": "above",
      "event": null,
-     "widthPct": 1.6874306944163455
+     "widthPct": 1.7312486909517786
     },
     {
      "key": "主通道",
@@ -85,11 +145,11 @@
       144,
       169
      ],
-     "upper": 206.6132271134736,
-     "lower": 204.51775402133183,
+     "upper": 206.09883507613242,
+     "lower": 203.47975259466708,
      "pos": "above",
      "event": null,
-     "widthPct": 1.019370073429083
+     "widthPct": 1.2789157247499663
     },
     {
      "key": "长通道",
@@ -97,25 +157,19 @@
       576,
       676
      ],
-     "upper": 229.93401172617178,
-     "lower": 222.64203293090785,
-     "pos": "inside",
+     "upper": 161.93918225923113,
+     "lower": 153.06006227976565,
+     "pos": "above",
      "event": null,
-     "widthPct": 3.2224325089009604
+     "widthPct": 5.637550015372341
     }
    ],
    "live": null,
-   "adj": "raw",
-   "anchored": false,
-   "source": "tencent",
+   "adj": "hfq",
+   "anchored": true,
+   "source": "yahoo",
    "bars": 2000,
-   "notes": [
-    {
-     "tag": "口径",
-     "level": "warn",
-     "text": "本行数据为不复权价（东财主源不可用，腾讯兜底）。近一年内有拆股的标的，长通道（EMA576/676）会明显失真，RSI6/主通道参考价值有限。"
-    }
-   ]
+   "notes": []
   },
   {
    "ticker": "AAPL",
@@ -125,10 +179,10 @@
    "spmoPct": null,
    "asOf": "2026-09-24",
    "close": 335.92,
-   "chgPct": -0.3263901252151147,
+   "chgPct": -0.32638289175567214,
    "rsi6": {
-    "value": 59.492455054002505,
-    "prev": 64.3372248407444,
+    "value": 59.49580956893823,
+    "prev": 64.3410495079962,
     "state": "neutral",
     "cross": null,
     "period": 6
@@ -140,11 +194,11 @@
       12,
       36
      ],
-     "upper": 333.0583733880803,
-     "lower": 324.1442450566176,
+     "upper": 333.0572571828293,
+     "lower": 324.0996870970402,
      "pos": "above",
      "event": null,
-     "widthPct": 2.7127488787425875
+     "widthPct": 2.7261585421135694
     },
     {
      "key": "主通道",
@@ -152,11 +206,11 @@
       144,
       169
      ],
-     "upper": 301.1595369643765,
-     "lower": 296.90697376051884,
+     "upper": 300.89225242136234,
+     "lower": 296.5937060320215,
      "pos": "above",
      "event": null,
-     "widthPct": 1.4221037719377712
+     "widthPct": 1.4388777940381445
     },
     {
      "key": "长通道",
@@ -164,43 +218,6497 @@
       576,
       676
      ],
-     "upper": 254.1043559480332,
-     "lower": 247.92783488539104,
+     "upper": 252.0377007083012,
+     "lower": 244.21259735523697,
      "pos": "above",
      "event": null,
-     "widthPct": 2.4606075767326856
+     "widthPct": 3.1536921523671655
     }
    ],
    "live": null,
-   "adj": "raw",
-   "anchored": false,
-   "source": "tencent",
+   "adj": "hfq",
+   "anchored": true,
+   "source": "yahoo",
+   "bars": 2000,
+   "notes": []
+  },
+  {
+   "ticker": "GOOGL",
+   "name": "谷歌-A",
+   "rank": 3,
+   "mcapUsd": 4187040489000,
+   "spmoPct": 4.539319,
+   "asOf": "2026-09-24",
+   "close": 342.35999999999996,
+   "chgPct": 1.340910801098416,
+   "rsi6": {
+    "value": 46.247679258212166,
+    "prev": 37.8544452799448,
+    "state": "neutral",
+    "cross": null,
+    "period": 6
+   },
+   "tunnels": [
+    {
+     "key": "短通道",
+     "n": [
+      12,
+      36
+     ],
+     "upper": 344.90385258245186,
+     "lower": 344.3551044315998,
+     "pos": "below",
+     "event": null,
+     "widthPct": 0.15922844245051723
+    },
+    {
+     "key": "主通道",
+     "n": [
+      144,
+      169
+     ],
+     "upper": 338.97551574436665,
+     "lower": 334.2837605854896,
+     "pos": "above",
+     "event": "break_up",
+     "widthPct": 1.3937439330812567
+    },
+    {
+     "key": "长通道",
+     "n": [
+      576,
+      676
+     ],
+     "upper": 261.0927157184682,
+     "lower": 248.6253452242899,
+     "pos": "above",
+     "event": null,
+     "widthPct": 4.891869231048646
+    }
+   ],
+   "live": null,
+   "adj": "hfq",
+   "anchored": true,
+   "source": "yahoo",
    "bars": 2000,
    "notes": [
     {
-     "tag": "口径",
+     "tag": "主通道",
+     "level": "info",
+     "text": "主通道（EMA144/169）当日上穿通道（收盘自下而上）。"
+    }
+   ]
+  },
+  {
+   "ticker": "GOOG",
+   "name": "谷歌-C",
+   "rank": 4,
+   "mcapUsd": 4146070207000,
+   "spmoPct": 3.600915,
+   "asOf": "2026-09-24",
+   "close": 339.01,
+   "chgPct": 1.2030564950519906,
+   "rsi6": {
+    "value": 46.26827262647947,
+    "prev": 38.31291593174115,
+    "state": "neutral",
+    "cross": null,
+    "period": 6
+   },
+   "tunnels": [
+    {
+     "key": "短通道",
+     "n": [
+      12,
+      36
+     ],
+     "upper": 341.9317215655102,
+     "lower": 340.86715256535973,
+     "pos": "below",
+     "event": null,
+     "widthPct": 0.3118250601996241
+    },
+    {
+     "key": "主通道",
+     "n": [
+      144,
+      169
+     ],
+     "upper": 336.9868062384933,
+     "lower": 332.4723648980666,
+     "pos": "above",
+     "event": "break_up",
+     "widthPct": 1.3486830967637324
+    },
+    {
+     "key": "长通道",
+     "n": [
+      576,
+      676
+     ],
+     "upper": 260.82957575027103,
+     "lower": 248.51379914141899,
+     "pos": "above",
+     "event": null,
+     "widthPct": 4.835942594314082
+    }
+   ],
+   "live": null,
+   "adj": "hfq",
+   "anchored": true,
+   "source": "yahoo",
+   "bars": 2000,
+   "notes": [
+    {
+     "tag": "主通道",
+     "level": "info",
+     "text": "主通道（EMA144/169）当日上穿通道（收盘自下而上）。"
+    }
+   ]
+  },
+  {
+   "ticker": "MSFT",
+   "name": "微软",
+   "rank": 5,
+   "mcapUsd": 3697401866000,
+   "spmoPct": null,
+   "asOf": "2026-09-24",
+   "close": 497.93,
+   "chgPct": -0.531373715329686,
+   "rsi6": {
+    "value": 50.241310559343866,
+    "prev": 55.20440118441626,
+    "state": "neutral",
+    "cross": null,
+    "period": 6
+   },
+   "tunnels": [
+    {
+     "key": "短通道",
+     "n": [
+      12,
+      36
+     ],
+     "upper": 497.6818513814713,
+     "lower": 484.7882252945868,
+     "pos": "above",
+     "event": null,
+     "widthPct": 2.6247366495897415
+    },
+    {
+     "key": "主通道",
+     "n": [
+      144,
+      169
+     ],
+     "upper": 446.8791578992191,
+     "lower": 445.26384077404913,
+     "pos": "above",
+     "event": null,
+     "widthPct": 0.3621206751769922
+    },
+    {
+     "key": "长通道",
+     "n": [
+      576,
+      676
+     ],
+     "upper": 426.3077195529019,
+     "lower": 418.39339480599426,
+     "pos": "above",
+     "event": null,
+     "widthPct": 1.873875767978452
+    }
+   ],
+   "live": null,
+   "adj": "hfq",
+   "anchored": true,
+   "source": "yahoo",
+   "bars": 2000,
+   "notes": []
+  },
+  {
+   "ticker": "AMZN",
+   "name": "亚马逊",
+   "rank": 6,
+   "mcapUsd": 2689890879000,
+   "spmoPct": null,
+   "asOf": "2026-09-24",
+   "close": 249.38,
+   "chgPct": 0.04412910035951345,
+   "rsi6": {
+    "value": 39.98480417402926,
+    "prev": 39.653590716446004,
+    "state": "neutral",
+    "cross": null,
+    "period": 6
+   },
+   "tunnels": [
+    {
+     "key": "短通道",
+     "n": [
+      12,
+      36
+     ],
+     "upper": 255.06354274907957,
+     "lower": 252.9213956336307,
+     "pos": "below",
+     "event": null,
+     "widthPct": 0.8433900116286496
+    },
+    {
+     "key": "主通道",
+     "n": [
+      144,
+      169
+     ],
+     "upper": 247.66748774582703,
+     "lower": 245.75800587874028,
+     "pos": "above",
+     "event": null,
+     "widthPct": 0.7739696840794454
+    },
+    {
+     "key": "长通道",
+     "n": [
+      576,
+      676
+     ],
+     "upper": 218.52661110343075,
+     "lower": 212.71691270673512,
+     "pos": "above",
+     "event": null,
+     "widthPct": 2.6943933420101986
+    }
+   ],
+   "live": null,
+   "adj": "hfq",
+   "anchored": true,
+   "source": "yahoo",
+   "bars": 2000,
+   "notes": []
+  },
+  {
+   "ticker": "META",
+   "name": "Meta Platforms",
+   "rank": 7,
+   "mcapUsd": 1980915365000,
+   "spmoPct": null,
+   "asOf": "2026-09-24",
+   "close": 777.59,
+   "chgPct": 4.5007461857742515,
+   "rsi6": {
+    "value": 88.11101592977434,
+    "prev": 83.41256010231865,
+    "state": "overbought",
+    "cross": null,
+    "period": 6
+   },
+   "tunnels": [
+    {
+     "key": "短通道",
+     "n": [
+      12,
+      36
+     ],
+     "upper": 697.7946068556395,
+     "lower": 641.8177576409518,
+     "pos": "above",
+     "event": null,
+     "widthPct": 8.35717117850328
+    },
+    {
+     "key": "主通道",
+     "n": [
+      144,
+      169
+     ],
+     "upper": 624.0300005612166,
+     "lower": 622.4610057247232,
+     "pos": "above",
+     "event": null,
+     "widthPct": 0.25174587358931677
+    },
+    {
+     "key": "长通道",
+     "n": [
+      576,
+      676
+     ],
+     "upper": 588.3657236058693,
+     "lower": 570.9541671817942,
+     "pos": "above",
+     "event": null,
+     "widthPct": 3.0037535907790525
+    }
+   ],
+   "live": null,
+   "adj": "hfq",
+   "anchored": true,
+   "source": "yahoo",
+   "bars": 2000,
+   "notes": [
+    {
+     "tag": "RSI6",
      "level": "warn",
-     "text": "本行数据为不复权价（东财主源不可用，腾讯兜底）。近一年内有拆股的标的，长通道（EMA576/676）会明显失真，RSI6/主通道参考价值有限。"
+     "text": "RSI6=88.1 超买（>70）。策略语境：超买常是做T减仓的观察信号，强趋势里会持续钝化。"
+    }
+   ]
+  },
+  {
+   "ticker": "AVGO",
+   "name": "博通",
+   "rank": 8,
+   "mcapUsd": 1672488959999.9998,
+   "spmoPct": 6.029852,
+   "asOf": "2026-09-24",
+   "close": 350.36,
+   "chgPct": -1.3042635032485372,
+   "rsi6": {
+    "value": 41.58787440511657,
+    "prev": 47.707805592866485,
+    "state": "neutral",
+    "cross": null,
+    "period": 6
+   },
+   "tunnels": [
+    {
+     "key": "短通道",
+     "n": [
+      12,
+      36
+     ],
+     "upper": 366.51132959902475,
+     "lower": 355.7454143882876,
+     "pos": "below",
+     "event": null,
+     "widthPct": 2.9811878671571863
+    },
+    {
+     "key": "主通道",
+     "n": [
+      144,
+      169
+     ],
+     "upper": 371.6845188992466,
+     "lower": 368.2489413770335,
+     "pos": "below",
+     "event": null,
+     "widthPct": 0.9286179654398463
+    },
+    {
+     "key": "长通道",
+     "n": [
+      576,
+      676
+     ],
+     "upper": 289.0563898178903,
+     "lower": 272.4238341511207,
+     "pos": "above",
+     "event": null,
+     "widthPct": 5.924538374369393
+    }
+   ],
+   "live": null,
+   "adj": "hfq",
+   "anchored": true,
+   "source": "yahoo",
+   "bars": 2000,
+   "notes": []
+  },
+  {
+   "ticker": "TSLA",
+   "name": "特斯拉",
+   "rank": 9,
+   "mcapUsd": 1492691942000,
+   "spmoPct": null,
+   "asOf": "2026-09-24",
+   "close": 377.94,
+   "chgPct": -0.5735011848322147,
+   "rsi6": {
+    "value": 66.50198436312597,
+    "prev": 72.02149489796241,
+    "state": "neutral",
+    "cross": "out_ob",
+    "period": 6
+   },
+   "tunnels": [
+    {
+     "key": "短通道",
+     "n": [
+      12,
+      36
+     ],
+     "upper": 369.4297611074156,
+     "lower": 361.4396768062866,
+     "pos": "above",
+     "event": null,
+     "widthPct": 2.1864600944149424
+    },
+    {
+     "key": "主通道",
+     "n": [
+      144,
+      169
+     ],
+     "upper": 378.18692045075284,
+     "lower": 376.60111411993904,
+     "pos": "inside",
+     "event": "reenter_down",
+     "widthPct": 0.42019911768097123
+    },
+    {
+     "key": "长通道",
+     "n": [
+      576,
+      676
+     ],
+     "upper": 346.85594894671726,
+     "lower": 336.5957472538003,
+     "pos": "above",
+     "event": null,
+     "widthPct": 3.0024657923759737
+    }
+   ],
+   "live": null,
+   "adj": "hfq",
+   "anchored": true,
+   "source": "yahoo",
+   "bars": 2000,
+   "notes": [
+    {
+     "tag": "RSI6",
+     "level": "info",
+     "text": "RSI6 自超买回落（前值 72.0 → 66.5）。做T语境下常见做法是观察回补时机，此处只记录事件。"
+    },
+    {
+     "tag": "主通道",
+     "level": "info",
+     "text": "主通道：自上方回到通道内。"
+    }
+   ]
+  },
+  {
+   "ticker": "MU",
+   "name": "美光科技",
+   "rank": 10,
+   "mcapUsd": 1220343181000,
+   "spmoPct": 10.71664,
+   "asOf": "2026-09-24",
+   "close": 1080.53,
+   "chgPct": 0.8069955941577778,
+   "rsi6": {
+    "value": 71.24303053745567,
+    "prev": 69.61897325665255,
+    "state": "overbought",
+    "cross": "into_ob",
+    "period": 6
+   },
+   "tunnels": [
+    {
+     "key": "短通道",
+     "n": [
+      12,
+      36
+     ],
+     "upper": 1019.480432670936,
+     "lower": 973.760872288554,
+     "pos": "above",
+     "event": null,
+     "widthPct": 4.5874586552691605
+    },
+    {
+     "key": "主通道",
+     "n": [
+      144,
+      169
+     ],
+     "upper": 796.653315705549,
+     "lower": 755.6220974130833,
+     "pos": "above",
+     "event": null,
+     "widthPct": 5.286589988567939
+    },
+    {
+     "key": "长通道",
+     "n": [
+      576,
+      676
+     ],
+     "upper": 412.94559873675,
+     "lower": 374.75826442531303,
+     "pos": "above",
+     "event": null,
+     "widthPct": 9.695860613947575
+    }
+   ],
+   "live": null,
+   "adj": "hfq",
+   "anchored": true,
+   "source": "yahoo",
+   "bars": 2000,
+   "notes": [
+    {
+     "tag": "RSI6",
+     "level": "hot",
+     "text": "RSI6=71.2 超买（>70），今日新进超买区。策略语境：超买常是做T减仓的观察信号，强趋势里会持续钝化。"
+    }
+   ]
+  },
+  {
+   "ticker": "BRK.B",
+   "name": "伯克希尔B",
+   "rank": 11,
+   "mcapUsd": 1081443774000,
+   "spmoPct": null,
+   "asOf": "2026-09-24",
+   "close": 505.18,
+   "chgPct": -0.3923774472594399,
+   "rsi6": {
+    "value": 42.78778343019272,
+    "prev": 47.545496298360945,
+    "state": "neutral",
+    "cross": null,
+    "period": 6
+   },
+   "tunnels": [
+    {
+     "key": "短通道",
+     "n": [
+      12,
+      36
+     ],
+     "upper": 507.6192055256783,
+     "lower": 506.28410426706444,
+     "pos": "below",
+     "event": "break_down",
+     "widthPct": 0.2633586942105507
+    },
+    {
+     "key": "主通道",
+     "n": [
+      144,
+      169
+     ],
+     "upper": 497.1394486319323,
+     "lower": 496.1042158745826,
+     "pos": "above",
+     "event": null,
+     "widthPct": 0.20845494300011624
+    },
+    {
+     "key": "长通道",
+     "n": [
+      576,
+      676
+     ],
+     "upper": 469.2855222568125,
+     "lower": 460.12476865570784,
+     "pos": "above",
+     "event": null,
+     "widthPct": 1.9713045337835418
+    }
+   ],
+   "live": null,
+   "adj": "hfq",
+   "anchored": true,
+   "source": "yahoo",
+   "bars": 2000,
+   "notes": [
+    {
+     "tag": "短通道",
+     "level": "info",
+     "text": "短通道（EMA12/36）当日下穿通道（收盘自上而下）。"
+    }
+   ]
+  },
+  {
+   "ticker": "LLY",
+   "name": "礼来",
+   "rank": 12,
+   "mcapUsd": 1053486002000,
+   "spmoPct": null,
+   "asOf": "2026-09-24",
+   "close": 1181.89,
+   "chgPct": 2.6846475361415045,
+   "rsi6": {
+    "value": 68.13805829522356,
+    "prev": 48.42803600849053,
+    "state": "neutral",
+    "cross": null,
+    "period": 6
+   },
+   "tunnels": [
+    {
+     "key": "短通道",
+     "n": [
+      12,
+      36
+     ],
+     "upper": 1164.334934128735,
+     "lower": 1157.3392466459343,
+     "pos": "above",
+     "event": "break_up",
+     "widthPct": 0.6026416230779259
+    },
+    {
+     "key": "主通道",
+     "n": [
+      144,
+      169
+     ],
+     "upper": 1100.8890842708165,
+     "lower": 1085.0772015110797,
+     "pos": "above",
+     "event": null,
+     "widthPct": 1.4466721525012982
+    },
+    {
+     "key": "长通道",
+     "n": [
+      576,
+      676
+     ],
+     "upper": 905.6445100430832,
+     "lower": 870.2333691865488,
+     "pos": "above",
+     "event": null,
+     "widthPct": 3.988015310140088
+    }
+   ],
+   "live": null,
+   "adj": "hfq",
+   "anchored": true,
+   "source": "yahoo",
+   "bars": 2000,
+   "notes": [
+    {
+     "tag": "短通道",
+     "level": "info",
+     "text": "短通道（EMA12/36）当日上穿通道（收盘自下而上）。"
+    }
+   ]
+  },
+  {
+   "ticker": "AMD",
+   "name": "超威半导体",
+   "rank": 13,
+   "mcapUsd": 1027251245000,
+   "spmoPct": 4.306581,
+   "asOf": "2026-09-24",
+   "close": 629.26,
+   "chgPct": 2.383629417553723,
+   "rsi6": {
+    "value": 83.20316457257422,
+    "prev": 80.55495272971208,
+    "state": "overbought",
+    "cross": null,
+    "period": 6
+   },
+   "tunnels": [
+    {
+     "key": "短通道",
+     "n": [
+      12,
+      36
+     ],
+     "upper": 565.4421295353358,
+     "lower": 521.2784341574335,
+     "pos": "above",
+     "event": null,
+     "widthPct": 8.127884362071935
+    },
+    {
+     "key": "主通道",
+     "n": [
+      144,
+      169
+     ],
+     "upper": 434.3693561704157,
+     "lower": 416.01638161962796,
+     "pos": "above",
+     "event": null,
+     "widthPct": 4.316388136631473
+    },
+    {
+     "key": "长通道",
+     "n": [
+      576,
+      676
+     ],
+     "upper": 266.95091072467267,
+     "lower": 249.72105147386938,
+     "pos": "above",
+     "event": null,
+     "widthPct": 6.669554576751874
+    }
+   ],
+   "live": null,
+   "adj": "hfq",
+   "anchored": true,
+   "source": "yahoo",
+   "bars": 2000,
+   "notes": [
+    {
+     "tag": "RSI6",
+     "level": "warn",
+     "text": "RSI6=83.2 超买（>70）。策略语境：超买常是做T减仓的观察信号，强趋势里会持续钝化。"
+    }
+   ]
+  },
+  {
+   "ticker": "JPM",
+   "name": "摩根大通",
+   "rank": 14,
+   "mcapUsd": 899955517999.9999,
+   "spmoPct": null,
+   "asOf": "2026-09-24",
+   "close": 338.55999999999995,
+   "chgPct": 0.30515769947023763,
+   "rsi6": {
+    "value": 25.277191911592197,
+    "prev": 21.08794656106822,
+    "state": "oversold",
+    "cross": null,
+    "period": 6
+   },
+   "tunnels": [
+    {
+     "key": "短通道",
+     "n": [
+      12,
+      36
+     ],
+     "upper": 350.12397478420274,
+     "lower": 347.0440575038041,
+     "pos": "below",
+     "event": null,
+     "widthPct": 0.8835509196515533
+    },
+    {
+     "key": "主通道",
+     "n": [
+      144,
+      169
+     ],
+     "upper": 330.9508948605778,
+     "lower": 327.2432133210873,
+     "pos": "above",
+     "event": null,
+     "widthPct": 1.1266225246936372
+    },
+    {
+     "key": "长通道",
+     "n": [
+      576,
+      676
+     ],
+     "upper": 276.2567889614041,
+     "lower": 265.8239791375937,
+     "pos": "above",
+     "event": null,
+     "widthPct": 3.8491717241313657
+    }
+   ],
+   "live": null,
+   "adj": "hfq",
+   "anchored": true,
+   "source": "yahoo",
+   "bars": 2000,
+   "notes": [
+    {
+     "tag": "RSI6",
+     "level": "cold",
+     "text": "RSI6=25.3 超卖（<30）。策略语境：超卖常是分批吸纳的观察信号，弱势里同样会钝化。"
+    }
+   ]
+  },
+  {
+   "ticker": "WMT",
+   "name": "沃尔玛",
+   "rank": 15,
+   "mcapUsd": 853591757999.9999,
+   "spmoPct": null,
+   "asOf": "2026-09-24",
+   "close": 107.59,
+   "chgPct": -2.659913574482853,
+   "rsi6": {
+    "value": 46.818939203911754,
+    "prev": 73.7817578786922,
+    "state": "neutral",
+    "cross": "out_ob",
+    "period": 6
+   },
+   "tunnels": [
+    {
+     "key": "短通道",
+     "n": [
+      12,
+      36
+     ],
+     "upper": 108.6964533581248,
+     "lower": 107.96590983692496,
+     "pos": "below",
+     "event": "break_down",
+     "widthPct": 0.6743612600054255
+    },
+    {
+     "key": "主通道",
+     "n": [
+      144,
+      169
+     ],
+     "upper": 113.57877955454906,
+     "lower": 113.53780712139262,
+     "pos": "below",
+     "event": null,
+     "widthPct": 0.03608052917324042
+    },
+    {
+     "key": "长通道",
+     "n": [
+      576,
+      676
+     ],
+     "upper": 99.52904540547652,
+     "lower": 95.89696301731175,
+     "pos": "above",
+     "event": null,
+     "widthPct": 3.717092128604562
+    }
+   ],
+   "live": null,
+   "adj": "hfq",
+   "anchored": true,
+   "source": "yahoo",
+   "bars": 2000,
+   "notes": [
+    {
+     "tag": "RSI6",
+     "level": "info",
+     "text": "RSI6 自超买回落（前值 73.8 → 46.8）。做T语境下常见做法是观察回补时机，此处只记录事件。"
+    },
+    {
+     "tag": "短通道",
+     "level": "info",
+     "text": "短通道（EMA12/36）当日下穿通道（收盘自上而下）。"
+    }
+   ]
+  },
+  {
+   "ticker": "V",
+   "name": "Visa",
+   "rank": 16,
+   "mcapUsd": 690829188000,
+   "spmoPct": null,
+   "asOf": "2026-09-24",
+   "close": 367.98,
+   "chgPct": 1.786905888739665,
+   "rsi6": {
+    "value": 48.89224763194825,
+    "prev": 25.91926861752401,
+    "state": "neutral",
+    "cross": "out_os",
+    "period": 6
+   },
+   "tunnels": [
+    {
+     "key": "短通道",
+     "n": [
+      12,
+      36
+     ],
+     "upper": 368.60556086500014,
+     "lower": 367.74503709121717,
+     "pos": "inside",
+     "event": "reenter_up",
+     "widthPct": 0.2337266449355524
+    },
+    {
+     "key": "主通道",
+     "n": [
+      144,
+      169
+     ],
+     "upper": 348.05055990614363,
+     "lower": 345.76492812762575,
+     "pos": "above",
+     "event": null,
+     "widthPct": 0.6588586786943088
+    },
+    {
+     "key": "长通道",
+     "n": [
+      576,
+      676
+     ],
+     "upper": 319.96666195624954,
+     "lower": 313.49071521932217,
+     "pos": "above",
+     "event": null,
+     "widthPct": 2.044635352042784
+    }
+   ],
+   "live": null,
+   "adj": "hfq",
+   "anchored": true,
+   "source": "yahoo",
+   "bars": 2000,
+   "notes": [
+    {
+     "tag": "RSI6",
+     "level": "info",
+     "text": "RSI6 自超卖回升（前值 25.9 → 48.9）。只记录事件。"
+    },
+    {
+     "tag": "短通道",
+     "level": "info",
+     "text": "短通道：自下方回到通道内。"
+    }
+   ]
+  },
+  {
+   "ticker": "XOM",
+   "name": "埃克森美孚",
+   "rank": 17,
+   "mcapUsd": 666705405000,
+   "spmoPct": 3.271594,
+   "asOf": "2026-09-24",
+   "close": 162.14,
+   "chgPct": 0.5644133760613457,
+   "rsi6": {
+    "value": 50.31791074755791,
+    "prev": 46.2418510134133,
+    "state": "neutral",
+    "cross": null,
+    "period": 6
+   },
+   "tunnels": [
+    {
+     "key": "短通道",
+     "n": [
+      12,
+      36
+     ],
+     "upper": 162.11162837915964,
+     "lower": 160.07925000498372,
+     "pos": "above",
+     "event": "break_up",
+     "widthPct": 1.2615989529987535
+    },
+    {
+     "key": "主通道",
+     "n": [
+      144,
+      169
+     ],
+     "upper": 149.92254417268185,
+     "lower": 147.83595866251187,
+     "pos": "above",
+     "event": null,
+     "widthPct": 1.4015287491722013
+    },
+    {
+     "key": "长通道",
+     "n": [
+      576,
+      676
+     ],
+     "upper": 125.55344412336527,
+     "lower": 121.91638148612485,
+     "pos": "above",
+     "event": null,
+     "widthPct": 2.939398876839022
+    }
+   ],
+   "live": null,
+   "adj": "hfq",
+   "anchored": true,
+   "source": "yahoo",
+   "bars": 2000,
+   "notes": [
+    {
+     "tag": "短通道",
+     "level": "info",
+     "text": "短通道（EMA12/36）当日上穿通道（收盘自下而上）。"
+    }
+   ]
+  },
+  {
+   "ticker": "JNJ",
+   "name": "强生",
+   "rank": 18,
+   "mcapUsd": 652311352000,
+   "spmoPct": 4.78324,
+   "asOf": "2026-09-24",
+   "close": 270.68,
+   "chgPct": 0.5609760273137754,
+   "rsi6": {
+    "value": 62.58333607995025,
+    "prev": 52.03970721621448,
+    "state": "neutral",
+    "cross": null,
+    "period": 6
+   },
+   "tunnels": [
+    {
+     "key": "短通道",
+     "n": [
+      12,
+      36
+     ],
+     "upper": 269.1912656445543,
+     "lower": 265.99508227709566,
+     "pos": "above",
+     "event": null,
+     "widthPct": 1.194418871060788
+    },
+    {
+     "key": "主通道",
+     "n": [
+      144,
+      169
+     ],
+     "upper": 246.08341502187602,
+     "lower": 241.94804942295744,
+     "pos": "above",
+     "event": null,
+     "widthPct": 1.6947126979293525
+    },
+    {
+     "key": "长通道",
+     "n": [
+      576,
+      676
+     ],
+     "upper": 199.23439100054145,
+     "lower": 193.45933652506486,
+     "pos": "above",
+     "event": null,
+     "widthPct": 2.9412511943420445
+    }
+   ],
+   "live": null,
+   "adj": "hfq",
+   "anchored": true,
+   "source": "yahoo",
+   "bars": 2000,
+   "notes": []
+  },
+  {
+   "ticker": "MA",
+   "name": "万事达",
+   "rank": 19,
+   "mcapUsd": 495891707000.00006,
+   "spmoPct": null,
+   "asOf": "2026-09-24",
+   "close": 566.08,
+   "chgPct": 1.100163303276136,
+   "rsi6": {
+    "value": 48.49345544628634,
+    "prev": 34.6650573831958,
+    "state": "neutral",
+    "cross": null,
+    "period": 6
+   },
+   "tunnels": [
+    {
+     "key": "短通道",
+     "n": [
+      12,
+      36
+     ],
+     "upper": 567.386788406104,
+     "lower": 567.3002804024896,
+     "pos": "below",
+     "event": null,
+     "widthPct": 0.015247905081908602
+    },
+    {
+     "key": "主通道",
+     "n": [
+      144,
+      169
+     ],
+     "upper": 542.5949441896597,
+     "lower": 540.9279679874846,
+     "pos": "above",
+     "event": null,
+     "widthPct": 0.3076956072531202
+    },
+    {
+     "key": "长通道",
+     "n": [
+      576,
+      676
+     ],
+     "upper": 515.0960251990737,
+     "lower": 506.0332329469294,
+     "pos": "above",
+     "event": null,
+     "widthPct": 1.7750528994926635
+    }
+   ],
+   "live": null,
+   "adj": "hfq",
+   "anchored": true,
+   "source": "yahoo",
+   "bars": 2000,
+   "notes": []
+  },
+  {
+   "ticker": "ABBV",
+   "name": "艾伯维公司",
+   "rank": 20,
+   "mcapUsd": 468498135000,
+   "spmoPct": null,
+   "asOf": "2026-09-24",
+   "close": 265.11999999999995,
+   "chgPct": 0.015093008506283923,
+   "rsi6": {
+    "value": 70.1624368021164,
+    "prev": 69.98938002123633,
+    "state": "overbought",
+    "cross": "into_ob",
+    "period": 6
+   },
+   "tunnels": [
+    {
+     "key": "短通道",
+     "n": [
+      12,
+      36
+     ],
+     "upper": 262.5452495133136,
+     "lower": 257.90744022992743,
+     "pos": "above",
+     "event": null,
+     "widthPct": 1.782221275741381
+    },
+    {
+     "key": "主通道",
+     "n": [
+      144,
+      169
+     ],
+     "upper": 238.61592406315236,
+     "lower": 235.63443610343157,
+     "pos": "above",
+     "event": null,
+     "widthPct": 1.2573476838999236
+    },
+    {
+     "key": "长通道",
+     "n": [
+      576,
+      676
+     ],
+     "upper": 203.54847503917367,
+     "lower": 197.45837220749087,
+     "pos": "above",
+     "event": null,
+     "widthPct": 3.0374059064067294
+    }
+   ],
+   "live": null,
+   "adj": "hfq",
+   "anchored": true,
+   "source": "yahoo",
+   "bars": 2000,
+   "notes": [
+    {
+     "tag": "RSI6",
+     "level": "hot",
+     "text": "RSI6=70.2 超买（>70），今日新进超买区。策略语境：超买常是做T减仓的观察信号，强趋势里会持续钝化。"
+    }
+   ]
+  },
+  {
+   "ticker": "PLTR",
+   "name": "Palantir",
+   "rank": 21,
+   "mcapUsd": 462805033000,
+   "spmoPct": 1.620139,
+   "asOf": "2026-09-24",
+   "close": 192.59,
+   "chgPct": 0.41712450063244866,
+   "rsi6": {
+    "value": 82.79488378146885,
+    "prev": 82.06880287567081,
+    "state": "overbought",
+    "cross": null,
+    "period": 6
+   },
+   "tunnels": [
+    {
+     "key": "短通道",
+     "n": [
+      12,
+      36
+     ],
+     "upper": 181.2779726242303,
+     "lower": 171.29150952812026,
+     "pos": "above",
+     "event": null,
+     "widthPct": 5.664961717698948
+    },
+    {
+     "key": "主通道",
+     "n": [
+      144,
+      169
+     ],
+     "upper": 154.2608507284103,
+     "lower": 153.11864266187047,
+     "pos": "above",
+     "event": null,
+     "widthPct": 0.7431908055685233
+    },
+    {
+     "key": "长通道",
+     "n": [
+      576,
+      676
+     ],
+     "upper": 121.72059439281192,
+     "lower": 114.22148694455102,
+     "pos": "above",
+     "event": null,
+     "widthPct": 6.356735861406822
+    }
+   ],
+   "live": null,
+   "adj": "hfq",
+   "anchored": true,
+   "source": "yahoo",
+   "bars": 1503,
+   "notes": [
+    {
+     "tag": "RSI6",
+     "level": "warn",
+     "text": "RSI6=82.8 超买（>70）。策略语境：超买常是做T减仓的观察信号，强趋势里会持续钝化。"
+    }
+   ]
+  },
+  {
+   "ticker": "ORCL",
+   "name": "甲骨文",
+   "rank": 22,
+   "mcapUsd": 421932121000,
+   "spmoPct": null,
+   "asOf": "2026-09-24",
+   "close": 139.54,
+   "chgPct": -3.472609544300953,
+   "rsi6": {
+    "value": 31.369290388669455,
+    "prev": 40.228931207225685,
+    "state": "neutral",
+    "cross": null,
+    "period": 6
+   },
+   "tunnels": [
+    {
+     "key": "短通道",
+     "n": [
+      12,
+      36
+     ],
+     "upper": 147.46240541848996,
+     "lower": 146.79747302887208,
+     "pos": "below",
+     "event": null,
+     "widthPct": 0.45193547494571756
+    },
+    {
+     "key": "主通道",
+     "n": [
+      144,
+      169
+     ],
+     "upper": 163.57618654669093,
+     "lower": 160.70817856788122,
+     "pos": "below",
+     "event": null,
+     "widthPct": 1.7688228526197527
+    },
+    {
+     "key": "长通道",
+     "n": [
+      576,
+      676
+     ],
+     "upper": 166.82739357661902,
+     "lower": 162.8343376324616,
+     "pos": "below",
+     "event": null,
+     "widthPct": 2.4225171235449907
+    }
+   ],
+   "live": null,
+   "adj": "hfq",
+   "anchored": true,
+   "source": "yahoo",
+   "bars": 2000,
+   "notes": []
+  },
+  {
+   "ticker": "CSCO",
+   "name": "思科",
+   "rank": 23,
+   "mcapUsd": 421738518000,
+   "spmoPct": 1.891365,
+   "asOf": "2026-09-24",
+   "close": 106.97,
+   "chgPct": 0.5073765986836065,
+   "rsi6": {
+    "value": 39.79536618873951,
+    "prev": 36.20309430265428,
+    "state": "neutral",
+    "cross": null,
+    "period": 6
+   },
+   "tunnels": [
+    {
+     "key": "短通道",
+     "n": [
+      12,
+      36
+     ],
+     "upper": 110.82354128294409,
+     "lower": 108.71072787769984,
+     "pos": "below",
+     "event": null,
+     "widthPct": 1.9248142108494275
+    },
+    {
+     "key": "主通道",
+     "n": [
+      144,
+      169
+     ],
+     "upper": 104.26581875808425,
+     "lower": 101.93227491531495,
+     "pos": "above",
+     "event": null,
+     "widthPct": 2.263400016166438
+    },
+    {
+     "key": "长通道",
+     "n": [
+      576,
+      676
+     ],
+     "upper": 78.43053937426392,
+     "lower": 75.22030976749821,
+     "pos": "above",
+     "event": null,
+     "widthPct": 4.178603144332603
+    }
+   ],
+   "live": null,
+   "adj": "hfq",
+   "anchored": true,
+   "source": "yahoo",
+   "bars": 2000,
+   "notes": []
+  },
+  {
+   "ticker": "COST",
+   "name": "好市多",
+   "rank": 24,
+   "mcapUsd": 397569878000,
+   "spmoPct": null,
+   "asOf": "2026-09-24",
+   "close": 896.48,
+   "chgPct": -0.9085919782656271,
+   "rsi6": {
+    "value": 37.565454047986655,
+    "prev": 49.69963649515871,
+    "state": "neutral",
+    "cross": null,
+    "period": 6
+   },
+   "tunnels": [
+    {
+     "key": "短通道",
+     "n": [
+      12,
+      36
+     ],
+     "upper": 922.9801538268188,
+     "lower": 904.4111089675439,
+     "pos": "below",
+     "event": null,
+     "widthPct": 2.0323009349273056
+    },
+    {
+     "key": "主通道",
+     "n": [
+      144,
+      169
+     ],
+     "upper": 951.066486442939,
+     "lower": 949.8694817442262,
+     "pos": "below",
+     "event": null,
+     "widthPct": 0.1259384554498535
+    },
+    {
+     "key": "长通道",
+     "n": [
+      576,
+      676
+     ],
+     "upper": 896.705405359634,
+     "lower": 874.2254394958111,
+     "pos": "inside",
+     "event": "reenter_down",
+     "widthPct": 2.5387739932507527
+    }
+   ],
+   "live": null,
+   "adj": "hfq",
+   "anchored": true,
+   "source": "yahoo",
+   "bars": 2000,
+   "notes": [
+    {
+     "tag": "长通道",
+     "level": "info",
+     "text": "长通道：自上方回到通道内。"
+    }
+   ]
+  },
+  {
+   "ticker": "BAC",
+   "name": "美国银行",
+   "rank": 25,
+   "mcapUsd": 391803691000,
+   "spmoPct": null,
+   "asOf": "2026-09-24",
+   "close": 56.03,
+   "chgPct": 0.053569248744422815,
+   "rsi6": {
+    "value": 14.11823704002309,
+    "prev": 13.38576929719639,
+    "state": "oversold",
+    "cross": null,
+    "period": 6
+   },
+   "tunnels": [
+    {
+     "key": "短通道",
+     "n": [
+      12,
+      36
+     ],
+     "upper": 60.08380221278058,
+     "lower": 58.33299057197243,
+     "pos": "below",
+     "event": null,
+     "widthPct": 2.9570326971962735
+    },
+    {
+     "key": "主通道",
+     "n": [
+      144,
+      169
+     ],
+     "upper": 56.97092143723127,
+     "lower": 56.26819870317654,
+     "pos": "below",
+     "event": null,
+     "widthPct": 1.2411306855500273
+    },
+    {
+     "key": "长通道",
+     "n": [
+      576,
+      676
+     ],
+     "upper": 48.213347764310235,
+     "lower": 46.810215682425586,
+     "pos": "above",
+     "event": null,
+     "widthPct": 2.9532297695216543
+    }
+   ],
+   "live": null,
+   "adj": "hfq",
+   "anchored": true,
+   "source": "yahoo",
+   "bars": 2000,
+   "notes": [
+    {
+     "tag": "RSI6",
+     "level": "cold",
+     "text": "RSI6=14.1 超卖（<30）。策略语境：超卖常是分批吸纳的观察信号，弱势里同样会钝化。"
+    }
+   ]
+  },
+  {
+   "ticker": "LRCX",
+   "name": "泛林集团",
+   "rank": 26,
+   "mcapUsd": 384355758000,
+   "spmoPct": 3.133648,
+   "asOf": "2026-09-24",
+   "close": 307.16,
+   "chgPct": -0.03905074123411456,
+   "rsi6": {
+    "value": 63.85414492669079,
+    "prev": 64.03458414584821,
+    "state": "neutral",
+    "cross": null,
+    "period": 6
+   },
+   "tunnels": [
+    {
+     "key": "短通道",
+     "n": [
+      12,
+      36
+     ],
+     "upper": 303.1744722357742,
+     "lower": 297.2265485654197,
+     "pos": "above",
+     "event": null,
+     "widthPct": 1.9813169745838883
+    },
+    {
+     "key": "主通道",
+     "n": [
+      144,
+      169
+     ],
+     "upper": 287.3091852126873,
+     "lower": 278.83759401430495,
+     "pos": "above",
+     "event": null,
+     "widthPct": 2.9927190294888906
+    },
+    {
+     "key": "长通道",
+     "n": [
+      576,
+      676
+     ],
+     "upper": 184.81150578237552,
+     "lower": 171.9961461821932,
+     "pos": "above",
+     "event": null,
+     "widthPct": 7.183343479110641
+    }
+   ],
+   "live": null,
+   "adj": "hfq",
+   "anchored": true,
+   "source": "yahoo",
+   "bars": 2000,
+   "notes": []
+  },
+  {
+   "ticker": "KO",
+   "name": "可口可乐",
+   "rank": 27,
+   "mcapUsd": 379054588000,
+   "spmoPct": 1.41823,
+   "asOf": "2026-09-24",
+   "close": 88.1,
+   "chgPct": 0.011354451863199166,
+   "rsi6": {
+    "value": 50.414010393651054,
+    "prev": 50.272881915881456,
+    "state": "neutral",
+    "cross": null,
+    "period": 6
+   },
+   "tunnels": [
+    {
+     "key": "短通道",
+     "n": [
+      12,
+      36
+     ],
+     "upper": 88.07678741444951,
+     "lower": 87.42564461645134,
+     "pos": "above",
+     "event": null,
+     "widthPct": 0.7420327917547364
+    },
+    {
+     "key": "主通道",
+     "n": [
+      144,
+      169
+     ],
+     "upper": 81.92863532433897,
+     "lower": 80.91545926905144,
+     "pos": "above",
+     "event": null,
+     "widthPct": 1.244350994510861
+    },
+    {
+     "key": "长通道",
+     "n": [
+      576,
+      676
+     ],
+     "upper": 71.19038891025211,
+     "lower": 69.64413833376389,
+     "pos": "above",
+     "event": null,
+     "widthPct": 2.1958401916727692
+    }
+   ],
+   "live": null,
+   "adj": "hfq",
+   "anchored": true,
+   "source": "yahoo",
+   "bars": 2000,
+   "notes": []
+  },
+  {
+   "ticker": "AMAT",
+   "name": "应用材料",
+   "rank": 28,
+   "mcapUsd": 376363587000,
+   "spmoPct": 1.714074,
+   "asOf": "2026-09-24",
+   "close": 474.25,
+   "chgPct": -0.027405219755127774,
+   "rsi6": {
+    "value": 69.17984722495079,
+    "prev": 69.34647000158509,
+    "state": "neutral",
+    "cross": null,
+    "period": 6
+   },
+   "tunnels": [
+    {
+     "key": "短通道",
+     "n": [
+      12,
+      36
+     ],
+     "upper": 474.43492563707196,
+     "lower": 456.8078578873375,
+     "pos": "inside",
+     "event": null,
+     "widthPct": 3.7857083161541474
+    },
+    {
+     "key": "主通道",
+     "n": [
+      144,
+      169
+     ],
+     "upper": 454.3269813227224,
+     "lower": 440.9327280830735,
+     "pos": "above",
+     "event": null,
+     "widthPct": 2.992260926952461
+    },
+    {
+     "key": "长通道",
+     "n": [
+      576,
+      676
+     ],
+     "upper": 305.57706275090806,
+     "lower": 287.7286029052663,
+     "pos": "above",
+     "event": null,
+     "widthPct": 6.0166153397176805
+    }
+   ],
+   "live": null,
+   "adj": "hfq",
+   "anchored": true,
+   "source": "yahoo",
+   "bars": 2000,
+   "notes": []
+  },
+  {
+   "ticker": "CAT",
+   "name": "卡特彼勒",
+   "rank": 29,
+   "mcapUsd": 370153204000,
+   "spmoPct": 2.437115,
+   "asOf": "2026-09-24",
+   "close": 805.25,
+   "chgPct": -0.8337256925214809,
+   "rsi6": {
+    "value": 49.56016867181949,
+    "prev": 56.8120241441611,
+    "state": "neutral",
+    "cross": null,
+    "period": 6
+   },
+   "tunnels": [
+    {
+     "key": "短通道",
+     "n": [
+      12,
+      36
+     ],
+     "upper": 821.8403308779749,
+     "lower": 805.7427476875671,
+     "pos": "below",
+     "event": "break_down",
+     "widthPct": 1.9780966517046
+    },
+    {
+     "key": "主通道",
+     "n": [
+      144,
+      169
+     ],
+     "upper": 810.6229834388314,
+     "lower": 794.5211340676365,
+     "pos": "inside",
+     "event": "reenter_down",
+     "widthPct": 2.006280831182755
+    },
+    {
+     "key": "长通道",
+     "n": [
+      576,
+      676
+     ],
+     "upper": 583.1716479529806,
+     "lower": 550.5227060555991,
+     "pos": "above",
+     "event": null,
+     "widthPct": 5.75974322919393
+    }
+   ],
+   "live": null,
+   "adj": "hfq",
+   "anchored": true,
+   "source": "yahoo",
+   "bars": 2000,
+   "notes": [
+    {
+     "tag": "短通道",
+     "level": "info",
+     "text": "短通道（EMA12/36）当日下穿通道（收盘自上而下）。"
+    },
+    {
+     "tag": "主通道",
+     "level": "info",
+     "text": "主通道：自上方回到通道内。"
+    }
+   ]
+  },
+  {
+   "ticker": "MRK",
+   "name": "默沙东",
+   "rank": 30,
+   "mcapUsd": 365092059000,
+   "spmoPct": null,
+   "asOf": "2026-09-24",
+   "close": 147.98000000000002,
+   "chgPct": -0.06753518522354396,
+   "rsi6": {
+    "value": 53.03510021262464,
+    "prev": 53.64488430156641,
+    "state": "neutral",
+    "cross": null,
+    "period": 6
+   },
+   "tunnels": [
+    {
+     "key": "短通道",
+     "n": [
+      12,
+      36
+     ],
+     "upper": 147.4417210070332,
+     "lower": 143.13197606254658,
+     "pos": "above",
+     "event": null,
+     "widthPct": 2.9663696252965575
+    },
+    {
+     "key": "主通道",
+     "n": [
+      144,
+      169
+     ],
+     "upper": 126.65027460895101,
+     "lower": 124.07316922425282,
+     "pos": "above",
+     "event": null,
+     "widthPct": 2.055735471161309
+    },
+    {
+     "key": "长通道",
+     "n": [
+      576,
+      676
+     ],
+     "upper": 106.29336476206426,
+     "lower": 104.37453014204762,
+     "pos": "above",
+     "event": null,
+     "widthPct": 1.8216678159622004
+    }
+   ],
+   "live": null,
+   "adj": "hfq",
+   "anchored": true,
+   "source": "yahoo",
+   "bars": 2000,
+   "notes": []
+  },
+  {
+   "ticker": "DELL",
+   "name": "戴尔科技",
+   "rank": 31,
+   "mcapUsd": 340808350000,
+   "spmoPct": null,
+   "asOf": "2026-09-24",
+   "close": 536.02,
+   "chgPct": -2.5116849079444115,
+   "rsi6": {
+    "value": 44.34662211966865,
+    "prev": 51.19829326415996,
+    "state": "neutral",
+    "cross": null,
+    "period": 6
+   },
+   "tunnels": [
+    {
+     "key": "短通道",
+     "n": [
+      12,
+      36
+     ],
+     "upper": 543.9762155601484,
+     "lower": 501.9387318341553,
+     "pos": "inside",
+     "event": "reenter_down",
+     "widthPct": 8.038413416066266
+    },
+    {
+     "key": "主通道",
+     "n": [
+      144,
+      169
+     ],
+     "upper": 371.57640119172055,
+     "lower": 350.86980156350523,
+     "pos": "above",
+     "event": null,
+     "widthPct": 5.732357523437902
+    },
+    {
+     "key": "长通道",
+     "n": [
+      576,
+      676
+     ],
+     "upper": 207.7498272247437,
+     "lower": 192.33047624411736,
+     "pos": "above",
+     "event": null,
+     "widthPct": 7.708128016767744
+    }
+   ],
+   "live": null,
+   "adj": "hfq",
+   "anchored": true,
+   "source": "yahoo",
+   "bars": 2000,
+   "notes": [
+    {
+     "tag": "短通道",
+     "level": "info",
+     "text": "短通道：自上方回到通道内。"
+    }
+   ]
+  },
+  {
+   "ticker": "PG",
+   "name": "宝洁",
+   "rank": 32,
+   "mcapUsd": 338366902000,
+   "spmoPct": null,
+   "asOf": "2026-09-24",
+   "close": 145.68,
+   "chgPct": -1.1601918182701954,
+   "rsi6": {
+    "value": 43.534974226871064,
+    "prev": 57.977514064951855,
+    "state": "neutral",
+    "cross": null,
+    "period": 6
+   },
+   "tunnels": [
+    {
+     "key": "短通道",
+     "n": [
+      12,
+      36
+     ],
+     "upper": 146.3733388204159,
+     "lower": 145.93486479672748,
+     "pos": "below",
+     "event": "break_down",
+     "widthPct": 0.30000801774467384
+    },
+    {
+     "key": "主通道",
+     "n": [
+      144,
+      169
+     ],
+     "upper": 146.3969141659252,
+     "lower": 146.19318731494783,
+     "pos": "below",
+     "event": "break_down",
+     "widthPct": 0.13925751414436907
+    },
+    {
+     "key": "长通道",
+     "n": [
+      576,
+      676
+     ],
+     "upper": 148.02642722227057,
+     "lower": 147.39811004002476,
+     "pos": "below",
+     "event": null,
+     "widthPct": 0.4253656030527699
+    }
+   ],
+   "live": null,
+   "adj": "hfq",
+   "anchored": true,
+   "source": "yahoo",
+   "bars": 2000,
+   "notes": [
+    {
+     "tag": "短通道",
+     "level": "info",
+     "text": "短通道（EMA12/36）当日下穿通道（收盘自上而下）。"
+    },
+    {
+     "tag": "主通道",
+     "level": "info",
+     "text": "主通道（EMA144/169）当日下穿通道（收盘自上而下）。"
+    }
+   ]
+  },
+  {
+   "ticker": "UNH",
+   "name": "联合健康",
+   "rank": 33,
+   "mcapUsd": 336607044000,
+   "spmoPct": null,
+   "asOf": "2026-09-24",
+   "close": 375.01,
+   "chgPct": 1.0019125575939203,
+   "rsi6": {
+    "value": 40.78880367568775,
+    "prev": 26.945252741679113,
+    "state": "neutral",
+    "cross": "out_os",
+    "period": 6
+   },
+   "tunnels": [
+    {
+     "key": "短通道",
+     "n": [
+      12,
+      36
+     ],
+     "upper": 388.6874604796569,
+     "lower": 378.5938244676684,
+     "pos": "below",
+     "event": null,
+     "widthPct": 2.631013217709708
+    },
+    {
+     "key": "主通道",
+     "n": [
+      144,
+      169
+     ],
+     "upper": 376.0192793590125,
+     "lower": 372.65635166331754,
+     "pos": "inside",
+     "event": "reenter_up",
+     "widthPct": 0.8983670781705092
+    },
+    {
+     "key": "长通道",
+     "n": [
+      576,
+      676
+     ],
+     "upper": 390.784049426753,
+     "lower": 386.54249752353513,
+     "pos": "below",
+     "event": null,
+     "widthPct": 1.091317907476302
+    }
+   ],
+   "live": null,
+   "adj": "hfq",
+   "anchored": true,
+   "source": "yahoo",
+   "bars": 2000,
+   "notes": [
+    {
+     "tag": "RSI6",
+     "level": "info",
+     "text": "RSI6 自超卖回升（前值 26.9 → 40.8）。只记录事件。"
+    },
+    {
+     "tag": "主通道",
+     "level": "info",
+     "text": "主通道：自下方回到通道内。"
+    }
+   ]
+  },
+  {
+   "ticker": "GE",
+   "name": "GE航天航空",
+   "rank": 34,
+   "mcapUsd": 331791740000,
+   "spmoPct": 1.654557,
+   "asOf": "2026-09-24",
+   "close": 319.78,
+   "chgPct": -0.00625047355686803,
+   "rsi6": {
+    "value": 47.74440596194182,
+    "prev": 47.80863145869136,
+    "state": "neutral",
+    "cross": null,
+    "period": 6
+   },
+   "tunnels": [
+    {
+     "key": "短通道",
+     "n": [
+      12,
+      36
+     ],
+     "upper": 333.83123324487576,
+     "lower": 320.9157039919821,
+     "pos": "below",
+     "event": null,
+     "widthPct": 3.9451973024568354
+    },
+    {
+     "key": "主通道",
+     "n": [
+      144,
+      169
+     ],
+     "upper": 329.3651819245038,
+     "lower": 325.7349706945127,
+     "pos": "below",
+     "event": null,
+     "widthPct": 1.108291981150651
+    },
+    {
+     "key": "长通道",
+     "n": [
+      576,
+      676
+     ],
+     "upper": 260.31535907674123,
+     "lower": 246.71689719952747,
+     "pos": "above",
+     "event": null,
+     "widthPct": 5.3639435001959
+    }
+   ],
+   "live": null,
+   "adj": "hfq",
+   "anchored": true,
+   "source": "yahoo",
+   "bars": 2000,
+   "notes": []
+  },
+  {
+   "ticker": "PANW",
+   "name": "派拓网络",
+   "rank": 35,
+   "mcapUsd": 318954560000,
+   "spmoPct": null,
+   "asOf": "2026-09-24",
+   "close": 389.92,
+   "chgPct": -0.8593883727791019,
+   "rsi6": {
+    "value": 70.18806481400635,
+    "prev": 75.08293651175319,
+    "state": "overbought",
+    "cross": null,
+    "period": 6
+   },
+   "tunnels": [
+    {
+     "key": "短通道",
+     "n": [
+      12,
+      36
+     ],
+     "upper": 371.4253724773085,
+     "lower": 358.2747398876655,
+     "pos": "above",
+     "event": null,
+     "widthPct": 3.60439374115526
+    },
+    {
+     "key": "主通道",
+     "n": [
+      144,
+      169
+     ],
+     "upper": 294.54869170190244,
+     "lower": 284.42907523391716,
+     "pos": "above",
+     "event": null,
+     "widthPct": 3.4956839609031323
+    },
+    {
+     "key": "长通道",
+     "n": [
+      576,
+      676
+     ],
+     "upper": 214.29778933671875,
+     "lower": 204.90808505456198,
+     "pos": "above",
+     "event": null,
+     "widthPct": 4.47975796894132
+    }
+   ],
+   "live": null,
+   "adj": "hfq",
+   "anchored": true,
+   "source": "yahoo",
+   "bars": 2000,
+   "notes": [
+    {
+     "tag": "RSI6",
+     "level": "warn",
+     "text": "RSI6=70.2 超买（>70）。策略语境：超买常是做T减仓的观察信号，强趋势里会持续钝化。"
+    }
+   ]
+  },
+  {
+   "ticker": "MS",
+   "name": "摩根士丹利",
+   "rank": 36,
+   "mcapUsd": 308333574000,
+   "spmoPct": 0.982614,
+   "asOf": "2026-09-24",
+   "close": 196.32,
+   "chgPct": -1.0433953686163955,
+   "rsi6": {
+    "value": 22.285268187454292,
+    "prev": 25.585359722710194,
+    "state": "oversold",
+    "cross": null,
+    "period": 6
+   },
+   "tunnels": [
+    {
+     "key": "短通道",
+     "n": [
+      12,
+      36
+     ],
+     "upper": 209.50808223936076,
+     "lower": 204.20710455264614,
+     "pos": "below",
+     "event": null,
+     "widthPct": 2.5626217532979547
+    },
+    {
+     "key": "主通道",
+     "n": [
+      144,
+      169
+     ],
+     "upper": 200.1341433304845,
+     "lower": 196.85372463178155,
+     "pos": "below",
+     "event": "break_down",
+     "widthPct": 1.6526543823826705
+    },
+    {
+     "key": "长通道",
+     "n": [
+      576,
+      676
+     ],
+     "upper": 156.01993525349184,
+     "lower": 149.1285587310916,
+     "pos": "above",
+     "event": null,
+     "widthPct": 4.516736381303196
+    }
+   ],
+   "live": null,
+   "adj": "hfq",
+   "anchored": true,
+   "source": "yahoo",
+   "bars": 2000,
+   "notes": [
+    {
+     "tag": "RSI6",
+     "level": "cold",
+     "text": "RSI6=22.3 超卖（<30）。策略语境：超卖常是分批吸纳的观察信号，弱势里同样会钝化。"
+    },
+    {
+     "tag": "主通道",
+     "level": "info",
+     "text": "主通道（EMA144/169）当日下穿通道（收盘自上而下）。"
+    }
+   ]
+  },
+  {
+   "ticker": "NFLX",
+   "name": "奈飞",
+   "rank": 37,
+   "mcapUsd": 298637754000,
+   "spmoPct": null,
+   "asOf": "2026-09-24",
+   "close": 71.72,
+   "chgPct": 0.5044851559310892,
+   "rsi6": {
+    "value": 31.035263722658158,
+    "prev": 27.866674164739948,
+    "state": "neutral",
+    "cross": "out_os",
+    "period": 6
+   },
+   "tunnels": [
+    {
+     "key": "短通道",
+     "n": [
+      12,
+      36
+     ],
+     "upper": 76.34219640661993,
+     "lower": 74.53331417056371,
+     "pos": "below",
+     "event": null,
+     "widthPct": 2.397847376471143
+    },
+    {
+     "key": "主通道",
+     "n": [
+      144,
+      169
+     ],
+     "upper": 83.81069312115117,
+     "lower": 82.35899714246978,
+     "pos": "below",
+     "event": null,
+     "widthPct": 1.7472452122626547
+    },
+    {
+     "key": "长通道",
+     "n": [
+      576,
+      676
+     ],
+     "upper": 85.643135422686,
+     "lower": 83.55715277714089,
+     "pos": "below",
+     "event": null,
+     "widthPct": 2.4656963268071426
+    }
+   ],
+   "live": null,
+   "adj": "hfq",
+   "anchored": true,
+   "source": "yahoo",
+   "bars": 2000,
+   "notes": [
+    {
+     "tag": "RSI6",
+     "level": "info",
+     "text": "RSI6 自超卖回升（前值 27.9 → 31.0）。只记录事件。"
+    }
+   ]
+  },
+  {
+   "ticker": "PM",
+   "name": "菲利普莫里斯",
+   "rank": 38,
+   "mcapUsd": 298474474000,
+   "spmoPct": 1.464772,
+   "asOf": "2026-09-24",
+   "close": 191.5,
+   "chgPct": 0.3458413722356335,
+   "rsi6": {
+    "value": 58.294110003402125,
+    "prev": 55.20431068554555,
+    "state": "neutral",
+    "cross": null,
+    "period": 6
+   },
+   "tunnels": [
+    {
+     "key": "短通道",
+     "n": [
+      12,
+      36
+     ],
+     "upper": 190.12697571166234,
+     "lower": 189.11207365672288,
+     "pos": "above",
+     "event": null,
+     "widthPct": 0.5352307768041046
+    },
+    {
+     "key": "主通道",
+     "n": [
+      144,
+      169
+     ],
+     "upper": 180.54938057602092,
+     "lower": 178.72600645068246,
+     "pos": "above",
+     "event": null,
+     "widthPct": 1.0150286889554934
+    },
+    {
+     "key": "长通道",
+     "n": [
+      576,
+      676
+     ],
+     "upper": 152.37441832328665,
+     "lower": 147.00081165049434,
+     "pos": "above",
+     "event": null,
+     "widthPct": 3.5898806145471167
+    }
+   ],
+   "live": null,
+   "adj": "hfq",
+   "anchored": true,
+   "source": "yahoo",
+   "bars": 2000,
+   "notes": []
+  },
+  {
+   "ticker": "HD",
+   "name": "家得宝",
+   "rank": 39,
+   "mcapUsd": 291504955000,
+   "spmoPct": null,
+   "asOf": "2026-09-24",
+   "close": 292.18,
+   "chgPct": -1.5300648848221576,
+   "rsi6": {
+    "value": 26.895508816860456,
+    "prev": 32.171615659594536,
+    "state": "oversold",
+    "cross": "into_os",
+    "period": 6
+   },
+   "tunnels": [
+    {
+     "key": "短通道",
+     "n": [
+      12,
+      36
+     ],
+     "upper": 316.86393342543573,
+     "lower": 303.63535447825177,
+     "pos": "below",
+     "event": null,
+     "widthPct": 4.263849839981533
+    },
+    {
+     "key": "主通道",
+     "n": [
+      144,
+      169
+     ],
+     "upper": 332.6307126464252,
+     "lower": 330.55221523814384,
+     "pos": "below",
+     "event": null,
+     "widthPct": 0.6268247630895364
+    },
+    {
+     "key": "长通道",
+     "n": [
+      576,
+      676
+     ],
+     "upper": 340.319482224188,
+     "lower": 337.76770177700223,
+     "pos": "below",
+     "event": null,
+     "widthPct": 0.7526408129787876
+    }
+   ],
+   "live": null,
+   "adj": "hfq",
+   "anchored": true,
+   "source": "yahoo",
+   "bars": 2000,
+   "notes": [
+    {
+     "tag": "RSI6",
+     "level": "cold",
+     "text": "RSI6=26.9 超卖（<30），今日新进超卖区。策略语境：超卖常是分批吸纳的观察信号，弱势里同样会钝化。"
+    }
+   ]
+  },
+  {
+   "ticker": "GS",
+   "name": "高盛",
+   "rank": 40,
+   "mcapUsd": 268835649000,
+   "spmoPct": 1.373547,
+   "asOf": "2026-09-24",
+   "close": 923.29,
+   "chgPct": -1.395831467457631,
+   "rsi6": {
+    "value": 24.295824695827662,
+    "prev": 28.52319785550995,
+    "state": "oversold",
+    "cross": null,
+    "period": 6
+   },
+   "tunnels": [
+    {
+     "key": "短通道",
+     "n": [
+      12,
+      36
+     ],
+     "upper": 999.0069646771734,
+     "lower": 963.8446302449426,
+     "pos": "below",
+     "event": null,
+     "widthPct": 3.582780738309059
+    },
+    {
+     "key": "主通道",
+     "n": [
+      144,
+      169
+     ],
+     "upper": 973.630310527256,
+     "lower": 959.6562784519091,
+     "pos": "below",
+     "event": null,
+     "widthPct": 1.4456244775096339
+    },
+    {
+     "key": "长通道",
+     "n": [
+      576,
+      676
+     ],
+     "upper": 756.8959591864004,
+     "lower": 720.5349984820868,
+     "pos": "above",
+     "event": null,
+     "widthPct": 4.922187465422316
+    }
+   ],
+   "live": null,
+   "adj": "hfq",
+   "anchored": true,
+   "source": "yahoo",
+   "bars": 2000,
+   "notes": [
+    {
+     "tag": "RSI6",
+     "level": "cold",
+     "text": "RSI6=24.3 超卖（<30）。策略语境：超卖常是分批吸纳的观察信号，弱势里同样会钝化。"
+    }
+   ]
+  },
+  {
+   "ticker": "CRWD",
+   "name": "CrowdStrike",
+   "rank": 41,
+   "mcapUsd": 265885160000,
+   "spmoPct": null,
+   "asOf": "2026-09-24",
+   "close": 259.67,
+   "chgPct": -1.0743178450815183,
+   "rsi6": {
+    "value": 74.22474134504662,
+    "prev": 79.58163176014132,
+    "state": "overbought",
+    "cross": null,
+    "period": 6
+   },
+   "tunnels": [
+    {
+     "key": "短通道",
+     "n": [
+      12,
+      36
+     ],
+     "upper": 241.3347258315414,
+     "lower": 221.54485982857915,
+     "pos": "above",
+     "event": null,
+     "widthPct": 8.550762062552218
+    },
+    {
+     "key": "主通道",
+     "n": [
+      144,
+      169
+     ],
+     "upper": 178.08947440658494,
+     "lower": 171.93431317267556,
+     "pos": "above",
+     "event": null,
+     "widthPct": 3.5169959598906333
+    },
+    {
+     "key": "长通道",
+     "n": [
+      576,
+      676
+     ],
+     "upper": 124.44250983127321,
+     "lower": 117.83919042279787,
+     "pos": "above",
+     "event": null,
+     "widthPct": 5.450943592975207
+    }
+   ],
+   "live": null,
+   "adj": "hfq",
+   "anchored": true,
+   "source": "yahoo",
+   "bars": 1832,
+   "notes": [
+    {
+     "tag": "RSI6",
+     "level": "warn",
+     "text": "RSI6=74.2 超买（>70）。策略语境：超买常是做T减仓的观察信号，强趋势里会持续钝化。"
+    }
+   ]
+  },
+  {
+   "ticker": "ANET",
+   "name": "Arista Networks, Inc.",
+   "rank": 42,
+   "mcapUsd": 259433910000,
+   "spmoPct": null,
+   "asOf": "2026-09-24",
+   "close": 205.7,
+   "chgPct": 1.0959825596699169,
+   "rsi6": {
+    "value": 66.86976514754366,
+    "prev": 62.545528545172154,
+    "state": "neutral",
+    "cross": null,
+    "period": 6
+   },
+   "tunnels": [
+    {
+     "key": "短通道",
+     "n": [
+      12,
+      36
+     ],
+     "upper": 199.88503348286272,
+     "lower": 193.34842372774727,
+     "pos": "above",
+     "event": null,
+     "widthPct": 3.3245440515070612
+    },
+    {
+     "key": "主通道",
+     "n": [
+      144,
+      169
+     ],
+     "upper": 170.80243011143716,
+     "lower": 167.0534286474035,
+     "pos": "above",
+     "event": null,
+     "widthPct": 2.2192904854787003
+    },
+    {
+     "key": "长通道",
+     "n": [
+      576,
+      676
+     ],
+     "upper": 127.71552635551946,
+     "lower": 120.920075057925,
+     "pos": "above",
+     "event": null,
+     "widthPct": 5.466193303745441
+    }
+   ],
+   "live": null,
+   "adj": "hfq",
+   "anchored": true,
+   "source": "yahoo",
+   "bars": 2000,
+   "notes": []
+  },
+  {
+   "ticker": "GEV",
+   "name": "GE Vernova",
+   "rank": 43,
+   "mcapUsd": 254359223000.00003,
+   "spmoPct": 1.332286,
+   "asOf": "2026-09-24",
+   "close": 955.04,
+   "chgPct": 0.33829617767513476,
+   "rsi6": {
+    "value": 61.44494703782894,
+    "prev": 59.81207122219959,
+    "state": "neutral",
+    "cross": null,
+    "period": 6
+   },
+   "tunnels": [
+    {
+     "key": "短通道",
+     "n": [
+      12,
+      36
+     ],
+     "upper": 957.008027320839,
+     "lower": 939.7014139157415,
+     "pos": "inside",
+     "event": null,
+     "widthPct": 1.8249092906728313
+    },
+    {
+     "key": "主通道",
+     "n": [
+      144,
+      169
+     ],
+     "upper": 940.161786046176,
+     "lower": 921.3072344786524,
+     "pos": "above",
+     "event": null,
+     "widthPct": 2.0257711903481113
+    },
+    {
+     "key": "长通道",
+     "n": [
+      576,
+      676
+     ],
+     "pos": null,
+     "event": null,
+     "insufficient": true
+    }
+   ],
+   "live": null,
+   "adj": "hfq",
+   "anchored": true,
+   "source": "yahoo",
+   "bars": 626,
+   "notes": [
+    {
+     "tag": "通道",
+     "level": "info",
+     "text": "长通道（EMA576/676）数据不足暂未计算：该标的上市/分拆时间短于窗口所需 676 根日线，随数据积累自动出现。"
+    }
+   ]
+  },
+  {
+   "ticker": "RTX",
+   "name": "雷神技术",
+   "rank": 44,
+   "mcapUsd": 254200664000,
+   "spmoPct": 1.601547,
+   "asOf": "2026-09-24",
+   "close": 188.61,
+   "chgPct": -1.8627409259470262,
+   "rsi6": {
+    "value": 19.650268796596393,
+    "prev": 28.55168237465311,
+    "state": "oversold",
+    "cross": null,
+    "period": 6
+   },
+   "tunnels": [
+    {
+     "key": "短通道",
+     "n": [
+      12,
+      36
+     ],
+     "upper": 201.23097625303,
+     "lower": 194.8807786212463,
+     "pos": "below",
+     "event": null,
+     "widthPct": 3.206265683177836
+    },
+    {
+     "key": "主通道",
+     "n": [
+      144,
+      169
+     ],
+     "upper": 194.9263619388835,
+     "lower": 192.79269129599516,
+     "pos": "below",
+     "event": null,
+     "widthPct": 1.1006271809891057
+    },
+    {
+     "key": "长通道",
+     "n": [
+      576,
+      676
+     ],
+     "upper": 159.24043625266043,
+     "lower": 153.0552210841205,
+     "pos": "above",
+     "event": null,
+     "widthPct": 3.9611278756078123
+    }
+   ],
+   "live": null,
+   "adj": "hfq",
+   "anchored": true,
+   "source": "yahoo",
+   "bars": 2000,
+   "notes": [
+    {
+     "tag": "RSI6",
+     "level": "cold",
+     "text": "RSI6=19.7 超卖（<30）。策略语境：超卖常是分批吸纳的观察信号，弱势里同样会钝化。"
+    }
+   ]
+  },
+  {
+   "ticker": "TMO",
+   "name": "赛默飞世尔",
+   "rank": 45,
+   "mcapUsd": 250832861000,
+   "spmoPct": null,
+   "asOf": "2026-09-24",
+   "close": 678.39,
+   "chgPct": 1.9675375162553355,
+   "rsi6": {
+    "value": 85.25361509713295,
+    "prev": 79.87619649316868,
+    "state": "overbought",
+    "cross": null,
+    "period": 6
+   },
+   "tunnels": [
+    {
+     "key": "短通道",
+     "n": [
+      12,
+      36
+     ],
+     "upper": 647.8009303680668,
+     "lower": 616.9125512031817,
+     "pos": "above",
+     "event": null,
+     "widthPct": 4.884644564160125
+    },
+    {
+     "key": "主通道",
+     "n": [
+      144,
+      169
+     ],
+     "upper": 555.0570164536689,
+     "lower": 549.808866876759,
+     "pos": "above",
+     "event": null,
+     "widthPct": 0.9500066308664092
+    },
+    {
+     "key": "长通道",
+     "n": [
+      576,
+      676
+     ],
+     "upper": 527.9274066507861,
+     "lower": 525.7007842972471,
+     "pos": "above",
+     "event": null,
+     "widthPct": 0.4226580823612092
+    }
+   ],
+   "live": null,
+   "adj": "hfq",
+   "anchored": true,
+   "source": "yahoo",
+   "bars": 2000,
+   "notes": [
+    {
+     "tag": "RSI6",
+     "level": "warn",
+     "text": "RSI6=85.3 超买（>70）。策略语境：超买常是做T减仓的观察信号，强趋势里会持续钝化。"
+    }
+   ]
+  },
+  {
+   "ticker": "WFC",
+   "name": "富国银行",
+   "rank": 46,
+   "mcapUsd": 248512264999.99997,
+   "spmoPct": null,
+   "asOf": "2026-09-24",
+   "close": 82.18,
+   "chgPct": 0.34187884503078525,
+   "rsi6": {
+    "value": 22.323865647394044,
+    "prev": 19.093312025022925,
+    "state": "oversold",
+    "cross": null,
+    "period": 6
+   },
+   "tunnels": [
+    {
+     "key": "短通道",
+     "n": [
+      12,
+      36
+     ],
+     "upper": 86.38717477515846,
+     "lower": 85.57077369475934,
+     "pos": "below",
+     "event": null,
+     "widthPct": 0.9495357297100321
+    },
+    {
+     "key": "主通道",
+     "n": [
+      144,
+      169
+     ],
+     "upper": 84.24069665537256,
+     "lower": 83.85716725763423,
+     "pos": "below",
+     "event": null,
+     "widthPct": 0.45631680119006274
+    },
+    {
+     "key": "长通道",
+     "n": [
+      576,
+      676
+     ],
+     "upper": 74.59588677825194,
+     "lower": 72.32113419693712,
+     "pos": "above",
+     "event": null,
+     "widthPct": 3.096649477665312
+    }
+   ],
+   "live": null,
+   "adj": "hfq",
+   "anchored": true,
+   "source": "yahoo",
+   "bars": 2000,
+   "notes": [
+    {
+     "tag": "RSI6",
+     "level": "cold",
+     "text": "RSI6=22.3 超卖（<30）。策略语境：超卖常是分批吸纳的观察信号，弱势里同样会钝化。"
+    }
+   ]
+  },
+  {
+   "ticker": "TXN",
+   "name": "德州仪器",
+   "rank": 47,
+   "mcapUsd": 247170485999.99997,
+   "spmoPct": null,
+   "asOf": "2026-09-24",
+   "close": 270.65,
+   "chgPct": -0.722618023617938,
+   "rsi6": {
+    "value": 62.48387192270907,
+    "prev": 70.18101564963288,
+    "state": "neutral",
+    "cross": "out_ob",
+    "period": 6
+   },
+   "tunnels": [
+    {
+     "key": "短通道",
+     "n": [
+      12,
+      36
+     ],
+     "upper": 268.4701737837366,
+     "lower": 266.6503035933187,
+     "pos": "above",
+     "event": null,
+     "widthPct": 0.6801721359414772
+    },
+    {
+     "key": "主通道",
+     "n": [
+      144,
+      169
+     ],
+     "upper": 260.0548984415379,
+     "lower": 255.39373620101213,
+     "pos": "above",
+     "event": null,
+     "widthPct": 1.8085845716744007
+    },
+    {
+     "key": "长通道",
+     "n": [
+      576,
+      676
+     ],
+     "upper": 211.8968781289578,
+     "lower": 206.05088837969257,
+     "pos": "above",
+     "event": null,
+     "widthPct": 2.7974738556925614
+    }
+   ],
+   "live": null,
+   "adj": "hfq",
+   "anchored": true,
+   "source": "yahoo",
+   "bars": 2000,
+   "notes": [
+    {
+     "tag": "RSI6",
+     "level": "info",
+     "text": "RSI6 自超买回落（前值 70.2 → 62.5）。做T语境下常见做法是观察回补时机，此处只记录事件。"
+    }
+   ]
+  },
+  {
+   "ticker": "KLAC",
+   "name": "科磊",
+   "rank": 48,
+   "mcapUsd": 244179765000,
+   "spmoPct": 1.267277,
+   "asOf": "2026-09-24",
+   "close": 187.11,
+   "chgPct": -0.39923347043716584,
+   "rsi6": {
+    "value": 66.87996246231413,
+    "prev": 69.341516255883,
+    "state": "neutral",
+    "cross": null,
+    "period": 6
+   },
+   "tunnels": [
+    {
+     "key": "短通道",
+     "n": [
+      12,
+      36
+     ],
+     "upper": 185.83669053132346,
+     "lower": 181.00087949124963,
+     "pos": "above",
+     "event": null,
+     "widthPct": 2.6364862463657976
+    },
+    {
+     "key": "主通道",
+     "n": [
+      144,
+      169
+     ],
+     "upper": 183.969103301122,
+     "lower": 179.7944886594081,
+     "pos": "above",
+     "event": null,
+     "widthPct": 2.2952350009601097
+    },
+    {
+     "key": "长通道",
+     "n": [
+      576,
+      676
+     ],
+     "upper": 127.95154962394736,
+     "lower": 120.0828662002993,
+     "pos": "above",
+     "event": null,
+     "widthPct": 6.344831943986094
+    }
+   ],
+   "live": null,
+   "adj": "hfq",
+   "anchored": true,
+   "source": "yahoo",
+   "bars": 2000,
+   "notes": []
+  },
+  {
+   "ticker": "MRVL",
+   "name": "迈威尔科技",
+   "rank": 49,
+   "mcapUsd": 232719560000,
+   "spmoPct": null,
+   "asOf": "2026-09-24",
+   "close": 258.95,
+   "chgPct": -0.7474058011004869,
+   "rsi6": {
+    "value": 71.29526495985422,
+    "prev": 75.24320396277939,
+    "state": "overbought",
+    "cross": null,
+    "period": 6
+   },
+   "tunnels": [
+    {
+     "key": "短通道",
+     "n": [
+      12,
+      36
+     ],
+     "upper": 244.6302188331696,
+     "lower": 232.03174390705396,
+     "pos": "above",
+     "event": null,
+     "widthPct": 5.286125561053714
+    },
+    {
+     "key": "主通道",
+     "n": [
+      144,
+      169
+     ],
+     "upper": 195.9748978553247,
+     "lower": 187.73201870513572,
+     "pos": "above",
+     "event": null,
+     "widthPct": 4.2964454350096
+    },
+    {
+     "key": "长通道",
+     "n": [
+      576,
+      676
+     ],
+     "upper": 123.59246292465012,
+     "lower": 116.33757421801944,
+     "pos": "above",
+     "event": null,
+     "widthPct": 6.047503508130337
+    }
+   ],
+   "live": null,
+   "adj": "hfq",
+   "anchored": true,
+   "source": "yahoo",
+   "bars": 2000,
+   "notes": [
+    {
+     "tag": "RSI6",
+     "level": "warn",
+     "text": "RSI6=71.3 超买（>70）。策略语境：超买常是做T减仓的观察信号，强趋势里会持续钝化。"
+    }
+   ]
+  },
+  {
+   "ticker": "AMGN",
+   "name": "安进",
+   "rank": 50,
+   "mcapUsd": 219518219000,
+   "spmoPct": null,
+   "asOf": "2026-09-24",
+   "close": 406.04,
+   "chgPct": -0.012309535674237537,
+   "rsi6": {
+    "value": 62.16022975128337,
+    "prev": 62.24416484364683,
+    "state": "neutral",
+    "cross": null,
+    "period": 6
+   },
+   "tunnels": [
+    {
+     "key": "短通道",
+     "n": [
+      12,
+      36
+     ],
+     "upper": 401.36693150625985,
+     "lower": 398.84762602501763,
+     "pos": "above",
+     "event": null,
+     "widthPct": 0.6296574981126216
+    },
+    {
+     "key": "主通道",
+     "n": [
+      144,
+      169
+     ],
+     "upper": 371.5474168829058,
+     "lower": 366.35801802450885,
+     "pos": "above",
+     "event": null,
+     "widthPct": 1.406521381441799
+    },
+    {
+     "key": "长通道",
+     "n": [
+      576,
+      676
+     ],
+     "upper": 317.98363918764693,
+     "lower": 310.31347030373337,
+     "pos": "above",
+     "event": null,
+     "widthPct": 2.441573824881265
+    }
+   ],
+   "live": null,
+   "adj": "hfq",
+   "anchored": true,
+   "source": "yahoo",
+   "bars": 2000,
+   "notes": []
+  },
+  {
+   "ticker": "LIN",
+   "name": "林德",
+   "rank": 51,
+   "mcapUsd": 215803254000.00003,
+   "spmoPct": null,
+   "asOf": "2026-09-24",
+   "close": 468.14,
+   "chgPct": -0.3363677442220103,
+   "rsi6": {
+    "value": 55.7361229038042,
+    "prev": 60.34836323312471,
+    "state": "neutral",
+    "cross": null,
+    "period": 6
+   },
+   "tunnels": [
+    {
+     "key": "短通道",
+     "n": [
+      12,
+      36
+     ],
+     "upper": 476.84158239533065,
+     "lower": 466.51941074898195,
+     "pos": "inside",
+     "event": null,
+     "widthPct": 2.1883821191172865
+    },
+    {
+     "key": "主通道",
+     "n": [
+      144,
+      169
+     ],
+     "upper": 485.76838958252506,
+     "lower": 484.1782939695232,
+     "pos": "below",
+     "event": null,
+     "widthPct": 0.32787278722965185
+    },
+    {
+     "key": "长通道",
+     "n": [
+      576,
+      676
+     ],
+     "upper": 452.4878153742201,
+     "lower": 443.8492978772119,
+     "pos": "above",
+     "event": null,
+     "widthPct": 1.9275152996113865
+    }
+   ],
+   "live": null,
+   "adj": "hfq",
+   "anchored": true,
+   "source": "yahoo",
+   "bars": 2000,
+   "notes": []
+  },
+  {
+   "ticker": "IBM",
+   "name": "IBM",
+   "rank": 52,
+   "mcapUsd": 213921034999.99997,
+   "spmoPct": null,
+   "asOf": "2026-09-24",
+   "close": 227.06,
+   "chgPct": -2.4488731237166217,
+   "rsi6": {
+    "value": 32.51822132394045,
+    "prev": 42.97238345520336,
+    "state": "neutral",
+    "cross": null,
+    "period": 6
+   },
+   "tunnels": [
+    {
+     "key": "短通道",
+     "n": [
+      12,
+      36
+     ],
+     "upper": 235.82131972997587,
+     "lower": 234.07659896630634,
+     "pos": "below",
+     "event": null,
+     "widthPct": 0.7425956550351233
+    },
+    {
+     "key": "主通道",
+     "n": [
+      144,
+      169
+     ],
+     "upper": 247.5901832354746,
+     "lower": 246.1533070668372,
+     "pos": "below",
+     "event": null,
+     "widthPct": 0.5820334634721497
+    },
+    {
+     "key": "长通道",
+     "n": [
+      576,
+      676
+     ],
+     "upper": 233.42827144150397,
+     "lower": 226.8576457102267,
+     "pos": "inside",
+     "event": null,
+     "widthPct": 2.8550192332351068
+    }
+   ],
+   "live": null,
+   "adj": "hfq",
+   "anchored": true,
+   "source": "yahoo",
+   "bars": 2000,
+   "notes": []
+  },
+  {
+   "ticker": "QCOM",
+   "name": "高通",
+   "rank": 53,
+   "mcapUsd": 207481430000,
+   "spmoPct": null,
+   "asOf": "2026-09-24",
+   "close": 194.26000000000002,
+   "chgPct": -1.5108552541747922,
+   "rsi6": {
+    "value": 63.13857887083319,
+    "prev": 70.16770934862394,
+    "state": "neutral",
+    "cross": "out_ob",
+    "period": 6
+   },
+   "tunnels": [
+    {
+     "key": "短通道",
+     "n": [
+      12,
+      36
+     ],
+     "upper": 186.93825725681413,
+     "lower": 177.47327107429706,
+     "pos": "above",
+     "event": null,
+     "widthPct": 5.194668909550524
+    },
+    {
+     "key": "主通道",
+     "n": [
+      144,
+      169
+     ],
+     "upper": 173.16332959853847,
+     "lower": 172.02662882958788,
+     "pos": "above",
+     "event": null,
+     "widthPct": 0.6585943427362285
+    },
+    {
+     "key": "长通道",
+     "n": [
+      576,
+      676
+     ],
+     "upper": 159.67903411231026,
+     "lower": 157.01543088967233,
+     "pos": "above",
+     "event": null,
+     "widthPct": 1.6821280552669313
+    }
+   ],
+   "live": null,
+   "adj": "hfq",
+   "anchored": true,
+   "source": "yahoo",
+   "bars": 2000,
+   "notes": [
+    {
+     "tag": "RSI6",
+     "level": "info",
+     "text": "RSI6 自超买回落（前值 70.2 → 63.1）。做T语境下常见做法是观察回补时机，此处只记录事件。"
+    }
+   ]
+  },
+  {
+   "ticker": "VZ",
+   "name": "威瑞森通信",
+   "rank": 54,
+   "mcapUsd": 196603963000,
+   "spmoPct": null,
+   "asOf": "2026-09-24",
+   "close": 47.31999999999999,
+   "chgPct": 1.7196887987713572,
+   "rsi6": {
+    "value": 35.132175784194786,
+    "prev": 18.343551449262847,
+    "state": "neutral",
+    "cross": "out_os",
+    "period": 6
+   },
+   "tunnels": [
+    {
+     "key": "短通道",
+     "n": [
+      12,
+      36
+     ],
+     "upper": 48.45900297794036,
+     "lower": 48.374190742665405,
+     "pos": "below",
+     "event": null,
+     "widthPct": 0.1751718228351793
+    },
+    {
+     "key": "主通道",
+     "n": [
+      144,
+      169
+     ],
+     "upper": 46.31086718354847,
+     "lower": 45.9147483768214,
+     "pos": "above",
+     "event": null,
+     "widthPct": 0.8590212259798296
+    },
+    {
+     "key": "长通道",
+     "n": [
+      576,
+      676
+     ],
+     "upper": 41.47537307737876,
+     "lower": 40.83781223624452,
+     "pos": "above",
+     "event": null,
+     "widthPct": 1.5491098751799264
+    }
+   ],
+   "live": null,
+   "adj": "hfq",
+   "anchored": true,
+   "source": "yahoo",
+   "bars": 2000,
+   "notes": [
+    {
+     "tag": "RSI6",
+     "level": "info",
+     "text": "RSI6 自超卖回升（前值 18.3 → 35.1）。只记录事件。"
+    }
+   ]
+  },
+  {
+   "ticker": "CRM",
+   "name": "赛富时",
+   "rank": 55,
+   "mcapUsd": 196055060000,
+   "spmoPct": null,
+   "asOf": "2026-09-24",
+   "close": 238.22,
+   "chgPct": 0.2693826857125492,
+   "rsi6": {
+    "value": 43.00510241976953,
+    "prev": 41.46285994838067,
+    "state": "neutral",
+    "cross": null,
+    "period": 6
+   },
+   "tunnels": [
+    {
+     "key": "短通道",
+     "n": [
+      12,
+      36
+     ],
+     "upper": 241.06768669274032,
+     "lower": 227.51644933026154,
+     "pos": "inside",
+     "event": null,
+     "widthPct": 5.78390787084332
+    },
+    {
+     "key": "主通道",
+     "n": [
+      144,
+      169
+     ],
+     "upper": 205.31471904113275,
+     "lower": 204.40499421956196,
+     "pos": "above",
+     "event": null,
+     "widthPct": 0.44407178474810416
+    },
+    {
+     "key": "长通道",
+     "n": [
+      576,
+      676
+     ],
+     "upper": 228.095407489022,
+     "lower": 226.94816336031337,
+     "pos": "above",
+     "event": null,
+     "widthPct": 0.504234847914585
+    }
+   ],
+   "live": null,
+   "adj": "hfq",
+   "anchored": true,
+   "source": "yahoo",
+   "bars": 2000,
+   "notes": []
+  },
+  {
+   "ticker": "DE",
+   "name": "迪尔股份",
+   "rank": 56,
+   "mcapUsd": 187373484000,
+   "spmoPct": null,
+   "asOf": "2026-09-24",
+   "close": 694.94,
+   "chgPct": -2.049385243786195,
+   "rsi6": {
+    "value": 57.27474901803617,
+    "prev": 77.17548339110823,
+    "state": "neutral",
+    "cross": "out_ob",
+    "period": 6
+   },
+   "tunnels": [
+    {
+     "key": "短通道",
+     "n": [
+      12,
+      36
+     ],
+     "upper": 686.8311031793843,
+     "lower": 659.3808801311895,
+     "pos": "above",
+     "event": null,
+     "widthPct": 4.078142727669052
+    },
+    {
+     "key": "主通道",
+     "n": [
+      144,
+      169
+     ],
+     "upper": 603.9744290753124,
+     "lower": 595.4925106960486,
+     "pos": "above",
+     "event": null,
+     "widthPct": 1.4142813108097148
+    },
+    {
+     "key": "长通道",
+     "n": [
+      576,
+      676
+     ],
+     "upper": 508.9056338584553,
+     "lower": 494.27561326492685,
+     "pos": "above",
+     "event": null,
+     "widthPct": 2.9167252947520654
+    }
+   ],
+   "live": null,
+   "adj": "hfq",
+   "anchored": true,
+   "source": "yahoo",
+   "bars": 2000,
+   "notes": [
+    {
+     "tag": "RSI6",
+     "level": "info",
+     "text": "RSI6 自超买回落（前值 77.2 → 57.3）。做T语境下常见做法是观察回补时机，此处只记录事件。"
+    }
+   ]
+  },
+  {
+   "ticker": "GILD",
+   "name": "吉利德科学",
+   "rank": 57,
+   "mcapUsd": 185608887000,
+   "spmoPct": 0.955674,
+   "asOf": "2026-09-24",
+   "close": 149.69,
+   "chgPct": -1.1098584461739835,
+   "rsi6": {
+    "value": 52.946669727978815,
+    "prev": 64.71831647433578,
+    "state": "neutral",
+    "cross": null,
+    "period": 6
+   },
+   "tunnels": [
+    {
+     "key": "短通道",
+     "n": [
+      12,
+      36
+     ],
+     "upper": 149.05205507715286,
+     "lower": 144.44127039725524,
+     "pos": "above",
+     "event": null,
+     "widthPct": 3.1420030915147126
+    },
+    {
+     "key": "主通道",
+     "n": [
+      144,
+      169
+     ],
+     "upper": 135.51108986994961,
+     "lower": 134.16674345062722,
+     "pos": "above",
+     "event": null,
+     "widthPct": 0.9970017948967377
+    },
+    {
+     "key": "长通道",
+     "n": [
+      576,
+      676
+     ],
+     "upper": 113.33852455877195,
+     "lower": 109.37078040651193,
+     "pos": "above",
+     "event": null,
+     "widthPct": 3.5631597457308937
+    }
+   ],
+   "live": null,
+   "adj": "hfq",
+   "anchored": true,
+   "source": "yahoo",
+   "bars": 2000,
+   "notes": []
+  },
+  {
+   "ticker": "ADI",
+   "name": "亚德诺",
+   "rank": 58,
+   "mcapUsd": 185399593000,
+   "spmoPct": 0.748081,
+   "asOf": "2026-09-24",
+   "close": 382.61,
+   "chgPct": -0.6801198141487941,
+   "rsi6": {
+    "value": 62.04316676708014,
+    "prev": 67.2575616746386,
+    "state": "neutral",
+    "cross": null,
+    "period": 6
+   },
+   "tunnels": [
+    {
+     "key": "短通道",
+     "n": [
+      12,
+      36
+     ],
+     "upper": 375.2506155226,
+     "lower": 373.29564711353225,
+     "pos": "above",
+     "event": null,
+     "widthPct": 0.522337364208595
+    },
+    {
+     "key": "主通道",
+     "n": [
+      144,
+      169
+     ],
+     "upper": 363.6753315668811,
+     "lower": 357.69098040908665,
+     "pos": "above",
+     "event": null,
+     "widthPct": 1.6591712306060122
+    },
+    {
+     "key": "长通道",
+     "n": [
+      576,
+      676
+     ],
+     "upper": 284.6269320241815,
+     "lower": 273.39427400523454,
+     "pos": "above",
+     "event": null,
+     "widthPct": 4.025889302262402
+    }
+   ],
+   "live": null,
+   "adj": "hfq",
+   "anchored": true,
+   "source": "yahoo",
+   "bars": 2000,
+   "notes": []
+  },
+  {
+   "ticker": "DIS",
+   "name": "迪士尼",
+   "rank": 59,
+   "mcapUsd": 182269069000,
+   "spmoPct": null,
+   "asOf": "2026-09-24",
+   "close": 105.56,
+   "chgPct": 2.029768502517104,
+   "rsi6": {
+    "value": 53.68247264949723,
+    "prev": 37.67427929859608,
+    "state": "neutral",
+    "cross": null,
+    "period": 6
+   },
+   "tunnels": [
+    {
+     "key": "短通道",
+     "n": [
+      12,
+      36
+     ],
+     "upper": 105.12134889371004,
+     "lower": 104.70114531239042,
+     "pos": "above",
+     "event": "break_up",
+     "widthPct": 0.4005324433012052
+    },
+    {
+     "key": "主通道",
+     "n": [
+      144,
+      169
+     ],
+     "upper": 103.32129792292292,
+     "lower": 103.1607239482744,
+     "pos": "above",
+     "event": null,
+     "widthPct": 0.1555331289313835
+    },
+    {
+     "key": "长通道",
+     "n": [
+      576,
+      676
+     ],
+     "upper": 104.42014148156923,
+     "lower": 104.20627238494014,
+     "pos": "above",
+     "event": "break_up",
+     "widthPct": 0.20502590507637422
+    }
+   ],
+   "live": null,
+   "adj": "hfq",
+   "anchored": true,
+   "source": "yahoo",
+   "bars": 2000,
+   "notes": [
+    {
+     "tag": "短通道",
+     "level": "info",
+     "text": "短通道（EMA12/36）当日上穿通道（收盘自下而上）。"
+    },
+    {
+     "tag": "长通道",
+     "level": "info",
+     "text": "长通道（EMA576/676）当日上穿通道（收盘自下而上）。"
+    }
+   ]
+  },
+  {
+   "ticker": "PEP",
+   "name": "百事可乐",
+   "rank": 60,
+   "mcapUsd": 174910853000,
+   "spmoPct": null,
+   "asOf": "2026-09-24",
+   "close": 128.15,
+   "chgPct": -1.5593784709703296,
+   "rsi6": {
+    "value": 18.041471782232875,
+    "prev": 24.373064214130025,
+    "state": "oversold",
+    "cross": null,
+    "period": 6
+   },
+   "tunnels": [
+    {
+     "key": "短通道",
+     "n": [
+      12,
+      36
+     ],
+     "upper": 135.89797305631527,
+     "lower": 132.59193720992351,
+     "pos": "below",
+     "event": null,
+     "widthPct": 2.462689076929136
+    },
+    {
+     "key": "主通道",
+     "n": [
+      144,
+      169
+     ],
+     "upper": 141.35289701268155,
+     "lower": 140.91945029180346,
+     "pos": "below",
+     "event": null,
+     "widthPct": 0.3071124217566656
+    },
+    {
+     "key": "长通道",
+     "n": [
+      576,
+      676
+     ],
+     "upper": 143.7613902618528,
+     "lower": 143.68266012316465,
+     "pos": "below",
+     "event": null,
+     "widthPct": 0.05477945261534451
+    }
+   ],
+   "live": null,
+   "adj": "hfq",
+   "anchored": true,
+   "source": "yahoo",
+   "bars": 2000,
+   "notes": [
+    {
+     "tag": "RSI6",
+     "level": "cold",
+     "text": "RSI6=18.0 超卖（<30）。策略语境：超卖常是分批吸纳的观察信号，弱势里同样会钝化。"
+    }
+   ]
+  },
+  {
+   "ticker": "ABT",
+   "name": "雅培",
+   "rank": 61,
+   "mcapUsd": 174889840000,
+   "spmoPct": null,
+   "asOf": "2026-09-24",
+   "close": 101.07,
+   "chgPct": -2.3383884615892025,
+   "rsi6": {
+    "value": 25.57688862459669,
+    "prev": 43.51069241059986,
+    "state": "oversold",
+    "cross": "into_os",
+    "period": 6
+   },
+   "tunnels": [
+    {
+     "key": "短通道",
+     "n": [
+      12,
+      36
+     ],
+     "upper": 105.23100343267703,
+     "lower": 103.64854079678521,
+     "pos": "below",
+     "event": null,
+     "widthPct": 1.5151915825260698
+    },
+    {
+     "key": "主通道",
+     "n": [
+      144,
+      169
+     ],
+     "upper": 104.22198855843449,
+     "lower": 103.52601938882071,
+     "pos": "below",
+     "event": null,
+     "widthPct": 0.670012845360687
+    },
+    {
+     "key": "长通道",
+     "n": [
+      576,
+      676
+     ],
+     "upper": 109.58703441155748,
+     "lower": 109.34899436893622,
+     "pos": "below",
+     "event": null,
+     "widthPct": 0.2174516857249883
+    }
+   ],
+   "live": null,
+   "adj": "hfq",
+   "anchored": true,
+   "source": "yahoo",
+   "bars": 2000,
+   "notes": [
+    {
+     "tag": "RSI6",
+     "level": "cold",
+     "text": "RSI6=25.6 超卖（<30），今日新进超卖区。策略语境：超卖常是分批吸纳的观察信号，弱势里同样会钝化。"
+    }
+   ]
+  },
+  {
+   "ticker": "T",
+   "name": "美国电话电报",
+   "rank": 62,
+   "mcapUsd": 174393215000,
+   "spmoPct": null,
+   "asOf": "2026-09-24",
+   "close": 25.45,
+   "chgPct": 0.5928914245150407,
+   "rsi6": {
+    "value": 46.493223222058454,
+    "prev": 41.015239846133596,
+    "state": "neutral",
+    "cross": null,
+    "period": 6
+   },
+   "tunnels": [
+    {
+     "key": "短通道",
+     "n": [
+      12,
+      36
+     ],
+     "upper": 25.55221040635843,
+     "lower": 25.142695813821987,
+     "pos": "inside",
+     "event": null,
+     "widthPct": 1.6156044978476551
+    },
+    {
+     "key": "主通道",
+     "n": [
+      144,
+      169
+     ],
+     "upper": 24.626370147358823,
+     "lower": 24.60233224247447,
+     "pos": "above",
+     "event": null,
+     "widthPct": 0.09765808854355058
+    },
+    {
+     "key": "长通道",
+     "n": [
+      576,
+      676
+     ],
+     "upper": 23.103326143664145,
+     "lower": 22.587438805756015,
+     "pos": "above",
+     "event": null,
+     "widthPct": 2.2581689690650544
+    }
+   ],
+   "live": null,
+   "adj": "hfq",
+   "anchored": true,
+   "source": "yahoo",
+   "bars": 2000,
+   "notes": []
+  },
+  {
+   "ticker": "SCHW",
+   "name": "嘉信理财",
+   "rank": 63,
+   "mcapUsd": 172051610000,
+   "spmoPct": 0.694728,
+   "asOf": "2026-09-24",
+   "close": 99.49000000000001,
+   "chgPct": -0.010052398221571668,
+   "rsi6": {
+    "value": 20.892895653797837,
+    "prev": 20.916343412849372,
+    "state": "oversold",
+    "cross": null,
+    "period": 6
+   },
+   "tunnels": [
+    {
+     "key": "短通道",
+     "n": [
+      12,
+      36
+     ],
+     "upper": 105.64075355500634,
+     "lower": 104.0723315034787,
+     "pos": "below",
+     "event": null,
+     "widthPct": 1.495778912498707
+    },
+    {
+     "key": "主通道",
+     "n": [
+      144,
+      169
+     ],
+     "upper": 99.98732722079795,
+     "lower": 99.12406452849761,
+     "pos": "inside",
+     "event": null,
+     "widthPct": 0.8671153214450802
+    },
+    {
+     "key": "长通道",
+     "n": [
+      576,
+      676
+     ],
+     "upper": 88.01314502591664,
+     "lower": 85.84389295523098,
+     "pos": "above",
+     "event": null,
+     "widthPct": 2.4954434929702223
+    }
+   ],
+   "live": null,
+   "adj": "hfq",
+   "anchored": true,
+   "source": "yahoo",
+   "bars": 2000,
+   "notes": [
+    {
+     "tag": "RSI6",
+     "level": "cold",
+     "text": "RSI6=20.9 超卖（<30）。策略语境：超卖常是分批吸纳的观察信号，弱势里同样会钝化。"
+    }
+   ]
+  },
+  {
+   "ticker": "ETN",
+   "name": "伊顿",
+   "rank": 64,
+   "mcapUsd": 170896000000,
+   "spmoPct": null,
+   "asOf": "2026-09-24",
+   "close": 440,
+   "chgPct": 0.2826124092387916,
+   "rsi6": {
+    "value": 69.18990307413591,
+    "prev": 68.36494287964223,
+    "state": "neutral",
+    "cross": null,
+    "period": 6
+   },
+   "tunnels": [
+    {
+     "key": "短通道",
+     "n": [
+      12,
+      36
+     ],
+     "upper": 423.92708510409346,
+     "lower": 418.1681001689722,
+     "pos": "above",
+     "event": null,
+     "widthPct": 1.367775290925998
+    },
+    {
+     "key": "主通道",
+     "n": [
+      144,
+      169
+     ],
+     "upper": 401.10889312276163,
+     "lower": 397.06394252480976,
+     "pos": "above",
+     "event": null,
+     "widthPct": 1.0135525583679201
+    },
+    {
+     "key": "长通道",
+     "n": [
+      576,
+      676
+     ],
+     "upper": 344.4879041809258,
+     "lower": 332.9008806669769,
+     "pos": "above",
+     "event": null,
+     "widthPct": 3.421085135488506
+    }
+   ],
+   "live": null,
+   "adj": "hfq",
+   "anchored": true,
+   "source": "yahoo",
+   "bars": 2000,
+   "notes": []
+  },
+  {
+   "ticker": "MCD",
+   "name": "麦当劳",
+   "rank": 65,
+   "mcapUsd": 167725196000,
+   "spmoPct": null,
+   "asOf": "2026-09-24",
+   "close": 237.02,
+   "chgPct": -0.5454863258665732,
+   "rsi6": {
+    "value": 16.75121535143228,
+    "prev": 17.974650377538524,
+    "state": "oversold",
+    "cross": null,
+    "period": 6
+   },
+   "tunnels": [
+    {
+     "key": "短通道",
+     "n": [
+      12,
+      36
+     ],
+     "upper": 257.1692889768044,
+     "lower": 248.20387881418938,
+     "pos": "below",
+     "event": null,
+     "widthPct": 3.548035682940269
+    },
+    {
+     "key": "主通道",
+     "n": [
+      144,
+      169
+     ],
+     "upper": 277.3558123218618,
+     "lower": 275.0182241755067,
+     "pos": "below",
+     "event": null,
+     "widthPct": 0.8463787187311836
+    },
+    {
+     "key": "长通道",
+     "n": [
+      576,
+      676
+     ],
+     "upper": 281.3139019938136,
+     "lower": 278.8858857791487,
+     "pos": "below",
+     "event": null,
+     "widthPct": 0.8668393911098545
+    }
+   ],
+   "live": null,
+   "adj": "hfq",
+   "anchored": true,
+   "source": "yahoo",
+   "bars": 2000,
+   "notes": [
+    {
+     "tag": "RSI6",
+     "level": "cold",
+     "text": "RSI6=16.8 超卖（<30）。策略语境：超卖常是分批吸纳的观察信号，弱势里同样会钝化。"
+    }
+   ]
+  },
+  {
+   "ticker": "BLK",
+   "name": "贝莱德",
+   "rank": 66,
+   "mcapUsd": 166244406000,
+   "spmoPct": null,
+   "asOf": "2026-09-24",
+   "close": 1073.45,
+   "chgPct": 1.1839056216962796,
+   "rsi6": {
+    "value": 49.72205130561482,
+    "prev": 41.55267020255749,
+    "state": "neutral",
+    "cross": null,
+    "period": 6
+   },
+   "tunnels": [
+    {
+     "key": "短通道",
+     "n": [
+      12,
+      36
+     ],
+     "upper": 1091.2743344361386,
+     "lower": 1075.2544901176416,
+     "pos": "below",
+     "event": null,
+     "widthPct": 1.4788489437057422
+    },
+    {
+     "key": "主通道",
+     "n": [
+      144,
+      169
+     ],
+     "upper": 1065.0994551191177,
+     "lower": 1061.1953624029557,
+     "pos": "above",
+     "event": "break_up",
+     "widthPct": 0.3672202635297549
+    },
+    {
+     "key": "长通道",
+     "n": [
+      576,
+      676
+     ],
+     "upper": 978.4466988587787,
+     "lower": 955.9548059718433,
+     "pos": "above",
+     "event": null,
+     "widthPct": 2.3254627160667867
+    }
+   ],
+   "live": null,
+   "adj": "hfq",
+   "anchored": true,
+   "source": "yahoo",
+   "bars": 2000,
+   "notes": [
+    {
+     "tag": "主通道",
+     "level": "info",
+     "text": "主通道（EMA144/169）当日上穿通道（收盘自下而上）。"
+    }
+   ]
+  },
+  {
+   "ticker": "UNP",
+   "name": "联合太平洋",
+   "rank": 67,
+   "mcapUsd": 162818272000,
+   "spmoPct": null,
+   "asOf": "2026-09-24",
+   "close": 274.07,
+   "chgPct": -0.5298847535827211,
+   "rsi6": {
+    "value": 31.720549813327167,
+    "prev": 34.626461949957516,
+    "state": "neutral",
+    "cross": null,
+    "period": 6
+   },
+   "tunnels": [
+    {
+     "key": "短通道",
+     "n": [
+      12,
+      36
+     ],
+     "upper": 286.6618248165264,
+     "lower": 279.9721862642641,
+     "pos": "below",
+     "event": null,
+     "widthPct": 2.361184969995911
+    },
+    {
+     "key": "主通道",
+     "n": [
+      144,
+      169
+     ],
+     "upper": 273.01032427584977,
+     "lower": 269.6345294892734,
+     "pos": "above",
+     "event": null,
+     "widthPct": 1.2442004243303977
+    },
+    {
+     "key": "长通道",
+     "n": [
+      576,
+      676
+     ],
+     "upper": 241.94185948103953,
+     "lower": 238.03310675433826,
+     "pos": "above",
+     "event": null,
+     "widthPct": 1.6287319138158673
+    }
+   ],
+   "live": null,
+   "adj": "hfq",
+   "anchored": true,
+   "source": "yahoo",
+   "bars": 2000,
+   "notes": []
+  },
+  {
+   "ticker": "PFE",
+   "name": "辉瑞",
+   "rank": 68,
+   "mcapUsd": 161927727000,
+   "spmoPct": null,
+   "asOf": "2026-09-24",
+   "close": 28.41,
+   "chgPct": 0.8161800558748933,
+   "rsi6": {
+    "value": 76.19167952685481,
+    "prev": 69.60913207688655,
+    "state": "overbought",
+    "cross": "into_ob",
+    "period": 6
+   },
+   "tunnels": [
+    {
+     "key": "短通道",
+     "n": [
+      12,
+      36
+     ],
+     "upper": 27.9372731084223,
+     "lower": 27.41979309705187,
+     "pos": "above",
+     "event": null,
+     "widthPct": 1.8696077911703277
+    },
+    {
+     "key": "主通道",
+     "n": [
+      144,
+      169
+     ],
+     "upper": 26.022169335958665,
+     "lower": 25.85257078012029,
+     "pos": "above",
+     "event": null,
+     "widthPct": 0.6538772260212576
+    },
+    {
+     "key": "长通道",
+     "n": [
+      576,
+      676
+     ],
+     "upper": 25.538860756668257,
+     "lower": 25.333227874090454,
+     "pos": "above",
+     "event": null,
+     "widthPct": 0.8084310595947143
+    }
+   ],
+   "live": null,
+   "adj": "hfq",
+   "anchored": true,
+   "source": "yahoo",
+   "bars": 2000,
+   "notes": [
+    {
+     "tag": "RSI6",
+     "level": "hot",
+     "text": "RSI6=76.2 超买（>70），今日新进超买区。策略语境：超买常是做T减仓的观察信号，强趋势里会持续钝化。"
+    }
+   ]
+  },
+  {
+   "ticker": "DHR",
+   "name": "丹纳赫",
+   "rank": 69,
+   "mcapUsd": 157307189000,
+   "spmoPct": null,
+   "asOf": "2026-09-24",
+   "close": 223.77,
+   "chgPct": 0.9974755092162946,
+   "rsi6": {
+    "value": 83.05396735035606,
+    "prev": 80.3335064867402,
+    "state": "overbought",
+    "cross": null,
+    "period": 6
+   },
+   "tunnels": [
+    {
+     "key": "短通道",
+     "n": [
+      12,
+      36
+     ],
+     "upper": 214.5395114480454,
+     "lower": 208.71573319296095,
+     "pos": "above",
+     "event": null,
+     "widthPct": 2.751898920956795
+    },
+    {
+     "key": "主通道",
+     "n": [
+      144,
+      169
+     ],
+     "upper": 200.29161558867747,
+     "lower": 200.19686494417996,
+     "pos": "above",
+     "event": null,
+     "widthPct": 0.047317538008305016
+    },
+    {
+     "key": "长通道",
+     "n": [
+      576,
+      676
+     ],
+     "upper": 210.13885546442353,
+     "lower": 209.13201449704917,
+     "pos": "above",
+     "event": null,
+     "widthPct": 0.4802818604912278
+    }
+   ],
+   "live": null,
+   "adj": "hfq",
+   "anchored": true,
+   "source": "yahoo",
+   "bars": 2000,
+   "notes": [
+    {
+     "tag": "RSI6",
+     "level": "warn",
+     "text": "RSI6=83.1 超买（>70）。策略语境：超买常是做T减仓的观察信号，强趋势里会持续钝化。"
+    }
+   ]
+  },
+  {
+   "ticker": "COP",
+   "name": "康菲石油",
+   "rank": 70,
+   "mcapUsd": 155380990000,
+   "spmoPct": null,
+   "asOf": "2026-09-24",
+   "close": 129.34,
+   "chgPct": 0.9758763648510138,
+   "rsi6": {
+    "value": 42.73610215040589,
+    "prev": 37.24680713196854,
+    "state": "neutral",
+    "cross": null,
+    "period": 6
+   },
+   "tunnels": [
+    {
+     "key": "短通道",
+     "n": [
+      12,
+      36
+     ],
+     "upper": 131.23095773009587,
+     "lower": 129.32678501599514,
+     "pos": "inside",
+     "event": "reenter_up",
+     "widthPct": 1.4616128417694405
+    },
+    {
+     "key": "主通道",
+     "n": [
+      144,
+      169
+     ],
+     "upper": 118.86043707526125,
+     "lower": 117.17880499059183,
+     "pos": "above",
+     "event": null,
+     "widthPct": 1.4248750080296013
+    },
+    {
+     "key": "长通道",
+     "n": [
+      576,
+      676
+     ],
+     "upper": 104.82136241244345,
+     "lower": 103.12516315331158,
+     "pos": "above",
+     "event": null,
+     "widthPct": 1.6313802353918303
+    }
+   ],
+   "live": null,
+   "adj": "hfq",
+   "anchored": true,
+   "source": "yahoo",
+   "bars": 2000,
+   "notes": [
+    {
+     "tag": "短通道",
+     "level": "info",
+     "text": "短通道：自下方回到通道内。"
+    }
+   ]
+  },
+  {
+   "ticker": "TJX",
+   "name": "TJX公司",
+   "rank": 71,
+   "mcapUsd": 144789586000,
+   "spmoPct": null,
+   "asOf": "2026-09-24",
+   "close": 131.63,
+   "chgPct": 0.030403941055778816,
+   "rsi6": {
+    "value": 66.12217126014363,
+    "prev": 65.93674806084533,
+    "state": "neutral",
+    "cross": null,
+    "period": 6
+   },
+   "tunnels": [
+    {
+     "key": "短通道",
+     "n": [
+      12,
+      36
+     ],
+     "upper": 136.44317582374023,
+     "lower": 129.7641409646331,
+     "pos": "inside",
+     "event": null,
+     "widthPct": 5.017919822554511
+    },
+    {
+     "key": "主通道",
+     "n": [
+      144,
+      169
+     ],
+     "upper": 147.41177562376916,
+     "lower": 147.27531735534015,
+     "pos": "below",
+     "event": null,
+     "widthPct": 0.09261231433619901
+    },
+    {
+     "key": "长通道",
+     "n": [
+      576,
+      676
+     ],
+     "upper": 132.83017387047573,
+     "lower": 128.7507813966229,
+     "pos": "inside",
+     "event": null,
+     "widthPct": 3.1190286538157133
+    }
+   ],
+   "live": null,
+   "adj": "hfq",
+   "anchored": true,
+   "source": "yahoo",
+   "bars": 2000,
+   "notes": []
+  },
+  {
+   "ticker": "NOW",
+   "name": "现在服务公司",
+   "rank": 72,
+   "mcapUsd": 142445506000,
+   "spmoPct": null,
+   "asOf": "2026-09-24",
+   "close": 137.77999999999997,
+   "chgPct": -2.130984533323632,
+   "rsi6": {
+    "value": 49.726360330056984,
+    "prev": 60.09506874944107,
+    "state": "neutral",
+    "cross": null,
+    "period": 6
+   },
+   "tunnels": [
+    {
+     "key": "短通道",
+     "n": [
+      12,
+      36
+     ],
+     "upper": 137.7335577368532,
+     "lower": 131.49679914027956,
+     "pos": "above",
+     "event": null,
+     "widthPct": 4.633027767682126
+    },
+    {
+     "key": "主通道",
+     "n": [
+      144,
+      169
+     ],
+     "upper": 123.391408183198,
+     "lower": 121.92308054344664,
+     "pos": "above",
+     "event": null,
+     "widthPct": 1.1970981798694467
+    },
+    {
+     "key": "长通道",
+     "n": [
+      576,
+      676
+     ],
+     "upper": 141.3583631409171,
+     "lower": 141.2831833597159,
+     "pos": "below",
+     "event": null,
+     "widthPct": 0.05319796904028876
+    }
+   ],
+   "live": null,
+   "adj": "hfq",
+   "anchored": true,
+   "source": "yahoo",
+   "bars": 2000,
+   "notes": []
+  },
+  {
+   "ticker": "UBER",
+   "name": "优步",
+   "rank": 73,
+   "mcapUsd": 141386012000,
+   "spmoPct": null,
+   "asOf": "2026-09-24",
+   "close": 69.22,
+   "chgPct": -0.2880970232172153,
+   "rsi6": {
+    "value": 23.151447776957426,
+    "prev": 24.37821428912055,
+    "state": "oversold",
+    "cross": null,
+    "period": 6
+   },
+   "tunnels": [
+    {
+     "key": "短通道",
+     "n": [
+      12,
+      36
+     ],
+     "upper": 73.00745157179537,
+     "lower": 71.16790736708411,
+     "pos": "below",
+     "event": null,
+     "widthPct": 2.551814981769667
+    },
+    {
+     "key": "主通道",
+     "n": [
+      144,
+      169
+     ],
+     "upper": 75.31627630656206,
+     "lower": 74.78737701908508,
+     "pos": "below",
+     "event": null,
+     "widthPct": 0.7047120782990368
+    },
+    {
+     "key": "长通道",
+     "n": [
+      576,
+      676
+     ],
+     "upper": 74.30568119541803,
+     "lower": 72.74666759973395,
+     "pos": "below",
+     "event": null,
+     "widthPct": 2.1203518453905517
+    }
+   ],
+   "live": null,
+   "adj": "hfq",
+   "anchored": true,
+   "source": "yahoo",
+   "bars": 1854,
+   "notes": [
+    {
+     "tag": "RSI6",
+     "level": "cold",
+     "text": "RSI6=23.2 超卖（<30）。策略语境：超卖常是分批吸纳的观察信号，弱势里同样会钝化。"
+    }
+   ]
+  },
+  {
+   "ticker": "ISRG",
+   "name": "直觉外科公司",
+   "rank": 74,
+   "mcapUsd": 141141642000,
+   "spmoPct": null,
+   "asOf": "2026-09-24",
+   "close": 399.52,
+   "chgPct": 0.3063020984417575,
+   "rsi6": {
+    "value": 74.1691920369332,
+    "prev": 72.90837313224011,
+    "state": "overbought",
+    "cross": null,
+    "period": 6
+   },
+   "tunnels": [
+    {
+     "key": "短通道",
+     "n": [
+      12,
+      36
+     ],
+     "upper": 388.05116714747095,
+     "lower": 381.9050546444397,
+     "pos": "above",
+     "event": null,
+     "widthPct": 1.596483625712503
+    },
+    {
+     "key": "主通道",
+     "n": [
+      144,
+      169
+     ],
+     "upper": 423.633464903743,
+     "lower": 416.2711000401835,
+     "pos": "below",
+     "event": null,
+     "widthPct": 1.7531431952750527
+    },
+    {
+     "key": "长通道",
+     "n": [
+      576,
+      676
+     ],
+     "upper": 447.3556624655616,
+     "lower": 441.04408160665196,
+     "pos": "below",
+     "event": null,
+     "widthPct": 1.4208875905296492
+    }
+   ],
+   "live": null,
+   "adj": "hfq",
+   "anchored": true,
+   "source": "yahoo",
+   "bars": 2000,
+   "notes": [
+    {
+     "tag": "RSI6",
+     "level": "warn",
+     "text": "RSI6=74.2 超买（>70）。策略语境：超买常是做T减仓的观察信号，强趋势里会持续钝化。"
+    }
+   ]
+  },
+  {
+   "ticker": "VRTX",
+   "name": "福泰制药",
+   "rank": 75,
+   "mcapUsd": 132402917000,
+   "spmoPct": null,
+   "asOf": "2026-09-24",
+   "close": 522.38,
+   "chgPct": 1.1697675394502172,
+   "rsi6": {
+    "value": 57.69114692835924,
+    "prev": 45.60344963597709,
+    "state": "neutral",
+    "cross": null,
+    "period": 6
+   },
+   "tunnels": [
+    {
+     "key": "短通道",
+     "n": [
+      12,
+      36
+     ],
+     "upper": 519.3756877076692,
+     "lower": 518.6953507394783,
+     "pos": "above",
+     "event": "break_up",
+     "widthPct": 0.13107715040554518
+    },
+    {
+     "key": "主通道",
+     "n": [
+      144,
+      169
+     ],
+     "upper": 485.8284257799752,
+     "lower": 481.56762514610824,
+     "pos": "above",
+     "event": null,
+     "widthPct": 0.8808803033231541
+    },
+    {
+     "key": "长通道",
+     "n": [
+      576,
+      676
+     ],
+     "upper": 446.70932507345003,
+     "lower": 438.5225188818688,
+     "pos": "above",
+     "event": null,
+     "widthPct": 1.8496411414667684
+    }
+   ],
+   "live": null,
+   "adj": "hfq",
+   "anchored": true,
+   "source": "yahoo",
+   "bars": 2000,
+   "notes": [
+    {
+     "tag": "短通道",
+     "level": "info",
+     "text": "短通道（EMA12/36）当日上穿通道（收盘自下而上）。"
+    }
+   ]
+  },
+  {
+   "ticker": "CB",
+   "name": "安达保险",
+   "rank": 76,
+   "mcapUsd": 129181225000,
+   "spmoPct": null,
+   "asOf": "2026-09-24",
+   "close": 334.84,
+   "chgPct": -0.11037711482924095,
+   "rsi6": {
+    "value": 28.029530486921132,
+    "prev": 29.295471074585194,
+    "state": "oversold",
+    "cross": null,
+    "period": 6
+   },
+   "tunnels": [
+    {
+     "key": "短通道",
+     "n": [
+      12,
+      36
+     ],
+     "upper": 340.45096429626545,
+     "lower": 338.1331594182481,
+     "pos": "below",
+     "event": null,
+     "widthPct": 0.6831297099407125
+    },
+    {
+     "key": "主通道",
+     "n": [
+      144,
+      169
+     ],
+     "upper": 332.08453314221117,
+     "lower": 329.396091430855,
+     "pos": "above",
+     "event": null,
+     "widthPct": 0.8128557697638853
+    },
+    {
+     "key": "长通道",
+     "n": [
+      576,
+      676
+     ],
+     "upper": 293.9254945174451,
+     "lower": 286.6209387710283,
+     "pos": "above",
+     "event": null,
+     "widthPct": 2.5164415204622053
+    }
+   ],
+   "live": null,
+   "adj": "hfq",
+   "anchored": true,
+   "source": "yahoo",
+   "bars": 2000,
+   "notes": [
+    {
+     "tag": "RSI6",
+     "level": "cold",
+     "text": "RSI6=28.0 超卖（<30）。策略语境：超卖常是分批吸纳的观察信号，弱势里同样会钝化。"
+    }
+   ]
+  },
+  {
+   "ticker": "PLD",
+   "name": "安博",
+   "rank": 77,
+   "mcapUsd": 127173612000,
+   "spmoPct": null,
+   "asOf": "2026-09-24",
+   "close": 133.82,
+   "chgPct": -0.10450834773952922,
+   "rsi6": {
+    "value": 36.50599449858884,
+    "prev": 37.48072842582296,
+    "state": "neutral",
+    "cross": null,
+    "period": 6
+   },
+   "tunnels": [
+    {
+     "key": "短通道",
+     "n": [
+      12,
+      36
+     ],
+     "upper": 137.36059323217603,
+     "lower": 135.1307881844137,
+     "pos": "below",
+     "event": null,
+     "widthPct": 1.6366059257877037
+    },
+    {
+     "key": "主通道",
+     "n": [
+      144,
+      169
+     ],
+     "upper": 136.69083971459352,
+     "lower": 135.62202069277814,
+     "pos": "below",
+     "event": null,
+     "widthPct": 0.7849934227979287
+    },
+    {
+     "key": "长通道",
+     "n": [
+      576,
+      676
+     ],
+     "upper": 122.77982725299348,
+     "lower": 120.91143843540017,
+     "pos": "above",
+     "event": null,
+     "widthPct": 1.5334064701214276
+    }
+   ],
+   "live": null,
+   "adj": "hfq",
+   "anchored": true,
+   "source": "yahoo",
+   "bars": 2000,
+   "notes": []
+  },
+  {
+   "ticker": "BMY",
+   "name": "施贵宝",
+   "rank": 78,
+   "mcapUsd": 125626951000.00002,
+   "spmoPct": null,
+   "asOf": "2026-09-24",
+   "close": 61.5,
+   "chgPct": 0.5723605321137581,
+   "rsi6": {
+    "value": 23.17993132486781,
+    "prev": 13.868201116445036,
+    "state": "oversold",
+    "cross": null,
+    "period": 6
+   },
+   "tunnels": [
+    {
+     "key": "短通道",
+     "n": [
+      12,
+      36
+     ],
+     "upper": 63.790788794000164,
+     "lower": 63.07293575729245,
+     "pos": "below",
+     "event": null,
+     "widthPct": 1.1316915678563082
+    },
+    {
+     "key": "主通道",
+     "n": [
+      144,
+      169
+     ],
+     "upper": 59.866146283408305,
+     "lower": 59.10215565042023,
+     "pos": "above",
+     "event": null,
+     "widthPct": 1.2843599859280428
+    },
+    {
+     "key": "长通道",
+     "n": [
+      576,
+      676
+     ],
+     "upper": 53.418257808456424,
+     "lower": 52.94077971734211,
+     "pos": "above",
+     "event": null,
+     "widthPct": 0.8978608724218597
+    }
+   ],
+   "live": null,
+   "adj": "hfq",
+   "anchored": true,
+   "source": "yahoo",
+   "bars": 2000,
+   "notes": [
+    {
+     "tag": "RSI6",
+     "level": "cold",
+     "text": "RSI6=23.2 超卖（<30）。策略语境：超卖常是分批吸纳的观察信号，弱势里同样会钝化。"
+    }
+   ]
+  },
+  {
+   "ticker": "LMT",
+   "name": "洛克希德马丁",
+   "rank": 79,
+   "mcapUsd": 120865117000.00002,
+   "spmoPct": 0.528548,
+   "asOf": "2026-09-24",
+   "close": 523.7,
+   "chgPct": -0.1867767939372489,
+   "rsi6": {
+    "value": 34.97772260590172,
+    "prev": 36.23189991457345,
+    "state": "neutral",
+    "cross": null,
+    "period": 6
+   },
+   "tunnels": [
+    {
+     "key": "短通道",
+     "n": [
+      12,
+      36
+     ],
+     "upper": 543.1053068789191,
+     "lower": 531.4864281589109,
+     "pos": "below",
+     "event": null,
+     "widthPct": 2.1624731218687723
+    },
+    {
+     "key": "主通道",
+     "n": [
+      144,
+      169
+     ],
+     "upper": 543.6928580366393,
+     "lower": 541.5119690329909,
+     "pos": "below",
+     "event": null,
+     "widthPct": 0.4019313127342889
+    },
+    {
+     "key": "长通道",
+     "n": [
+      576,
+      676
+     ],
+     "upper": 500.25068267484494,
+     "lower": 491.70543985447426,
+     "pos": "above",
+     "event": null,
+     "widthPct": 1.722907420256001
+    }
+   ],
+   "live": null,
+   "adj": "hfq",
+   "anchored": true,
+   "source": "yahoo",
+   "bars": 2000,
+   "notes": []
+  },
+  {
+   "ticker": "COF",
+   "name": "第一资本信贷",
+   "rank": 80,
+   "mcapUsd": 120617254000,
+   "spmoPct": null,
+   "asOf": "2026-09-24",
+   "close": 196.61,
+   "chgPct": 0.26006858284681744,
+   "rsi6": {
+    "value": 22.726506352178845,
+    "prev": 19.86080367381031,
+    "state": "oversold",
+    "cross": null,
+    "period": 6
+   },
+   "tunnels": [
+    {
+     "key": "短通道",
+     "n": [
+      12,
+      36
+     ],
+     "upper": 208.5721863929064,
+     "lower": 203.5995129317181,
+     "pos": "below",
+     "event": null,
+     "widthPct": 2.4129135839925
+    },
+    {
+     "key": "主通道",
+     "n": [
+      144,
+      169
+     ],
+     "upper": 204.79771640869234,
+     "lower": 204.41153913026332,
+     "pos": "below",
+     "event": null,
+     "widthPct": 0.18874317880244215
+    },
+    {
+     "key": "长通道",
+     "n": [
+      576,
+      676
+     ],
+     "upper": 186.88917840070897,
+     "lower": 181.6877859406931,
+     "pos": "above",
+     "event": null,
+     "widthPct": 2.8224186334108414
+    }
+   ],
+   "live": null,
+   "adj": "hfq",
+   "anchored": true,
+   "source": "yahoo",
+   "bars": 2000,
+   "notes": [
+    {
+     "tag": "RSI6",
+     "level": "cold",
+     "text": "RSI6=22.7 超卖（<30）。策略语境：超卖常是分批吸纳的观察信号，弱势里同样会钝化。"
+    }
+   ]
+  },
+  {
+   "ticker": "SPGI",
+   "name": "标普全球",
+   "rank": 81,
+   "mcapUsd": 118878100000,
+   "spmoPct": null,
+   "asOf": "2026-09-24",
+   "close": 403.25,
+   "chgPct": -0.7995079950799511,
+   "rsi6": {
+    "value": 34.373017860379875,
+    "prev": 39.68119883264913,
+    "state": "neutral",
+    "cross": null,
+    "period": 6
+   },
+   "tunnels": [
+    {
+     "key": "短通道",
+     "n": [
+      12,
+      36
+     ],
+     "upper": 417.6191999150164,
+     "lower": 410.3116424866915,
+     "pos": "below",
+     "event": null,
+     "widthPct": 1.7652579307534295
+    },
+    {
+     "key": "主通道",
+     "n": [
+      144,
+      169
+     ],
+     "upper": 422.90680664832837,
+     "lower": 420.75661991684865,
+     "pos": "below",
+     "event": null,
+     "widthPct": 0.5097261926438644
+    },
+    {
+     "key": "长通道",
+     "n": [
+      576,
+      676
+     ],
+     "upper": 431.9356400098364,
+     "lower": 428.23273316238823,
+     "pos": "below",
+     "event": null,
+     "widthPct": 0.8609725637300916
+    }
+   ],
+   "live": null,
+   "adj": "hfq",
+   "anchored": true,
+   "source": "yahoo",
+   "bars": 2000,
+   "notes": []
+  },
+  {
+   "ticker": "BKNG",
+   "name": "Booking Holdings Inc. Common Stock",
+   "rank": 82,
+   "mcapUsd": 118274804999.99998,
+   "spmoPct": null,
+   "asOf": "2026-09-24",
+   "close": 157.41,
+   "chgPct": 0.96857589784618,
+   "rsi6": {
+    "value": 15.241521970676928,
+    "prev": 8.10493806121228,
+    "state": "oversold",
+    "cross": null,
+    "period": 6
+   },
+   "tunnels": [
+    {
+     "key": "短通道",
+     "n": [
+      12,
+      36
+     ],
+     "upper": 182.7850176524238,
+     "lower": 169.71538868912842,
+     "pos": "below",
+     "event": null,
+     "widthPct": 7.415383771575951
+    },
+    {
+     "key": "主通道",
+     "n": [
+      144,
+      169
+     ],
+     "upper": 184.6571188826645,
+     "lower": 184.21063148942068,
+     "pos": "below",
+     "event": null,
+     "widthPct": 0.2420853505319627
+    },
+    {
+     "key": "长通道",
+     "n": [
+      576,
+      676
+     ],
+     "upper": 178.3280553437695,
+     "lower": 174.2104982787768,
+     "pos": "below",
+     "event": null,
+     "widthPct": 2.3359471029096324
+    }
+   ],
+   "live": null,
+   "adj": "hfq",
+   "anchored": true,
+   "source": "yahoo",
+   "bars": 2000,
+   "notes": [
+    {
+     "tag": "RSI6",
+     "level": "cold",
+     "text": "RSI6=15.2 超卖（<30）。策略语境：超卖常是分批吸纳的观察信号，弱势里同样会钝化。"
+    }
+   ]
+  },
+  {
+   "ticker": "PGR",
+   "name": "前进保险",
+   "rank": 83,
+   "mcapUsd": 117339468000.00002,
+   "spmoPct": null,
+   "asOf": "2026-09-24",
+   "close": 202.17,
+   "chgPct": -0.4726070451389064,
+   "rsi6": {
+    "value": 13.806919172663115,
+    "prev": 14.757197757522306,
+    "state": "oversold",
+    "cross": null,
+    "period": 6
+   },
+   "tunnels": [
+    {
+     "key": "短通道",
+     "n": [
+      12,
+      36
+     ],
+     "upper": 214.46092371687052,
+     "lower": 211.58359555676117,
+     "pos": "below",
+     "event": null,
+     "widthPct": 1.3507171339816544
+    },
+    {
+     "key": "主通道",
+     "n": [
+      144,
+      169
+     ],
+     "upper": 212.19571616230112,
+     "lower": 212.02959221135788,
+     "pos": "below",
+     "event": null,
+     "widthPct": 0.07831873660725698
+    },
+    {
+     "key": "长通道",
+     "n": [
+      576,
+      676
+     ],
+     "upper": 207.38536439184284,
+     "lower": 203.1580448247805,
+     "pos": "below",
+     "event": null,
+     "widthPct": 2.0593776307985037
+    }
+   ],
+   "live": null,
+   "adj": "hfq",
+   "anchored": true,
+   "source": "yahoo",
+   "bars": 2000,
+   "notes": [
+    {
+     "tag": "RSI6",
+     "level": "cold",
+     "text": "RSI6=13.8 超卖（<30）。策略语境：超卖常是分批吸纳的观察信号，弱势里同样会钝化。"
+    }
+   ]
+  },
+  {
+   "ticker": "MO",
+   "name": "奥驰亚",
+   "rank": 84,
+   "mcapUsd": 115011962000,
+   "spmoPct": 0.508101,
+   "asOf": "2026-09-24",
+   "close": 68.88,
+   "chgPct": -0.10152240452854233,
+   "rsi6": {
+    "value": 52.08118816754808,
+    "prev": 53.61192431928909,
+    "state": "neutral",
+    "cross": null,
+    "period": 6
+   },
+   "tunnels": [
+    {
+     "key": "短通道",
+     "n": [
+      12,
+      36
+     ],
+     "upper": 68.75068707921348,
+     "lower": 68.21424713528508,
+     "pos": "above",
+     "event": null,
+     "widthPct": 0.7833245012745965
+    },
+    {
+     "key": "主通道",
+     "n": [
+      144,
+      169
+     ],
+     "upper": 66.72238163335818,
+     "lower": 66.11615741346823,
+     "pos": "above",
+     "event": null,
+     "widthPct": 0.9127234072880834
+    },
+    {
+     "key": "长通道",
+     "n": [
+      576,
+      676
+     ],
+     "upper": 56.727778190266235,
+     "lower": 54.92778694302359,
+     "pos": "above",
+     "event": null,
+     "widthPct": 3.224185458367237
+    }
+   ],
+   "live": null,
+   "adj": "hfq",
+   "anchored": true,
+   "source": "yahoo",
+   "bars": 2000,
+   "notes": []
+  },
+  {
+   "ticker": "VLO",
+   "name": "瓦莱罗能源",
+   "rank": 85,
+   "mcapUsd": 110235908000,
+   "spmoPct": null,
+   "asOf": "2026-09-24",
+   "close": 382.86000000000007,
+   "chgPct": 1.867813187013967,
+   "rsi6": {
+    "value": 45.491649612510635,
+    "prev": 36.30602226849695,
+    "state": "neutral",
+    "cross": null,
+    "period": 6
+   },
+   "tunnels": [
+    {
+     "key": "短通道",
+     "n": [
+      12,
+      36
+     ],
+     "upper": 385.921335197741,
+     "lower": 361.7193021105888,
+     "pos": "inside",
+     "event": null,
+     "widthPct": 6.474242270801334
+    },
+    {
+     "key": "主通道",
+     "n": [
+      144,
+      169
+     ],
+     "upper": 289.85303021140265,
+     "lower": 279.3679834075028,
+     "pos": "above",
+     "event": null,
+     "widthPct": 3.683998500772017
+    },
+    {
+     "key": "长通道",
+     "n": [
+      576,
+      676
+     ],
+     "upper": 198.99920112498359,
+     "lower": 189.35694933020028,
+     "pos": "above",
+     "event": null,
+     "widthPct": 4.9656748237316854
+    }
+   ],
+   "live": null,
+   "adj": "hfq",
+   "anchored": true,
+   "source": "yahoo",
+   "bars": 2000,
+   "notes": []
+  },
+  {
+   "ticker": "MPC",
+   "name": "马拉松石油",
+   "rank": 86,
+   "mcapUsd": 109788440999.99998,
+   "spmoPct": null,
+   "asOf": "2026-09-24",
+   "close": 390.95,
+   "chgPct": 0.6617249322591112,
+   "rsi6": {
+    "value": 40.036544567358355,
+    "prev": 35.98692012718631,
+    "state": "neutral",
+    "cross": null,
+    "period": 6
+   },
+   "tunnels": [
+    {
+     "key": "短通道",
+     "n": [
+      12,
+      36
+     ],
+     "upper": 397.2013188757953,
+     "lower": 372.66978631126335,
+     "pos": "inside",
+     "event": null,
+     "widthPct": 6.372893436121737
+    },
+    {
+     "key": "主通道",
+     "n": [
+      144,
+      169
+     ],
+     "upper": 296.52897692095104,
+     "lower": 286.11173905117033,
+     "pos": "above",
+     "event": null,
+     "widthPct": 3.5758702006947134
+    },
+    {
+     "key": "长通道",
+     "n": [
+      576,
+      676
+     ],
+     "upper": 210.0206712340468,
+     "lower": 200.37500415261175,
+     "pos": "above",
+     "event": null,
+     "widthPct": 4.700667019625528
+    }
+   ],
+   "live": null,
+   "adj": "hfq",
+   "anchored": true,
+   "source": "yahoo",
+   "bars": 2000,
+   "notes": []
+  },
+  {
+   "ticker": "ACN",
+   "name": "埃森哲",
+   "rank": 87,
+   "mcapUsd": 108564650000,
+   "spmoPct": null,
+   "asOf": "2026-09-24",
+   "close": 177.41,
+   "chgPct": -3.329337656989384,
+   "rsi6": {
+    "value": 33.3209312802491,
+    "prev": 44.47766349106546,
+    "state": "neutral",
+    "cross": null,
+    "period": 6
+   },
+   "tunnels": [
+    {
+     "key": "短通道",
+     "n": [
+      12,
+      36
+     ],
+     "upper": 184.26210905759405,
+     "lower": 179.89120505556227,
+     "pos": "below",
+     "event": "break_down",
+     "widthPct": 2.4005844970415797
+    },
+    {
+     "key": "主通道",
+     "n": [
+      144,
+      169
+     ],
+     "upper": 187.66271745770837,
+     "lower": 183.28082551793753,
+     "pos": "below",
+     "event": "break_down",
+     "widthPct": 2.362565421476297
+    },
+    {
+     "key": "长通道",
+     "n": [
+      576,
+      676
+     ],
+     "upper": 245.55236330118578,
+     "lower": 240.06682067859825,
+     "pos": "below",
+     "event": null,
+     "widthPct": 2.2591951897913036
+    }
+   ],
+   "live": null,
+   "adj": "hfq",
+   "anchored": true,
+   "source": "yahoo",
+   "bars": 2000,
+   "notes": [
+    {
+     "tag": "短通道",
+     "level": "info",
+     "text": "短通道（EMA12/36）当日下穿通道（收盘自上而下）。"
+    },
+    {
+     "tag": "主通道",
+     "level": "info",
+     "text": "主通道（EMA144/169）当日下穿通道（收盘自上而下）。"
+    }
+   ]
+  },
+  {
+   "ticker": "SBUX",
+   "name": "星巴克",
+   "rank": 88,
+   "mcapUsd": 106760999999.99998,
+   "spmoPct": null,
+   "asOf": "2026-09-24",
+   "close": 93.65,
+   "chgPct": -0.5204991150907223,
+   "rsi6": {
+    "value": 13.566933874507512,
+    "prev": 15.02195882673277,
+    "state": "oversold",
+    "cross": null,
+    "period": 6
+   },
+   "tunnels": [
+    {
+     "key": "短通道",
+     "n": [
+      12,
+      36
+     ],
+     "upper": 100.93741221263201,
+     "lower": 97.02584331956312,
+     "pos": "below",
+     "event": null,
+     "widthPct": 3.9518130600077375
+    },
+    {
+     "key": "主通道",
+     "n": [
+      144,
+      169
+     ],
+     "upper": 99.80115428983213,
+     "lower": 99.04370287826121,
+     "pos": "below",
+     "event": null,
+     "widthPct": 0.761851648927084
+    },
+    {
+     "key": "长通道",
+     "n": [
+      576,
+      676
+     ],
+     "upper": 92.7140745011899,
+     "lower": 91.90998793566344,
+     "pos": "above",
+     "event": null,
+     "widthPct": 0.871052835598265
+    }
+   ],
+   "live": null,
+   "adj": "hfq",
+   "anchored": true,
+   "source": "yahoo",
+   "bars": 2000,
+   "notes": [
+    {
+     "tag": "RSI6",
+     "level": "cold",
+     "text": "RSI6=13.6 超卖（<30）。策略语境：超卖常是分批吸纳的观察信号，弱势里同样会钝化。"
+    }
+   ]
+  },
+  {
+   "ticker": "LOW",
+   "name": "劳氏",
+   "rank": 89,
+   "mcapUsd": 105753072000,
+   "spmoPct": null,
+   "asOf": "2026-09-24",
+   "close": 188.49,
+   "chgPct": -1.499788413479053,
+   "rsi6": {
+    "value": 28.13874923153878,
+    "prev": 34.28311314672459,
+    "state": "oversold",
+    "cross": "into_os",
+    "period": 6
+   },
+   "tunnels": [
+    {
+     "key": "短通道",
+     "n": [
+      12,
+      36
+     ],
+     "upper": 202.70375138003158,
+     "lower": 194.76904337962551,
+     "pos": "below",
+     "event": null,
+     "widthPct": 3.9925791676907108
+    },
+    {
+     "key": "主通道",
+     "n": [
+      144,
+      169
+     ],
+     "upper": 220.61430179048205,
+     "lower": 218.47356504422,
+     "pos": "below",
+     "event": null,
+     "widthPct": 0.9750835347349428
+    },
+    {
+     "key": "长通道",
+     "n": [
+      576,
+      676
+     ],
+     "upper": 226.42712896681533,
+     "lower": 224.5021353374086,
+     "pos": "below",
+     "event": null,
+     "widthPct": 0.853789621472882
+    }
+   ],
+   "live": null,
+   "adj": "hfq",
+   "anchored": true,
+   "source": "yahoo",
+   "bars": 2000,
+   "notes": [
+    {
+     "tag": "RSI6",
+     "level": "cold",
+     "text": "RSI6=28.1 超卖（<30），今日新进超卖区。策略语境：超卖常是分批吸纳的观察信号，弱势里同样会钝化。"
+    }
+   ]
+  },
+  {
+   "ticker": "APP",
+   "name": "Applovin",
+   "rank": 90,
+   "mcapUsd": 104568248000,
+   "spmoPct": null,
+   "asOf": "2026-09-24",
+   "close": 312.47,
+   "chgPct": -0.8818394224573867,
+   "rsi6": {
+    "value": 41.13913250708436,
+    "prev": 43.57696812614272,
+    "state": "neutral",
+    "cross": null,
+    "period": 6
+   },
+   "tunnels": [
+    {
+     "key": "短通道",
+     "n": [
+      12,
+      36
+     ],
+     "upper": 336.807911708578,
+     "lower": 319.8696295098071,
+     "pos": "below",
+     "event": null,
+     "widthPct": 5.158782244126686
+    },
+    {
+     "key": "主通道",
+     "n": [
+      144,
+      169
+     ],
+     "upper": 425.37958077745304,
+     "lower": 417.6839189492937,
+     "pos": "below",
+     "event": null,
+     "widthPct": 1.825642275025232
+    },
+    {
+     "key": "长通道",
+     "n": [
+      576,
+      676
+     ],
+     "upper": 372.9861552468568,
+     "lower": 351.519074535914,
+     "pos": "below",
+     "event": null,
+     "widthPct": 5.925997447217685
+    }
+   ],
+   "live": null,
+   "adj": "hfq",
+   "anchored": true,
+   "source": "yahoo",
+   "bars": 1368,
+   "notes": []
+  },
+  {
+   "ticker": "ADP",
+   "name": "自动数据处理公司",
+   "rank": 91,
+   "mcapUsd": 104523799000.00002,
+   "spmoPct": null,
+   "asOf": "2026-09-24",
+   "close": 263.11,
+   "chgPct": -0.21617390020168825,
+   "rsi6": {
+    "value": 23.93331992204959,
+    "prev": 24.915822818676304,
+    "state": "oversold",
+    "cross": null,
+    "period": 6
+   },
+   "tunnels": [
+    {
+     "key": "短通道",
+     "n": [
+      12,
+      36
+     ],
+     "upper": 269.6797208036421,
+     "lower": 268.65448953965495,
+     "pos": "below",
+     "event": null,
+     "widthPct": 0.38089025155335143
+    },
+    {
+     "key": "主通道",
+     "n": [
+      144,
+      169
+     ],
+     "upper": 248.66127522466616,
+     "lower": 247.79635288129612,
+     "pos": "above",
+     "event": null,
+     "widthPct": 0.34843752795976124
+    },
+    {
+     "key": "长通道",
+     "n": [
+      576,
+      676
+     ],
+     "upper": 248.97392481574792,
+     "lower": 247.1211496688258,
+     "pos": "above",
+     "event": null,
+     "widthPct": 0.7469435768323581
+    }
+   ],
+   "live": null,
+   "adj": "hfq",
+   "anchored": true,
+   "source": "yahoo",
+   "bars": 2000,
+   "notes": [
+    {
+     "tag": "RSI6",
+     "level": "cold",
+     "text": "RSI6=23.9 超卖（<30）。策略语境：超卖常是分批吸纳的观察信号，弱势里同样会钝化。"
+    }
+   ]
+  },
+  {
+   "ticker": "SYK",
+   "name": "史赛克",
+   "rank": 92,
+   "mcapUsd": 103468829000,
+   "spmoPct": null,
+   "asOf": "2026-09-24",
+   "close": 269.75,
+   "chgPct": -1.335038031444269,
+   "rsi6": {
+    "value": 22.83111801807189,
+    "prev": 27.58493765288715,
+    "state": "oversold",
+    "cross": null,
+    "period": 6
+   },
+   "tunnels": [
+    {
+     "key": "短通道",
+     "n": [
+      12,
+      36
+     ],
+     "upper": 300.4526456004666,
+     "lower": 280.4433322306531,
+     "pos": "below",
+     "event": null,
+     "widthPct": 6.889120990137313
+    },
+    {
+     "key": "主通道",
+     "n": [
+      144,
+      169
+     ],
+     "upper": 324.93487471002584,
+     "lower": 321.8928393542137,
+     "pos": "below",
+     "event": null,
+     "widthPct": 0.9406014274490405
+    },
+    {
+     "key": "长通道",
+     "n": [
+      576,
+      676
+     ],
+     "upper": 335.5250265921077,
+     "lower": 332.2594965355683,
+     "pos": "below",
+     "event": null,
+     "widthPct": 0.9780190895244897
+    }
+   ],
+   "live": null,
+   "adj": "hfq",
+   "anchored": true,
+   "source": "yahoo",
+   "bars": 2000,
+   "notes": [
+    {
+     "tag": "RSI6",
+     "level": "cold",
+     "text": "RSI6=22.8 超卖（<30）。策略语境：超卖常是分批吸纳的观察信号，弱势里同样会钝化。"
+    }
+   ]
+  },
+  {
+   "ticker": "EQIX",
+   "name": "易昆尼克斯",
+   "rank": 93,
+   "mcapUsd": 102101514000,
+   "spmoPct": null,
+   "asOf": "2026-09-24",
+   "close": 1034.76,
+   "chgPct": -0.279477316128407,
+   "rsi6": {
+    "value": 49.029019565981066,
+    "prev": 50.94050373985805,
+    "state": "neutral",
+    "cross": null,
+    "period": 6
+   },
+   "tunnels": [
+    {
+     "key": "短通道",
+     "n": [
+      12,
+      36
+     ],
+     "upper": 1040.9128842235964,
+     "lower": 1036.0502291718092,
+     "pos": "below",
+     "event": "break_down",
+     "widthPct": 0.468246645347281
+    },
+    {
+     "key": "主通道",
+     "n": [
+      144,
+      169
+     ],
+     "upper": 1010.2795268902079,
+     "lower": 998.5358735548481,
+     "pos": "above",
+     "event": null,
+     "widthPct": 1.169211798431849
+    },
+    {
+     "key": "长通道",
+     "n": [
+      576,
+      676
+     ],
+     "upper": 883.5676984967507,
+     "lower": 865.8105209974722,
+     "pos": "above",
+     "event": null,
+     "widthPct": 2.0301130197462363
+    }
+   ],
+   "live": null,
+   "adj": "hfq",
+   "anchored": true,
+   "source": "yahoo",
+   "bars": 2000,
+   "notes": [
+    {
+     "tag": "短通道",
+     "level": "info",
+     "text": "短通道（EMA12/36）当日下穿通道（收盘自上而下）。"
+    }
+   ]
+  },
+  {
+   "ticker": "PSX",
+   "name": "Phillips 66",
+   "rank": 94,
+   "mcapUsd": 102097482000,
+   "spmoPct": null,
+   "asOf": "2026-09-24",
+   "close": 255.87000000000003,
+   "chgPct": -0.2378414858899669,
+   "rsi6": {
+    "value": 38.939693065364686,
+    "prev": 40.104870214279295,
+    "state": "neutral",
+    "cross": null,
+    "period": 6
+   },
+   "tunnels": [
+    {
+     "key": "短通道",
+     "n": [
+      12,
+      36
+     ],
+     "upper": 259.447790003681,
+     "lower": 245.02065474685764,
+     "pos": "inside",
+     "event": null,
+     "widthPct": 5.719737441241792
+    },
+    {
+     "key": "主通道",
+     "n": [
+      144,
+      169
+     ],
+     "upper": 201.0214737897234,
+     "lower": 195.04345312063037,
+     "pos": "above",
+     "event": null,
+     "widthPct": 3.0187074203851894
+    },
+    {
+     "key": "长通道",
+     "n": [
+      576,
+      676
+     ],
+     "upper": 151.14320617263203,
+     "lower": 145.66405216263323,
+     "pos": "above",
+     "event": null,
+     "widthPct": 3.6920620073311734
+    }
+   ],
+   "live": null,
+   "adj": "hfq",
+   "anchored": true,
+   "source": "yahoo",
+   "bars": 2000,
+   "notes": []
+  },
+  {
+   "ticker": "MCK",
+   "name": "麦克森",
+   "rank": 95,
+   "mcapUsd": 101358998000,
+   "spmoPct": 0.574145,
+   "asOf": "2026-09-24",
+   "close": 869.3599999999999,
+   "chgPct": -1.2651918964721842,
+   "rsi6": {
+    "value": 35.2252611755529,
+    "prev": 43.04664718939451,
+    "state": "neutral",
+    "cross": null,
+    "period": 6
+   },
+   "tunnels": [
+    {
+     "key": "短通道",
+     "n": [
+      12,
+      36
+     ],
+     "upper": 884.8296289308719,
+     "lower": 876.6063752366873,
+     "pos": "below",
+     "event": "break_down",
+     "widthPct": 0.9336988314907085
+    },
+    {
+     "key": "主通道",
+     "n": [
+      144,
+      169
+     ],
+     "upper": 840.6570197150528,
+     "lower": 835.3851971406012,
+     "pos": "above",
+     "event": null,
+     "widthPct": 0.6290799266789099
+    },
+    {
+     "key": "长通道",
+     "n": [
+      576,
+      676
+     ],
+     "upper": 723.6662230725659,
+     "lower": 696.8765154447133,
+     "pos": "above",
+     "event": null,
+     "widthPct": 3.7717566534907556
+    }
+   ],
+   "live": null,
+   "adj": "hfq",
+   "anchored": true,
+   "source": "yahoo",
+   "bars": 2000,
+   "notes": [
+    {
+     "tag": "短通道",
+     "level": "info",
+     "text": "短通道（EMA12/36）当日下穿通道（收盘自上而下）。"
+    }
+   ]
+  },
+  {
+   "ticker": "CME",
+   "name": "芝加哥商品交易所",
+   "rank": 96,
+   "mcapUsd": 96694460000,
+   "spmoPct": null,
+   "asOf": "2026-09-24",
+   "close": 268.91,
+   "chgPct": -0.6979262245404128,
+   "rsi6": {
+    "value": 38.408730292167334,
+    "prev": 42.39850381087644,
+    "state": "neutral",
+    "cross": null,
+    "period": 6
+   },
+   "tunnels": [
+    {
+     "key": "短通道",
+     "n": [
+      12,
+      36
+     ],
+     "upper": 272.9744139113938,
+     "lower": 271.0125670888335,
+     "pos": "below",
+     "event": null,
+     "widthPct": 0.7212844759457467
+    },
+    {
+     "key": "主通道",
+     "n": [
+      144,
+      169
+     ],
+     "upper": 268.86877895238285,
+     "lower": 268.80178215100716,
+     "pos": "above",
+     "event": null,
+     "widthPct": 0.024921134323666765
+    },
+    {
+     "key": "长通道",
+     "n": [
+      576,
+      676
+     ],
+     "upper": 248.90728260298224,
+     "lower": 243.36751910009903,
+     "pos": "above",
+     "event": null,
+     "widthPct": 2.250679288770319
+    }
+   ],
+   "live": null,
+   "adj": "hfq",
+   "anchored": true,
+   "source": "yahoo",
+   "bars": 2000,
+   "notes": []
+  },
+  {
+   "ticker": "SO",
+   "name": "美国南方公司",
+   "rank": 97,
+   "mcapUsd": 95353586000,
+   "spmoPct": null,
+   "asOf": "2026-09-24",
+   "close": 82.89,
+   "chgPct": -0.6948626124026469,
+   "rsi6": {
+    "value": 11.89932870753077,
+    "prev": 13.837381205298826,
+    "state": "oversold",
+    "cross": null,
+    "period": 6
+   },
+   "tunnels": [
+    {
+     "key": "短通道",
+     "n": [
+      12,
+      36
+     ],
+     "upper": 88.40390770155436,
+     "lower": 85.68234504499904,
+     "pos": "below",
+     "event": null,
+     "widthPct": 3.126683024784912
+    },
+    {
+     "key": "主通道",
+     "n": [
+      144,
+      169
+     ],
+     "upper": 90.95771398261864,
+     "lower": 90.9093222944103,
+     "pos": "below",
+     "event": null,
+     "widthPct": 0.05321655776545231
+    },
+    {
+     "key": "长通道",
+     "n": [
+      576,
+      676
+     ],
+     "upper": 85.27541327912142,
+     "lower": 83.58417589072666,
+     "pos": "below",
+     "event": null,
+     "widthPct": 2.0031286309640732
+    }
+   ],
+   "live": null,
+   "adj": "hfq",
+   "anchored": true,
+   "source": "yahoo",
+   "bars": 2000,
+   "notes": [
+    {
+     "tag": "RSI6",
+     "level": "cold",
+     "text": "RSI6=11.9 超卖（<30）。策略语境：超卖常是分批吸纳的观察信号，弱势里同样会钝化。"
+    }
+   ]
+  },
+  {
+   "ticker": "CEG",
+   "name": "星座能源",
+   "rank": 98,
+   "mcapUsd": 92693896000,
+   "spmoPct": null,
+   "asOf": "2026-09-24",
+   "close": 261.61999999999995,
+   "chgPct": -0.8564535864051925,
+   "rsi6": {
+    "value": 38.31643841146727,
+    "prev": 42.14146600891429,
+    "state": "neutral",
+    "cross": null,
+    "period": 6
+   },
+   "tunnels": [
+    {
+     "key": "短通道",
+     "n": [
+      12,
+      36
+     ],
+     "upper": 271.3217601448323,
+     "lower": 267.0584413322846,
+     "pos": "below",
+     "event": null,
+     "widthPct": 1.5837576496500922
+    },
+    {
+     "key": "主通道",
+     "n": [
+      144,
+      169
+     ],
+     "upper": 282.1348687452064,
+     "lower": 279.951806890838,
+     "pos": "below",
+     "event": null,
+     "widthPct": 0.7767705405569756
+    },
+    {
+     "key": "长通道",
+     "n": [
+      576,
+      676
+     ],
+     "upper": 261.5775202663342,
+     "lower": 249.31405528225923,
+     "pos": "above",
+     "event": null,
+     "widthPct": 4.800809240554225
+    }
+   ],
+   "live": null,
+   "adj": "hfq",
+   "anchored": true,
+   "source": "yahoo",
+   "bars": 1175,
+   "notes": []
+  },
+  {
+   "ticker": "HCA",
+   "name": "HCA医疗",
+   "rank": 99,
+   "mcapUsd": 91684055000,
+   "spmoPct": null,
+   "asOf": "2026-09-24",
+   "close": 423.48,
+   "chgPct": -2.978372359051107,
+   "rsi6": {
+    "value": 44.44168475431006,
+    "prev": 70.25329811522725,
+    "state": "neutral",
+    "cross": "out_ob",
+    "period": 6
+   },
+   "tunnels": [
+    {
+     "key": "短通道",
+     "n": [
+      12,
+      36
+     ],
+     "upper": 426.2690040581924,
+     "lower": 417.32559585531766,
+     "pos": "inside",
+     "event": "reenter_down",
+     "widthPct": 2.1203094955305994
+    },
+    {
+     "key": "主通道",
+     "n": [
+      144,
+      169
+     ],
+     "upper": 423.28536867627673,
+     "lower": 421.95124640182263,
+     "pos": "above",
+     "event": null,
+     "widthPct": 0.3156801895835596
+    },
+    {
+     "key": "长通道",
+     "n": [
+      576,
+      676
+     ],
+     "upper": 391.6270636479265,
+     "lower": 380.91951906200154,
+     "pos": "above",
+     "event": null,
+     "widthPct": 2.772012672262474
+    }
+   ],
+   "live": null,
+   "adj": "hfq",
+   "anchored": true,
+   "source": "yahoo",
+   "bars": 2000,
+   "notes": [
+    {
+     "tag": "RSI6",
+     "level": "info",
+     "text": "RSI6 自超买回落（前值 70.3 → 44.4）。做T语境下常见做法是观察回补时机，此处只记录事件。"
+    },
+    {
+     "tag": "短通道",
+     "level": "info",
+     "text": "短通道：自上方回到通道内。"
+    }
+   ]
+  },
+  {
+   "ticker": "MAR",
+   "name": "万豪酒店",
+   "rank": 100,
+   "mcapUsd": 91661958000,
+   "spmoPct": null,
+   "asOf": "2026-09-24",
+   "close": 351.51,
+   "chgPct": -0.042653100984590964,
+   "rsi6": {
+    "value": 75.2330669893177,
+    "prev": 75.82030101260051,
+    "state": "overbought",
+    "cross": null,
+    "period": 6
+   },
+   "tunnels": [
+    {
+     "key": "短通道",
+     "n": [
+      12,
+      36
+     ],
+     "upper": 347.4061655865066,
+     "lower": 343.1524418869994,
+     "pos": "above",
+     "event": null,
+     "widthPct": 1.2319660209782817
+    },
+    {
+     "key": "主通道",
+     "n": [
+      144,
+      169
+     ],
+     "upper": 348.81219053128524,
+     "lower": 345.5665030226454,
+     "pos": "above",
+     "event": null,
+     "widthPct": 0.9348465149550989
+    },
+    {
+     "key": "长通道",
+     "n": [
+      576,
+      676
+     ],
+     "upper": 295.5021374443039,
+     "lower": 285.9171280099628,
+     "pos": "above",
+     "event": null,
+     "widthPct": 3.2971076136778024
+    }
+   ],
+   "live": null,
+   "adj": "hfq",
+   "anchored": true,
+   "source": "yahoo",
+   "bars": 2000,
+   "notes": [
+    {
+     "tag": "RSI6",
+     "level": "warn",
+     "text": "RSI6=75.2 超买（>70）。策略语境：超买常是做T减仓的观察信号，强趋势里会持续钝化。"
     }
    ]
   }
  ],
- "failed": [
-  {
-   "ticker": "SPMO",
-   "rank": null,
-   "mcapUsd": null,
-   "spmoPct": null,
-   "name": "标普500动量ETF-Invesco",
-   "quotePrice": 152.18,
-   "reason": "取数失败"
-  }
- ],
+ "failed": [],
  "groups": {
-  "overbought": [],
-  "oversold": [],
-  "obReturn": [],
-  "osReturn": [],
-  "events": []
+  "overbought": [
+   "META",
+   "TMO",
+   "AMD",
+   "DHR",
+   "PLTR",
+   "PFE",
+   "MAR",
+   "CRWD",
+   "ISRG",
+   "MRVL",
+   "MU",
+   "PANW",
+   "ABBV"
+  ],
+  "oversold": [
+   "SO",
+   "SBUX",
+   "PGR",
+   "BAC",
+   "BKNG",
+   "MCD",
+   "PEP",
+   "RTX",
+   "SCHW",
+   "MS",
+   "WFC",
+   "COF",
+   "SYK",
+   "UBER",
+   "BMY",
+   "ADP",
+   "GS",
+   "JPM",
+   "ABT",
+   "HD",
+   "CB",
+   "LOW"
+  ],
+  "obReturn": [
+   "TSLA",
+   "WMT",
+   "TXN",
+   "QCOM",
+   "DE",
+   "HCA"
+  ],
+  "osReturn": [
+   "V",
+   "UNH",
+   "NFLX",
+   "VZ"
+  ],
+  "events": [
+   "GOOGL",
+   "GOOG",
+   "TSLA",
+   "BRK.B",
+   "LLY",
+   "WMT",
+   "V",
+   "XOM",
+   "COST",
+   "CAT",
+   "DELL",
+   "PG",
+   "UNH",
+   "MS",
+   "DIS",
+   "BLK",
+   "COP",
+   "VRTX",
+   "ACN",
+   "EQIX",
+   "MCK",
+   "HCA"
+  ]
  }
 }
