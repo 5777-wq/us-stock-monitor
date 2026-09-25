@@ -124,9 +124,6 @@ async function main() {
     const row = evaluate(m, series, cfg, marketDate);
     if (!row) { failed.push({ ...m, reason: '指标计算数据不足' }); continue; }
     row.anchored = series.anchored || false;
-    // 报表 sparkline 用：最近 120 根已收盘收盘价（HTML 端重算 EMA/RSI 画图）
-    const closedBars = series.bars.filter((b) => b[0] <= marketDate);
-    row.spark = { closes: closedBars.slice(-120).map((b) => b[2]) };
     rows.push(row);
     await sleep(60);
   }
