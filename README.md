@@ -28,7 +28,7 @@ node test.mjs                 # 离线测试（无网络可跑）
 
 ## 数据口径（重要）
 
-- **主源：东财 push2his 后复权（fqt=2）**——乘性口径，含拆股与分红，约 2400+ 根，EMA576/676 收敛充分。Node fetch 被其 WAF 拒时自动退 curl 子进程；连续失败熔断换源。
+- **主源：东财 push2his 后复权（fqt=2）**——乘性口径，含拆股与分红，约 2400+ 根，EMA576/676 收敛充分。展示时用报价现价把整条序列等比锚定回"现价口径"（等价于锚定今日的前复权）：收盘价显示真实价位，RSI/EMA/通道因尺度不变而完全不受影响。Node fetch 被其 WAF 拒时自动退 curl 子进程；连续失败熔断换源。
 - **兜底：腾讯 K 线（不复权）**——美股是不复权原始价。近一年内有拆股的标的（如 NVDA 2024-06、NFLX 2025-11），长通道 EMA576/676 会被拆股缺口明显污染，报表会在该行打「不复权」徽标并注明。主源恢复后自动回到后复权口径。
 - RSI6 用 Wilder 平滑（与通达信 SMA(X,N,1)、TradingView RMA 同口径）；EMA 种子 = 前 n 项 SMA。与上层 OpenFinLens 看板 js/technical.js 完全同口径。
 - 盘中运行安全：只认已收盘 bar（按 ET 墙钟判定），未收盘的 live bar 单独标注「盘中参考」，不进信号。
@@ -55,6 +55,10 @@ schtasks /Create /TN "US-Monitor" /TR "\"D:\57的vibe coding内容\global-fin-da
 ### 手机上看
 
 私有仓库里直接打开 `out/report.html` → 文件视图右上角 Preview 渲染；或把仓库转 public 后开 GitHub Pages（Settings → Pages）绑自己的域名，就是一条网址。推送通知见下。
+
+## 手机上看（已上线）
+
+**线上地址：<https://5777-wq.github.io/us-stock-monitor/>**（仓库公开 + GitHub Pages，Actions 每个美股交易日收盘后自动更新报告）。仓库当前为 public——免费 `github.io` 域名只给公开仓库；若改回 private，Pages 会停（私有仓库用 Pages 需 GitHub Pro）。也可本地 `out/report.html` 双击看。
 
 ## 推送通知（可选，默认关）
 

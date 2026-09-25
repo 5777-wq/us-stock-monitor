@@ -4,7 +4,7 @@
 
 import { emaSeries, rsiSeries, tunnelSnap, rsiSnap, tunnelPos, tunnelEvent } from './lib/indicators.mjs';
 import { lastClosedDate, splitClosed, etNow } from './lib/market.mjs';
-import { mergeBars } from './lib/sources.mjs';
+import { mergeBars, anchorSeries } from './lib/sources.mjs';
 import { rankUniverse } from './lib/universe.mjs';
 import { evaluate, summarize } from './lib/signals.mjs';
 
@@ -135,8 +135,21 @@ suite('market.mjs：ET 收盘判定（2026-09 为 EDT=UTC-4，2026-01 为 EST=UT
 }
 
 /* ---------- 缓存合并 / 排名 ---------- */
-suite('sources.mergeBars / universe.rankUniverse');
+suite('sources.mergeBars / anchorSeries / universe.rankUniverse');
 {
+  // hfq 序列锚定：整条序列等比缩放，RSI/EMA 比值不变
+  const scale = 77621.28 / 335.92;
+  const hfqBars = Array.from({ length: 30 }, (_, i) => ['h' + String(i).padStart(2, '0'), 0, (100 + Math.sin(i / 5) * 6 + i * 0.8) * scale, 0, 0, 0]);
+  hfqBars[29][2] = 77621.28;                       // 末值恰为现价 335.92 的 hfq 值
+  const hfq = { adj: 'hfq', bars: hfqBars };
+  const a = anchorSeries(hfq, 335.92);
+  near(a.bars[29][2], 335.92, 1e-6, '锚定后末值 = 现价', a.bars[29][2]);
+  ok(a.anchored === true && a.adj === 'hfq', 'anchored 标记');
+  const r_before = rsiSeries(hfqBars.map((b) => b[2]), 6)[29];
+  const r_after = rsiSeries(a.bars.map((b) => b[2]), 6)[29];
+  ok(r_before !== null && Math.abs(r_after - r_before) < 1e-9, 'RSI 尺度不变', { r_before, r_after });
+  ok(anchorSeries({ adj: 'raw', bars: [['x', 0, 1, 0, 0, 0]] }, 100).adj === 'raw', 'raw 序列不锚定');
+  ok(anchorSeries(hfq, null) === hfq, '无报价不锚定');
   const m = mergeBars([['2026-09-22', 1, 1, 1, 1, 1], ['2026-09-23', 1, 2, 2, 2, 2]], [['2026-09-23', 1, 9, 9, 9, 9], ['2026-09-24', 1, 3, 3, 3, 3]]);
   ok(m.length === 3 && m[2][0] === '2026-09-24' && m[1][2] === 9, '新覆盖同日 + 升序', m);
   const cands = [{ ticker: 'A' }, { ticker: 'BRK.B' }, { ticker: 'C' }];

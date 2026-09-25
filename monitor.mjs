@@ -87,7 +87,7 @@ async function main() {
   if (!quiet) console.error(`[${et.date} ${et.hhmm} ET] 最后已收盘交易日: ${marketDate}`);
 
   /* 1. 池子：SP500 候选 → 实时市值前 N */
-  const { universe, candidatesMeta, spmoHoldings } = await buildUniverse({
+  const { universe, candidatesMeta, spmoHoldings, spmoQuote } = await buildUniverse({
     topN: cfg.universe.topN,
     candidatesFile: cfg.universe.candidatesFile,
     quoteBatch: cfg.universe.quoteBatch,
@@ -97,7 +97,11 @@ async function main() {
 
   /* 2. 逐标的取数 + 评估（SPMO 排第一） */
   const targets = [
-    { ticker: 'SPMO', name: '标普500动量ETF-Invesco', rank: null, mcapUsd: null, spmoPct: null },
+    {
+      ticker: 'SPMO', rank: null, mcapUsd: null, spmoPct: null,
+      name: (spmoQuote && spmoQuote.name) || '标普500动量ETF-Invesco',
+      quotePrice: spmoQuote ? spmoQuote.price : null,
+    },
     ...picked,
   ];
   const rows = [];
@@ -114,8 +118,12 @@ async function main() {
       });
     } catch (e) { if (!quiet) console.error(`  ✗ ${e.message}`); }
     if (!series || series.bars.length < 30) { failed.push({ ...m, reason: series ? 'bars<30' : '取数失败' }); continue; }
+    // 后复权序列锚定回现价口径（RSI/EMA 尺度不变，仅展示价回归真实价位）
+    const anchored = anchorSeries(series, m.quotePrice);
+    if (anchored !== series) series = anchored;
     const row = evaluate(m, series, cfg, marketDate);
     if (!row) { failed.push({ ...m, reason: '指标计算数据不足' }); continue; }
+    row.anchored = series.anchored || false;
     // 报表 sparkline 用：最近 120 根已收盘收盘价（HTML 端重算 EMA/RSI 画图）
     const closedBars = series.bars.filter((b) => b[0] <= marketDate);
     row.spark = { closes: closedBars.slice(-120).map((b) => b[2]) };
