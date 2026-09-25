@@ -3,9 +3,9 @@
  "strategy": "SPMO 攒股 + SP500前100 增强 · 日线 RSI6 超买超卖 + Vegas 三通道",
  "meta": {
   "marketDate": "2026-09-24",
-  "generatedAt": "2026-09-25T11:56:49.622Z",
-  "generatedAtLocal": "2026/9/25 19:56:49",
-  "runAtEt": "2026-09-25 07:55 ET",
+  "generatedAt": "2026-09-25T12:00:23.854Z",
+  "generatedAtLocal": "2026/9/25 12:00:23",
+  "runAtEt": "2026-09-25 07:59 ET",
   "topN": 100,
   "extraNote": " + SPMO",
   "candidatesAsOf": "2026-09-25",
@@ -13,7 +13,7 @@
   "srcEast": 0,
   "srcTx": 101,
   "srcFail": 0,
-  "eastError": "curl(56)",
+  "eastError": "Unexpected token '<', \"<html>\r\n<h\"... is not valid JSON",
   "liveCount": 0
  },
  "cfg": {
