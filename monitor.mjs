@@ -153,7 +153,8 @@ async function main() {
   };
 
   const data = { meta, cfg, spmo, rows: stockRows, summary, failed, outputs: [] };
-  const outputs = writeOutputs(data, outDir, { csv: cfg.report.csv, html: cfg.report.html && !args.noHtml });
+  // --limit 是试跑：写 out/preview，绝不覆盖正式报告（曾发生试跑快照顶掉全量报告）
+  const outputs = writeOutputs(data, args.limit ? path.join(outDir, 'preview') : outDir, { csv: cfg.report.csv, html: cfg.report.html && !args.noHtml });
   data.outputs = outputs.map((p) => path.relative(HERE, p));
 
   if (cfg.report.console !== false) console.log(consoleReport(data));
