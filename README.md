@@ -16,6 +16,8 @@
 - **池外标的**（如 QQQ）：运行时单独取数评估，全表排在末尾（排名位显示★），备注显示在徽标/详情里；
 - 报告页顶部有「自选持仓」卡片面板（点卡片看 K 线与口径），筛选 chips 多一枚「自选」；控制台报告、latest.json（`groups.watch` + 行级 `watch/note`）、CSV（自选备注列）同步呈现。
 
+**持仓隐私**：仓库是公开的，真实持仓别写进 `config.json`。把清单放 **`config.local.json`**（已被 .gitignore 排除，不会上传），字段会自动叠加在 `config.json` 之上，本地 `node monitor.mjs` 即可监控你的持仓；公开报告（Actions 云端跑）不含它们。写法见 `config.local.json.example`（复制一份去掉 `.example` 改内容）。
+
 ## 快速开始
 
 ```bash

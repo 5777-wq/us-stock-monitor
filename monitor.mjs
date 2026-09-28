@@ -69,7 +69,17 @@ function loadConfig(file) {
     for (const k of Object.keys(u)) o[k] = u[k] && typeof u[k] === 'object' && !Array.isArray(u[k]) ? merge(d[k] || {}, u[k]) : u[k];
     return o;
   };
-  return merge(defaults, user);
+  let merged = merge(defaults, user);
+  /* config.local.json（gitignore，持仓隐私）叠加在 config.json 之上；
+   * --config 显式指定时不叠加（明确要看的就只是那份配置）。坏文件静默忽略。 */
+  if (!file) {
+    const lp = path.join(HERE, 'config.local.json');
+    if (existsSync(lp)) {
+      try { merged = merge(merged, JSON.parse(readFileSync(lp, 'utf8'))); }
+      catch { /* 隐私配置层解析失败不弄挂监控 */ }
+    }
+  }
+  return merged;
 }
 
 /* ---------- 主流程 ---------- */

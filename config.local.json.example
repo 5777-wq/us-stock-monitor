@@ -1,0 +1,9 @@
+{
+  "_说明": "本文件被 .gitignore 排除，不会上传 GitHub——把你的真实持仓写在这里，本地跑 node monitor.mjs 即可监控；公开报告（Actions）不含这些标的。字段会整体叠加在 config.json 之上。",
+  "watchlist": {
+    "tickers": [
+      "NVDA",
+      { "ticker": "QQQ", "note": "池外ETF示例" }
+    ]
+  }
+}

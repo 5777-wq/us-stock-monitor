@@ -4,3 +4,5 @@ out/shots/
 out/preview/
 out/run.log
 .tmp-*
+# 本地私有配置：持仓/自选清单与密钥放这里，不上 GitHub（loadConfig 自动叠加在 config.json 之上）
+config.local.json
