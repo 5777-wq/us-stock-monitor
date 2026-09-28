@@ -4,7 +4,7 @@
  * 监控策略（用户自述）：
  *   · 池子：SP500 实时市值前 100 + SPMO（核心攒股标的，固定监控）；
  *   · 指标：日线收盘 RSI6（Wilder）>70 超买（做T观察）/<30 超卖（吸纳观察）；
- *   · Vegas 三通道：EMA12/36 短 · EMA144/169 主（Vegas Tunnel）· EMA576/676 长，
+ *   · Vegas 三通道：EMA144/169 短 · EMA288/338 中 · EMA576/676 长，
  *     记录价格相对通道位置与当日上下穿事件。
  * 用法：
  *   node monitor.mjs                     # 全量 101 只（首次约 2-4 分钟，之后增量很快）
@@ -51,7 +51,8 @@ function loadConfig(file) {
     universe: { topN: 100, candidatesFile: 'data/sp500-candidates.json', quoteBatch: 60 },
     rsi: { period: 6, overbought: 70, oversold: 30 },
     tunnels: [
-      { key: '短通道', n: [12, 36] },
+      { key: '短通道', n: [144, 169] },
+      { key: '中通道', n: [288, 338] },
       { key: '主通道', n: [144, 169] },
       { key: '长通道', n: [576, 676] },
     ],
@@ -147,7 +148,7 @@ async function main() {
       h: win.map((b) => +b[3].toFixed(3)),
       l: win.map((b) => +b[4].toFixed(3)),
       c: win.map((b) => +b[2].toFixed(3)),
-      e: [12, 36, 144, 169, 576, 676].map(emaSlice),
+      e: [144, 169, 288, 338, 576, 676].map(emaSlice),
     };
     rows.push(row);
     await sleep(60);
