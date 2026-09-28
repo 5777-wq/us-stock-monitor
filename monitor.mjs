@@ -19,6 +19,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { getSeries, eastStatus, yahooStatus, tencentQuotes, anchorSeries } from './lib/sources.mjs';
 import { buildUniverse, tvSymbolOf } from './lib/universe.mjs';
+import { emaSeries } from './lib/indicators.mjs';
 import { evaluate, summarize } from './lib/signals.mjs';
 import { lastClosedDate, etNow } from './lib/market.mjs';
 import { consoleReport, writeOutputs } from './lib/report.mjs';
@@ -127,6 +128,27 @@ async function main() {
     if (!row) { failed.push({ ...m, reason: '指标计算数据不足' }); continue; }
     row.anchored = series.anchored || false;
     row.tvSymbol = m.tvSymbol || m.ticker;
+    // 报表 K 线用：最近 90 根已收盘 bar + 六条 EMA（服务端对全量历史算好再切片，
+    // 长通道 EMA576/676 不可能从 90 根窗口现场算）——只进 HTML，不进 latest.json
+    const closedBars = series.bars.filter((b) => b[0] <= marketDate);
+    const win = closedBars.slice(-90);
+    const allCloses = closedBars.map((b) => b[2]);
+    const startI = allCloses.length - win.length;
+    const emaSlice = (n) => {
+      const seq = emaSeries(allCloses, n);
+      return win.map((_, i) => {
+        const v = seq[startI + i];
+        return v === null ? null : +v.toFixed(3);
+      });
+    };
+    row.k = {
+      d: win.map((b) => b[0]),
+      o: win.map((b) => +b[1].toFixed(3)),
+      h: win.map((b) => +b[3].toFixed(3)),
+      l: win.map((b) => +b[4].toFixed(3)),
+      c: win.map((b) => +b[2].toFixed(3)),
+      e: [12, 36, 144, 169, 576, 676].map(emaSlice),
+    };
     rows.push(row);
     await sleep(60);
   }

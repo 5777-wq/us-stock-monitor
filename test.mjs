@@ -247,12 +247,12 @@ suite('report.html：生成物内联脚本可解析（防模板转义破坏页�
   const files = writeOutputs(data, dir, { csv: false });
   const html = readFileSync(files.find((f) => f.endsWith('.html')), 'utf8');
   const blocks = [...html.matchAll(/<script>([\s\S]*?)<\/script>/g)].map((m) => m[1]);
-  ok(blocks.length === 2, '两个内联脚本块（数据 + 页面逻辑）', blocks.length);
+  ok(blocks.length === 3, '三个内联脚本块（lightweight-charts + 数据 + 页面逻辑）', blocks.length);
   let synErr = null;
   try { for (const b of blocks) new vm.Script(b); } catch (e) { synErr = e; }
   ok(!synErr, 'vm.Script 语法校验通过', synErr && String(synErr).slice(0, 200));
-  ok(html.includes('embed-widget-advanced-chart.js'), 'TradingView 免费日K嵌入在场');
-  ok(html.includes('tv-box'), '图表容器 id 在场');
+  ok(html.includes('LightweightCharts'), 'K 线库（lightweight-charts）已内联');
+  ok(html.includes('drawK') && html.includes('tv-box'), 'K 线渲染函数与容器在场');
   ok(html.includes('\\u003c') || !html.includes('</scr' + 'ipt></script>'), '数据块内 </script> 已转义');
 }
 
