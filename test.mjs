@@ -137,19 +137,21 @@ suite('market.mjs：ET 收盘判定（2026-09 为 EDT=UTC-4，2026-01 为 EST=UT
 /* ---------- 缓存合并 / 排名 ---------- */
 suite('sources.mergeBars / anchorSeries / parseYahoo / universe.rankUniverse');
 {
-  // Yahoo 解析：时间戳→ET 日期、null 过滤、adjclose 优先
+  // Yahoo 解析：时间戳→ET 日期、null 过滤、adjclose 优先、OHLC 按比例复权（否则蜡烛全是横线）
   const { parseYahoo } = await import('./lib/sources.mjs');
   const sample = JSON.stringify({
     chart: { result: [{
       timestamp: [1758648000, 1758734400, 1758820800, 1758907200],
       indicators: {
-        quote: [{ close: [1, null, 3, 4] }],
+        quote: [{ open: [1, 2, 3, 4], high: [1.5, 2.5, 3.5, 4.5], low: [0.9, 1.9, 2.9, 3.9], close: [1, null, 3, 4] }],
         adjclose: [{ adjclose: [10, 20, 30, 40] }],
       },
     }] },
   });
   const yb = parseYahoo(sample);
-  ok(yb.length === 4 && yb.every((b) => b[2] === b[1] && b[2] === b[3] && b[2] === b[4]), 'close-only bar 结构', yb.length);
+  ok(yb[0][1] === 10 && yb[0][3] === 15 && yb[0][4] === 9, '首根 o/h/l 按 adjclose/close 比例缩放', yb[0]);
+  ok(yb.some((b) => b[3] > b[4]), '存在真实高低差（不再全是横线）');
+  ok(yb.every((b) => b[3] >= b[2] && b[4] <= b[2]), 'high≥close≥low 恒成立');
   ok(yb.every((b) => /^\d{4}-\d{2}-\d{2}$/.test(b[0])), 'ET 日期格式');
   ok(yb.every((b, i) => i === 0 || yb[i - 1][0] <= b[0]), '升序');
   ok(yb[0][2] === 10, 'adjclose 优先于 close', yb[0][2]);
