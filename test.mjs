@@ -251,6 +251,8 @@ suite('report.html：生成物内联脚本可解析（防模板转义破坏页�
   let synErr = null;
   try { for (const b of blocks) new vm.Script(b); } catch (e) { synErr = e; }
   ok(!synErr, 'vm.Script 语法校验通过', synErr && String(synErr).slice(0, 200));
+  ok(html.includes('embed-widget-advanced-chart.js'), 'TradingView 免费日K嵌入在场');
+  ok(html.includes('tv-box'), '图表容器 id 在场');
   ok(html.includes('\\u003c') || !html.includes('</scr' + 'ipt></script>'), '数据块内 </script> 已转义');
 }
 

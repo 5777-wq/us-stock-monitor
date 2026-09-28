@@ -18,7 +18,7 @@ import { existsSync, readFileSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { getSeries, eastStatus, yahooStatus, tencentQuotes, anchorSeries } from './lib/sources.mjs';
-import { buildUniverse } from './lib/universe.mjs';
+import { buildUniverse, tvSymbolOf } from './lib/universe.mjs';
 import { evaluate, summarize } from './lib/signals.mjs';
 import { lastClosedDate, etNow } from './lib/market.mjs';
 import { consoleReport, writeOutputs } from './lib/report.mjs';
@@ -101,6 +101,7 @@ async function main() {
       ticker: 'SPMO', rank: null, mcapUsd: null, spmoPct: null,
       name: (spmoQuote && spmoQuote.name) || '标普500动量ETF-Invesco',
       quotePrice: spmoQuote ? spmoQuote.price : null,
+      tvSymbol: tvSymbolOf(spmoQuote && spmoQuote.code, 'SPMO'),
     },
     ...picked,
   ];
@@ -125,6 +126,7 @@ async function main() {
     const row = evaluate(m, series, cfg, marketDate);
     if (!row) { failed.push({ ...m, reason: '指标计算数据不足' }); continue; }
     row.anchored = series.anchored || false;
+    row.tvSymbol = m.tvSymbol || m.ticker;
     rows.push(row);
     await sleep(60);
   }
