@@ -18,7 +18,7 @@ import { existsSync, readFileSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { getSeries, eastStatus, yahooStatus, tencentQuotes, anchorSeries } from './lib/sources.mjs';
-import { buildUniverse, tvSymbolOf } from './lib/universe.mjs';
+import { buildUniverse, tvSymbolOf, normalizeWatchlist, splitWatchlist, watchTargetOf } from './lib/universe.mjs';
 import { emaSeries } from './lib/indicators.mjs';
 import { evaluate, summarize } from './lib/signals.mjs';
 import { lastClosedDate, etNow } from './lib/market.mjs';
@@ -57,6 +57,7 @@ function loadConfig(file) {
       { key: '长通道', n: [576, 676] },
     ],
     sources: { bootstrapLmt: 2000, refreshLmt: 120 },
+    watchlist: { tickers: [] },
     report: { outDir: 'out', console: true, json: true, csv: true, html: true },
     notify: { enabled: false, onlySignals: true, serverchanSendkey: '', barkUrl: '', telegramToken: '', telegramChatId: '' },
   };
@@ -107,6 +108,18 @@ async function main() {
     },
     ...picked,
   ];
+
+  /* 1.5 自选/持仓：池内标的就地打标（不重复取数），池外标的补报价后新增目标 */
+  const watchlist = normalizeWatchlist(cfg.watchlist);
+  const { extra: extraWatch } = splitWatchlist(targets, watchlist);
+  if (extraWatch.length) {
+    const wQuotes = await tencentQuotes(extraWatch.map((w) => w.ticker), { batch: cfg.universe.quoteBatch || 60 });
+    targets.push(...extraWatch.map((w) => watchTargetOf(
+      w,
+      wQuotes.find((q) => String(q.query || '').replace(/^us/i, '').toUpperCase() === w.ticker),
+    )));
+  }
+  if (watchlist.length && !quiet) console.error(`自选/持仓 ${watchlist.length} 只（池内打标 ${watchlist.length - extraWatch.length} · 池外新增 ${extraWatch.length}）`);
   const rows = [];
   const failed = [];
   for (let i = 0; i < targets.length; i++) {
@@ -129,6 +142,7 @@ async function main() {
     if (!row) { failed.push({ ...m, reason: '指标计算数据不足' }); continue; }
     row.anchored = series.anchored || false;
     row.tvSymbol = m.tvSymbol || m.ticker;
+    if (m.watch) { row.watch = true; row.note = m.watchNote || ''; }
     // 报表 K 线用：最近 90 根已收盘 bar + 六条 EMA（服务端对全量历史算好再切片，
     // 长通道 EMA576/676 不可能从 90 根窗口现场算）——只进 HTML，不进 latest.json
     const closedBars = series.bars.filter((b) => b[0] <= marketDate);
@@ -175,6 +189,7 @@ async function main() {
     eastError: es.disabled ? (es.lastError || '熔断') : null,
     yahooError: (() => { const ys = yahooStatus(); return ys.fails && ys.lastError ? ys.lastError : null; })(),
     liveCount: rows.filter((r) => r.live).length,
+    watchCount: rows.filter((r) => r.watch).length,
   };
 
   const data = { meta, cfg, spmo, rows: stockRows, summary, failed, outputs: [] };

@@ -5,7 +5,7 @@
 import { emaSeries, rsiSeries, tunnelSnap, rsiSnap, tunnelPos, tunnelEvent } from './lib/indicators.mjs';
 import { lastClosedDate, splitClosed, etNow } from './lib/market.mjs';
 import { mergeBars, anchorSeries } from './lib/sources.mjs';
-import { rankUniverse } from './lib/universe.mjs';
+import { rankUniverse, normalizeWatchlist, splitWatchlist, watchTargetOf } from './lib/universe.mjs';
 import { evaluate, summarize } from './lib/signals.mjs';
 
 let pass = 0, fail = 0;
@@ -182,6 +182,42 @@ suite('sources.mergeBars / anchorSeries / parseYahoo / universe.rankUniverse');
   ok(rankUniverse(cands, [], 3)[0].rank === 1, '报价全挂 → 静态序兜底，不崩');
 }
 
+/* ---------- 自选/持仓清单 ---------- */
+suite('universe：watchlist 归一化 / 池内外拆分 / 池外目标构造');
+{
+  const wl = normalizeWatchlist({
+    tickers: ['NVDA', { ticker: 'qqq', note: '池外ETF' }, { ticker: 'SPMO' }, 'nvda', { ticker: 'BRK.B', note: '  现金替代  ' }, { note: '没有代码' }, '', { ticker: 'XLK', note: 42 }],
+  });
+  ok(wl.length === 5, '字符串/对象混合，去重（大小写不敏感）、跳过空与缺代码', wl.map((x) => x.ticker));
+  ok(wl[0].ticker === 'NVDA' && wl[0].note === '', '纯字符串 → 无备注');
+  ok(wl[1].ticker === 'QQQ' && wl[1].note === '池外ETF', '对象形态，代码大写 + 备注');
+  ok(wl[4].note === '42', '备注数字转字符串', wl[4].note);
+  ok(normalizeWatchlist(undefined).length === 0 && normalizeWatchlist({}).length === 0, '未配置/空配置 → 空清单');
+  ok(normalizeWatchlist({ tickers: 'NVDA' }).length === 0, 'tickers 非数组 → 空清单（容错）');
+
+  // 池内外拆分：池内就地打标、池外进入 extra；SPMO 也在 targets 里同样命中
+  const targets = [
+    { ticker: 'SPMO', name: '标普500动量ETF', rank: null },
+    { ticker: 'NVDA', name: '英伟达', rank: 1 },
+    { ticker: 'AAPL', name: '苹果', rank: 2 },
+  ];
+  const { extra } = splitWatchlist(targets, [{ ticker: 'NVDA', note: '' }, { ticker: 'QQQ', note: '池外ETF' }, { ticker: 'SPMO', note: '核心' }]);
+  ok(extra.length === 1 && extra[0].ticker === 'QQQ' && extra[0].note === '池外ETF', '只有池外标的进 extra', extra);
+  const nvda = targets.find((t) => t.ticker === 'NVDA');
+  const spmo = targets.find((t) => t.ticker === 'SPMO');
+  ok(nvda.watch === true && nvda.watchNote === '', '池内标的就地打 watch 标');
+  ok(spmo.watch === true && spmo.watchNote === '核心', 'SPMO 命中同样打标');
+  ok(targets.find((t) => t.ticker === 'AAPL').watch === undefined, '未命中不受影响');
+
+  const wt = watchTargetOf({ ticker: 'QQQ', note: '池外ETF' }, { query: 'usQQQ', code: 'QQQ.OQ', name: '纳指100ETF', price: 512.3 });
+  ok(wt.ticker === 'QQQ' && wt.rank === null && wt.spmoPct === null, '池外目标：无排名无 SPMO 权重');
+  ok(wt.name === '纳指100ETF' && wt.quotePrice === 512.3, '报价补名称 + 现价锚');
+  ok(wt.tvSymbol === 'NASDAQ:QQQ', '报价后缀 → TradingView 交易所前缀', wt.tvSymbol);
+  ok(wt.watch === true && wt.watchNote === '池外ETF', '带 watch 标与备注');
+  const wt2 = watchTargetOf({ ticker: 'QQQ', note: '' }, null);
+  ok(wt2.name === 'QQQ' && wt2.quotePrice === null && wt2.tvSymbol === 'QQQ', '报价缺失 → 退回裸代码，仍可跑');
+}
+
 /* ---------- evaluate / summarize ---------- */
 suite('signals.evaluate：live 剔除 / raw 标记 / 汇总分组');
 {
@@ -238,15 +274,16 @@ suite('report.html：生成物内联脚本可解析（防模板转义破坏页�
     spark: { closes },
   });
   const data = {
-    meta: { marketDate: '2026-09-24', generatedAt: 'x', generatedAtLocal: 'x', runAtEt: 'x', topN: 100, extraNote: ' + SPMO', candidatesAsOf: 'x', universeNote: 'x', srcEast: 1, srcTx: 0, srcFail: 0, eastError: null, liveCount: 0 },
+    meta: { marketDate: '2026-09-24', generatedAt: 'x', generatedAtLocal: 'x', runAtEt: 'x', topN: 100, extraNote: ' + SPMO', candidatesAsOf: 'x', universeNote: 'x', srcEast: 1, srcTx: 0, srcFail: 0, eastError: null, liveCount: 0, watchCount: 1 },
     cfg: { rsi: { period: 6, overbought: 70, oversold: 30 }, tunnels: [{ key: '短通道', n: [12, 36] }, { key: '主通道', n: [144, 169] }, { key: '长通道', n: [576, 676] }] },
     spmo: mkRow('SPMO', null), rows: [mkRow('AAA', 1), mkRow('BBB', 2)],
     summary: { overbought: [mkRow('AAA', 1)], oversold: [], obReturn: [mkRow('BBB', 2)], osReturn: [], events: [mkRow('AAA', 1)] },
     failed: [],
     outputs: [],
   };
+  data.rows[1].watch = true; data.rows[1].note = '池外ETF';
   const dir = mkdtempSync(path.join(tmpdir(), 'usmon-test-'));
-  const files = writeOutputs(data, dir, { csv: false });
+  const files = writeOutputs(data, dir, {});
   const html = readFileSync(files.find((f) => f.endsWith('.html')), 'utf8');
   const blocks = [...html.matchAll(/<script>([\s\S]*?)<\/script>/g)].map((m) => m[1]);
   ok(blocks.length === 3, '三个内联脚本块（lightweight-charts + 数据 + 页面逻辑）', blocks.length);
@@ -256,6 +293,18 @@ suite('report.html：生成物内联脚本可解析（防模板转义破坏页�
   ok(html.includes('LightweightCharts'), 'K 线库（lightweight-charts）已内联');
   ok(html.includes('drawK') && html.includes('tv-box'), 'K 线渲染函数与容器在场');
   ok(html.includes('\\u003c') || !html.includes('</scr' + 'ipt></script>'), '数据块内 </script> 已转义');
+  // 自选持仓四端呈现
+  ok(html.includes('id="watch-panel"') && html.includes('watch-grid') && html.includes('自选持仓'), '自选持仓面板结构在场');
+  ok(html.includes("watch:{label:'自选'") && html.includes("cur==='watch'"), '自选 chip 与筛选分支在场');
+  ok(html.includes('note-badge') && html.includes('自选备注'), '表格徽标与弹层备注行在场');
+  ok(html.includes('wc-top') && html.includes('watch-card'), '自选卡片样式/结构在场');
+  const jobj = JSON.parse(readFileSync(files.find((f) => f.endsWith('.json')), 'utf8'));
+  ok(jobj.groups.watch.includes('BBB'), 'groups.watch 收录自选标的', jobj.groups.watch);
+  ok(jobj.rows.find((r) => r.ticker === 'BBB').watch === true && jobj.rows.find((r) => r.ticker === 'BBB').note === '池外ETF', '行级 watch/note 进 JSON');
+  ok(jobj.meta.watchCount === 1, 'meta.watchCount 计数');
+  const csv = readFileSync(files.find((f) => f.endsWith('.csv')), 'utf8');
+  ok(csv.includes('自选备注'), 'CSV 表头含自选备注列');
+  ok(/BBB,[^]*池外ETF/.test(csv), 'CSV 行带备注', csv.split('\r\n')[2]);
 }
 
 /* ---------- 汇总 ---------- */

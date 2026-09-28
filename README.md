@@ -10,6 +10,12 @@
 
 池子：**SP500 实时市值前 100 + SPMO（固定监控）**。成分快照约 130 只候选，运行时用腾讯实时总市值重排取前 100；命中华夏 SPMO 前 40 大持仓的标的会标注「SPMO 持仓 %」。
 
+**自选/持仓清单**（`config.json → watchlist.tickers`）：在池子之外加一层"我关心的标的"，写法 `"NVDA"`（无备注）或 `{"ticker":"QQQ","note":"池外ETF"}`（带备注）——
+
+- **池内标的**（如 NVDA）：不重复取数，正常参与排名与全表，行上多一枚「自选」徽标；
+- **池外标的**（如 QQQ）：运行时单独取数评估，全表排在末尾（排名位显示★），备注显示在徽标/详情里；
+- 报告页顶部有「自选持仓」卡片面板（点卡片看 K 线与口径），筛选 chips 多一枚「自选」；控制台报告、latest.json（`groups.watch` + 行级 `watch/note`）、CSV（自选备注列）同步呈现。
+
 ## 快速开始
 
 ```bash
@@ -84,13 +90,13 @@ schtasks /Create /TN "US-Monitor" /TR "\"D:\57的vibe coding内容\global-fin-da
 
 ## 配置
 
-`config.json`：`universe.topN`（前几名）、`rsi.period/overbought/oversold`、`tunnels`（三通道参数，想只看 144/169 就删掉另外两条）、`report`（输出开关）、`notify`。
+`config.json`：`universe.topN`（前几名）、`watchlist.tickers`（自选/持仓，写法见上）、`rsi.period/overbought/oversold`、`tunnels`（三通道参数，想只看 144/169 就删掉另外两条）、`report`（输出开关）、`notify`。
 
 SP500 候选池：`data/sp500-candidates.json`（快照 + 说明），指数调仓后手工增删；市值排名每次运行时用实时报价重排，不怕次序漂移。
 
 ## 测试
 
-`node test.mjs`——56 条断言：EMA/RSI 手算黄金值对账、与 OpenFinLens technical.js 递推逐点互证（随机序列 40 组）、ET 收盘时钟（含夏冬令时边界）、缓存合并、市值排名、live bar 剔除、生成物内联脚本语法守卫。
+`node test.mjs`——96 条断言：EMA/RSI 手算黄金值对账、与 OpenFinLens technical.js 递推逐点互证（随机序列 40 组）、ET 收盘时钟（含夏冬令时边界）、缓存合并、市值排名、自选清单归一化/池内外拆分、live bar 剔除、生成物内联脚本语法守卫。
 
 ## 免责声明
 

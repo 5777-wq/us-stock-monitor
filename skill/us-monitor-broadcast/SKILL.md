@@ -16,8 +16,8 @@ description: 读取并播报美股监控最新信号（SPMO + SP500市值前100�
 
 - `meta.marketDate` 报告对应收盘交易日；`meta.generatedAt` 生成时间
 - `spmo`：核心标的 SPMO 行（先读它）
-- `rows[]`：100 只，`rsi6{value,state,cross}`、`tunnels[]{key,pos,event}`、`spmoPct`（SPMO 持仓权重）、`adj`（hfq=后复权 / raw=不复权）、`anchored`、`notes[]`（每只的事实解读，可摘引）
-- `groups`：`overbought`(超买中) / `oversold`(超卖中) / `obReturn`(超买回落→回归正常区) / `osReturn`(超卖回升→回归正常区) / `events`(通道穿越)，都是 ticker 数组
+- `rows[]`：100 只 + 池外自选，`rsi6{value,state,cross}`、`tunnels[]{key,pos,event}`、`spmoPct`（SPMO 持仓权重）、`adj`（hfq=后复权 / raw=不复权）、`anchored`、`notes[]`（每只的事实解读，可摘引）；自选/持仓行带 `watch:true` 和 `note`（用户备注，如"池外ETF"）
+- `groups`：`overbought`(超买中) / `oversold`(超卖中) / `obReturn`(超买回落→回归正常区) / `osReturn`(超卖回升→回归正常区) / `events`(通道穿越) / `watch`(自选持仓清单)，都是 ticker 数组
 
 用户策略语境：攒股 SPMO 为主、围绕它做增强、主要做多；超买时做 T（减仓后回补）；超卖时分批吸纳。**回归信号（前一根收盘在超买/超卖区、本根收盘回到 30~70 正常区）是用户最关心的信号，播报时置顶。**
 
@@ -37,7 +37,8 @@ description: 读取并播报美股监控最新信号（SPMO + SP500市值前100�
 3. **当前超买**（`groups.overbought`）：列前 5~8 只，格式 `代码(RSI值)`，SPMO 重仓重合的标注（对照 rows[].spmoPct>0）
 4. **当前超卖**（`groups.oversold`）：同上
 5. **通道事件**（`groups.events`）：只列 ticker
-6. 结尾一句：口径提醒——`adj=raw` 的行不复权（近期拆过股的长通道读数别当真）＋"以上为指标事实描述，不构成投资建议"
+6. **自选持仓速览**（`groups.watch`）：每个 ticker 一行——收盘、涨跌%、RSI6、通道位置；行上有 `note` 的带上一句备注。若其中标的同时出现在回归/超买/超卖/事件里，点名强调
+7. 结尾一句：口径提醒——`adj=raw` 的行不复权（近期拆过股的长通道读数别当真）＋"以上为指标事实描述，不构成投资建议"
 
 无信号的日子就一句话带过（如"今日无超买/超卖，池内 RSI6 全部在正常区"）。
 

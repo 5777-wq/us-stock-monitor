@@ -15,6 +15,9 @@
     "refreshLmt": 120,
     "eastProxy": ""
   },
+  "watchlist": {
+    "tickers": ["NVDA", { "ticker": "QQQ", "note": "池外ETF" }]
+  },
   "report": {
     "outDir": "out",
     "console": true,
