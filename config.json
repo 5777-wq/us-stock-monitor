@@ -16,7 +16,7 @@
     "eastProxy": ""
   },
   "watchlist": {
-    "tickers": ["NVDA", { "ticker": "QQQ", "note": "池外ETF" }]
+    "tickers": ["NVDA", "ASML", { "ticker": "QQQ", "note": "池外ETF" }]
   },
   "report": {
     "outDir": "out",

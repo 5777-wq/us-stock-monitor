@@ -298,6 +298,13 @@ suite('report.html：生成物内联脚本可解析（防模板转义破坏页�
   ok(html.includes("watch:{label:'自选'") && html.includes("cur==='watch'"), '自选 chip 与筛选分支在场');
   ok(html.includes('note-badge') && html.includes('自选备注'), '表格徽标与弹层备注行在场');
   ok(html.includes('wc-top') && html.includes('watch-card'), '自选卡片样式/结构在场');
+  // 搜索框 + 页内增删自选（localStorage 叠加层）+ 复制清单 + 弹层开关
+  ok(html.includes('id="search"') && html.includes('matchQ'), '搜索框与过滤逻辑在场');
+  ok(html.includes('usmon.watch.v1') && html.includes('toggleWatch') && html.includes('isWatch'), '自选增删状态机（localStorage 叠加层）在场');
+  ok(html.includes('id="copy-cfg"') && html.includes('copyCfg'), '复制清单按钮在场');
+  ok(html.includes('id="detail-star"') && html.includes('cardstar') && html.includes('stcol'), '弹层/卡片/表格自选开关在场');
+  ok(html.includes('colspan="13"'), '新增自选列后的空态 colspan');
+  ok(html.includes('liveQuote') && html.includes('fetchExtra'), '池外新增标的在线报价逻辑在场');
   const jobj = JSON.parse(readFileSync(files.find((f) => f.endsWith('.json')), 'utf8'));
   ok(jobj.groups.watch.includes('BBB'), 'groups.watch 收录自选标的', jobj.groups.watch);
   ok(jobj.rows.find((r) => r.ticker === 'BBB').watch === true && jobj.rows.find((r) => r.ticker === 'BBB').note === '池外ETF', '行级 watch/note 进 JSON');
