@@ -370,7 +370,8 @@ suite('report.html：生成物内联脚本可解析（防模板转义破坏页�
   ok(html.includes('usmon.watch.v1') && html.includes('toggleWatch') && html.includes('isWatch'), '自选增删状态机（localStorage 叠加层）在场');
   ok(html.includes('id="copy-cfg"') && html.includes('copyCfg'), '复制清单按钮在场');
   ok(html.includes('id="detail-star"') && html.includes('cardstar') && html.includes('stcol'), '弹层/卡片/表格自选开关在场');
-  ok(html.includes('colspan="15"'), '自选+周线列后的空态 colspan=15');
+  ok(html.includes('colspan="14"'), '信号标签列合并后的空态 colspan=14');
+  ok(html.includes('<th>信号</th>') && html.includes('sigTags') && html.includes('.tagx.fill-up') && html.includes("'fill-up'"), '信号标签列与实心/描边标签渲染在场');
   // 周线与成分标注呈现
   ok(html.includes('id="th-wkrsi">周RSI6</th>') && html.includes('<th>周通道</th>') && html.includes('wkTunCell'), '周RSI/周通道列与渲染函数在场');
   ok(html.includes("drawK(r,'w')") && html.includes('kMode') && html.includes('ct-w'), '日/周图表切换在场');
