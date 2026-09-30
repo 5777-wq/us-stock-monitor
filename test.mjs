@@ -370,10 +370,10 @@ suite('report.html：生成物内联脚本可解析（防模板转义破坏页�
   ok(html.includes('usmon.watch.v1') && html.includes('toggleWatch') && html.includes('isWatch'), '自选增删状态机（localStorage 叠加层）在场');
   ok(html.includes('id="copy-cfg"') && html.includes('copyCfg'), '复制清单按钮在场');
   ok(html.includes('id="detail-star"') && html.includes('cardstar') && html.includes('stcol'), '弹层/卡片/表格自选开关在场');
-  ok(html.includes('colspan="14"'), '信号标签列合并后的空态 colspan=14');
+  ok(html.includes('colspan="10"'), '通道/RSI 收纳后的空态 colspan=10');
   ok(html.includes('<th>信号</th>') && html.includes('sigTags') && html.includes('.tagx.fill-up') && html.includes("'fill-up'"), '信号标签列与实心/描边标签渲染在场');
   // 周线与成分标注呈现
-  ok(html.includes('id="th-wkrsi">周RSI6</th>') && html.includes('<th>周通道</th>') && html.includes('wkTunCell'), '周RSI/周通道列与渲染函数在场');
+  ok(html.includes('Vegas 通道 日/周') && html.includes('tunDualCell') && html.includes('rsiDualCell'), '周RSI/通道收纳为日/周双行列（tunDualCell/rsiDualCell）');
   ok(html.includes("drawK(r,'w')") && html.includes('kMode') && html.includes('ct-w'), '日/周图表切换在场');
   ok(html.includes('idx-badge') && html.includes('成分指数'), '纳指100 徽标与弹层成分行在场');
   ok(html.includes('周超买') && html.includes("cur==='wob'") && html.includes("cur==='wret'"), '周线 chips 与筛选分支在场');
