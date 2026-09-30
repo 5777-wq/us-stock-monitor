@@ -50,7 +50,7 @@ function loadConfig(file) {
   const p = path.resolve(HERE, file || 'config.json');
   const defaults = {
     universe: { topN: 100, candidatesFile: 'data/sp500-candidates.json', quoteBatch: 60 },
-    rsi: { period: 6, overbought: 70, oversold: 30 },
+    rsi: { period: 6, period2: 14, overbought: 70, oversold: 30 },
     tunnels: [
       { key: '短通道', n: [144, 169] },
       { key: '中通道', n: [288, 338] },

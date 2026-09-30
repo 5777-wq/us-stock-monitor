@@ -257,7 +257,7 @@ suite('universe：watchlist 归一化 / 池内外拆分 / 池外目标构造');
 /* ---------- evaluate / summarize ---------- */
 suite('signals.evaluate：live 剔除 / raw 标记 / 汇总分组');
 {
-  const cfg = { rsi: { period: 6, overbought: 70, oversold: 30 }, tunnels: [{ key: '主通道', n: [12, 36] }] };
+  const cfg = { rsi: { period: 6, period2: 14, overbought: 70, oversold: 30 }, tunnels: [{ key: '主通道', n: [12, 36] }] };
   const up = Array.from({ length: 60 }, (_, i) => ['d' + String(i).padStart(3, '0'), 0, 100 + i, 0, 0, 0]);
   const meta = { ticker: 'TEST', name: '测试', rank: 1, mcapUsd: 1e12, spmoPct: 2.5 };
   const r1 = evaluate(meta, { bars: up, adj: 'hfq', source: 'eastmoney' }, cfg, 'd059');
@@ -265,6 +265,10 @@ suite('signals.evaluate：live 剔除 / raw 标记 / 汇总分组');
   const r2 = evaluate(meta, { bars: [...up, ['d060', 0, 160, 0, 0, 0]], adj: 'hfq', source: 'eastmoney' }, cfg, 'd059');
   ok(r2.close === 159 && r2.live && r2.live.close === 160, 'live bar 剔除后信号用 d059，live 记录 d060', { close: r2.close, live: r2.live });
   ok(r2.rsi6.state === 'overbought', '连涨超买');
+  // 第二周期 RSI（默认14）：同阈值，独立数值
+  ok(r2.rsi14 && r2.rsi14.period === 14, 'evaluate 带 rsi14（period 14）', r2.rsi14 && r2.rsi14.period);
+  ok(r2.rsi14.value > 70 && r2.rsi14.state === 'overbought', '连涨序列 RSI14 也超买', r2.rsi14 && +r2.rsi14.value.toFixed(1));
+  ok(r2.rsi14.value <= r2.rsi6.value || r2.rsi14.value === 100, 'RSI14 平滑更慢（不超前 RSI6）', { r6: r2.rsi6.value, r14: r2.rsi14.value });
   const r3 = evaluate(meta, { bars: up, adj: 'raw', source: 'tencent' }, cfg, 'd059');
   ok(r3.notes.some((n) => n.tag === '口径'), '不复权 → 口径警告');
   const s = summarize([r2]);
@@ -293,7 +297,7 @@ suite('signals.evaluate：live 剔除 / raw 标记 / 汇总分组');
 suite('signals.evaluate 周线块：40 周真实日历日线 → 周RSI/周通道/周标签');
 {
   const metaW = { ticker: 'WKLY', name: '周线测试', rank: 1, sp500: true, ndx: true };
-  const cfgW = { rsi: { period: 6, overbought: 70, oversold: 30 }, tunnels: [{ key: '短通道', n: [12, 36] }, { key: '长通道', n: [576, 676] }] };
+  const cfgW = { rsi: { period: 6, period2: 14, overbought: 70, oversold: 30 }, tunnels: [{ key: '短通道', n: [12, 36] }, { key: '长通道', n: [576, 676] }] };
   // 2026-01-05 是周一：40 周 × 5 个交易日，逐日上涨
   const wbars = [];
   for (let wi = 0; wi < 40; wi++) for (let d = 0; d < 5; d++) {
@@ -303,6 +307,7 @@ suite('signals.evaluate 周线块：40 周真实日历日线 → 周RSI/周通�
   const rw = evaluate(metaW, { bars: wbars, adj: 'hfq', source: 'eastmoney' }, cfgW, wbars[wbars.length - 1][0]);
   ok(rw && rw.wk && rw.wk.bars === 40, '40 周日线 → 40 根周线', rw.wk && rw.wk.bars);
   ok(rw.wk.rsi6 && rw.wk.rsi6.state === 'overbought', '周线RSI6 超买（逐周上涨）', rw.wk.rsi6);
+  ok(rw.wk.rsi14 && rw.wk.rsi14.period === 14 && rw.wk.rsi14.state === 'overbought', '周线RSI14 同参同判（超买）', rw.wk.rsi14);
   ok(rw.wk.tunnels[0].pos === 'above' && rw.wk.tunnels[0].insufficient === undefined, '周线短通道(12/36周)可算 → above', rw.wk.tunnels[0]);
   ok(rw.wk.tunnels[1].insufficient === true, '周线长通道(576/676周) → insufficient');
   ok(rw.wk.asOf === weekEndOf(wbars[199][0]) && rw.wk.asOf === rw.asOf, '周线 asOf = 本周周五标签', rw.wk.asOf);
@@ -329,7 +334,8 @@ suite('report.html：生成物内联脚本可解析（防模板转义破坏页�
       { key: '长通道', n: [576, 676], pos: null, event: null, insufficient: true },
     ],
     live: null, adj: 'hfq', source: 'eastmoney', bars: 2000,
-    wk: { asOf: '2026-09-25', bars: 260, rsi6: { value: 55.5, prev: 61.2, state: 'neutral', cross: null, period: 6 }, tunnels: [{ key: '短通道', n: [144, 169], upper: 2, lower: 1, pos: 'above', event: null, widthPct: 3 }, { key: '主通道', n: [288, 338], pos: 'inside', event: null }, { key: '长通道', n: [576, 676], pos: null, event: null, insufficient: true }], live: null, k: { d: ['2026-09-25'], o: [1], h: [2], l: [0.5], c: [1], e: [[1], [1], [1], [1], [1], [1]] } },
+    wk: { asOf: '2026-09-25', bars: 260, rsi6: { value: 55.5, prev: 61.2, state: 'neutral', cross: null, period: 6 }, rsi14: { value: 48.2, prev: 51.0, state: 'neutral', cross: null, period: 14 }, tunnels: [{ key: '短通道', n: [144, 169], upper: 2, lower: 1, pos: 'above', event: null, widthPct: 3 }, { key: '主通道', n: [288, 338], pos: 'inside', event: null }, { key: '长通道', n: [576, 676], pos: null, event: null, insufficient: true }], live: null, k: { d: ['2026-09-25'], o: [1], h: [2], l: [0.5], c: [1], e: [[1], [1], [1], [1], [1], [1]] } },
+    rsi14: { value: 63.4, prev: 60.2, state: 'neutral', cross: null, period: 14 },
     sp500: true, ndx: ticker === 'BBB' ? true : false,
     notes: [{ tag: 'RSI6', level: 'warn', text: 'RSI6=72.5 超买（>70），今日新进超买区。' }],
     spark: { closes },
@@ -366,7 +372,7 @@ suite('report.html：生成物内联脚本可解析（防模板转义破坏页�
   ok(html.includes('id="detail-star"') && html.includes('cardstar') && html.includes('stcol'), '弹层/卡片/表格自选开关在场');
   ok(html.includes('colspan="15"'), '自选+周线列后的空态 colspan=15');
   // 周线与成分标注呈现
-  ok(html.includes('<th>周RSI6</th>') && html.includes('<th>周通道</th>') && html.includes('wkTunCell'), '周RSI/周通道列与渲染函数在场');
+  ok(html.includes('id="th-wkrsi">周RSI6</th>') && html.includes('<th>周通道</th>') && html.includes('wkTunCell'), '周RSI/周通道列与渲染函数在场');
   ok(html.includes("drawK(r,'w')") && html.includes('kMode') && html.includes('ct-w'), '日/周图表切换在场');
   ok(html.includes('idx-badge') && html.includes('成分指数'), '纳指100 徽标与弹层成分行在场');
   ok(html.includes('周超买') && html.includes("cur==='wob'") && html.includes("cur==='wret'"), '周线 chips 与筛选分支在场');
@@ -383,6 +389,11 @@ suite('report.html：生成物内联脚本可解析（防模板转义破坏页�
   ok(csv.includes('自选备注'), 'CSV 表头含自选备注列');
   ok(/BBB,[^]*池外ETF/.test(csv), 'CSV 行带备注', csv.split('\r\n')[2]);
   ok(csv.includes('周RSI6') && csv.includes('成分') && csv.includes('周通道'), 'CSV 周线与成分列在场');
+  // RSI14 可选周期
+  ok(html.includes('id="rswitch"') && html.includes('usmon.rsi.v1') && html.includes('applyRsi') && html.includes('data-p="14"'), 'RSI6/14 切换开关与状态持久化在场');
+  ok(html.includes('th-rsi') && html.includes('th-wkrsi'), 'RSI 表头动态 id 在场');
+  ok(csv.includes('RSI14状态') && csv.includes('周RSI14状态'), 'CSV RSI14 日/周列在场');
+  ok(jobj.rows[0].rsi14 && jobj.rows[0].rsi14.period === 14 && jobj.rows[0].wk.rsi14, '行级 rsi14 与 wk.rsi14 进 JSON');
 }
 
 /* ---------- 汇总 ---------- */

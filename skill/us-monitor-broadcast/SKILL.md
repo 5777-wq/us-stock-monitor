@@ -16,7 +16,7 @@ description: 读取并播报美股监控最新信号（SPMO + SP500市值前100�
 
 - `meta.marketDate` 报告对应收盘交易日；`meta.generatedAt` 生成时间
 - `spmo`：核心标的 SPMO 行（先读它）
-- `rows[]`：150 只 + 池外自选，`rsi6{value,state,cross}`、`tunnels[]{key,pos,event}`、`wk{rsi6,tunnels,asOf,bars}`（**周线**同参指标）、`sp500`/`ndx`（成分标志：标普500/纳指100）、`spmoPct`（SPMO 持仓权重）、`adj`（hfq=后复权 / raw=不复权）、`anchored`、`notes[]`（每只的事实解读，可摘引，周线事件 tag 以「周」开头）；自选/持仓行带 `watch:true` 和 `note`（用户备注，如"池外ETF"）
+- `rows[]`：150 只 + 池外自选，`rsi6{value,state,cross}`、`rsi14{...}`（第二周期，同阈值）、`tunnels[]{key,pos,event}`、`wk{rsi6,rsi14,tunnels,asOf,bars}`（**周线**同参指标）、`sp500`/`ndx`（成分标志：标普500/纳指100）、`spmoPct`（SPMO 持仓权重）、`adj`（hfq=后复权 / raw=不复权）、`anchored`、`notes[]`（每只的事实解读，可摘引，周线事件 tag 以「周」开头）；自选/持仓行带 `watch:true` 和 `note`（用户备注，如"池外ETF"）
 - `groups`：`overbought`(超买中) / `oversold`(超卖中) / `obReturn`(超买回落→回归正常区) / `osReturn`(超卖回升→回归正常区) / `events`(通道穿越) / `weekOverbought`(周超买) / `weekOversold`(周超卖) / `weekReturn`(周线回归) / `watch`(自选持仓清单)，都是 ticker 数组
 
 用户策略语境：攒股 SPMO 为主、围绕它做增强、主要做多；超买时做 T（减仓后回补）；超卖时分批吸纳。**回归信号（前一根收盘在超买/超卖区、本根收盘回到 30~70 正常区）是用户最关心的信号，播报时置顶。**
