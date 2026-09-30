@@ -5,7 +5,8 @@
 import { emaSeries, rsiSeries, tunnelSnap, rsiSnap, tunnelPos, tunnelEvent } from './lib/indicators.mjs';
 import { lastClosedDate, splitClosed, etNow } from './lib/market.mjs';
 import { mergeBars, anchorSeries } from './lib/sources.mjs';
-import { rankUniverse, normalizeWatchlist, splitWatchlist, watchTargetOf } from './lib/universe.mjs';
+import { rankUniverse, normalizeWatchlist, splitWatchlist, watchTargetOf, loadNdx } from './lib/universe.mjs';
+import { resampleWeekly, weekEndOf } from './lib/weekly.mjs';
 import { evaluate, summarize } from './lib/signals.mjs';
 
 let pass = 0, fail = 0;
@@ -180,6 +181,41 @@ suite('sources.mergeBars / anchorSeries / parseYahoo / universe.rankUniverse');
   ok(ranked[0].ticker === 'BRK.B' && ranked[0].rank === 1, '按实时市值排序，BRK.B 键对齐', ranked.map((r) => r.ticker));
   ok(ranked[1].ticker === 'A' && ranked[1].rank === 2, '第二位');
   ok(rankUniverse(cands, [], 3)[0].rank === 1, '报价全挂 → 静态序兜底，不崩');
+  // 成分标注：NDX 集合命中 → ndx:true；未传集合 → null（旧调用兼容）
+  const rankedNdx = rankUniverse(cands, quotes, 3, new Set(['A', 'BRK.B']));
+  ok(rankedNdx[0].ndx === true && rankedNdx[1].ndx === true && rankedNdx[2].ndx === false, 'rankUniverse 纳指100 成员标注', rankedNdx.map((r) => r.ndx));
+  ok(rankUniverse(cands, quotes, 2)[0].ndx === null && rankUniverse(cands, quotes, 2)[0].ndx !== undefined, '不传 NDX 集合 → ndx=null（向后兼容）');
+  const ndxSnap = loadNdx();
+  ok(ndxSnap.set.size >= 95 && ndxSnap.set.has('AAPL') && ndxSnap.set.has('ASML') && !ndxSnap.set.has('TSM'), 'loadNdx 快照：ASML 在列（纳指100）、TSM 不在（纽交所ADR）', ndxSnap.set.size);
+  ok(/^\d{4}-\d{2}-\d{2}$/.test(ndxSnap.asOf), 'NDX 快照带 asOf', ndxSnap.asOf);
+}
+
+/* ---------- 周线重采样 ---------- */
+suite('weekly.mjs：weekEndOf 周五标签 + 日线→周线聚合（O=周首 C=周末 H/L=极值 V=求和）');
+{
+  ok(weekEndOf('2026-09-23') === '2026-09-25', '周三 → 本周周五 09-25', weekEndOf('2026-09-23'));
+  ok(weekEndOf('2026-09-25') === '2026-09-25', '周五 → 当天');
+  ok(weekEndOf('2026-09-28') === '2026-10-02', '周一 → 当周周五（跨月）', weekEndOf('2026-09-28'));
+  ok(weekEndOf('2026-01-01') === '2026-01-02', '元旦周四 → 周五（闭市日也作标签）');
+  ok(weekEndOf('垃圾') === null, '非法日期 → null');
+  // 两周半的日线：第一周 3 根（涨），第二周 2 根（跌），第三周 1 根
+  const bars = [
+    ['2026-09-21', 10, 11, 12, 9, 100],
+    ['2026-09-22', 11, 13, 14, 10, 200],
+    ['2026-09-23', 13, 12, 15, 8, 300],
+    ['2026-09-28', 12, 11, 13, 10, 400],
+    ['2026-09-29', 11, 10, 12, 9, 500],
+    ['2026-10-05', 10, 12, 12, 10, 600],
+  ];
+  const w = resampleWeekly(bars);
+  ok(w.length === 3, '3 个自然周 → 3 根周线', w.map((x) => x[0]));
+  ok(w[0][0] === '2026-09-25' && w[1][0] === '2026-10-02' && w[2][0] === '2026-10-09', '周标签 = 各周周五', w.map((x) => x[0]));
+  ok(w[0][1] === 10 && w[0][2] === 12 && w[0][3] === 15 && w[0][4] === 8, '首周 O=10 C=12 H=15 L=8', w[0]);
+  ok(w[0][5] === 600, '首周量求和 100+200+300', w[0][5]);
+  ok(w[1][2] === 10 && w[1][1] === 12, '次周开=周首 12 收=周末 10', w[1]);
+  ok(resampleWeekly([]).length === 0 && resampleWeekly(null).length === 0, '空输入 → 空');
+  const one = resampleWeekly([['2026-09-24', 5, 6, 7, 4, 10]]);
+  ok(one.length === 1 && one[0][0] === '2026-09-25', '单根成周');
 }
 
 /* ---------- 自选/持仓清单 ---------- */
@@ -249,6 +285,29 @@ suite('signals.evaluate：live 剔除 / raw 标记 / 汇总分组');
   const ry = evaluate(meta, { bars: young, adj: 'hfq', source: 'eastmoney' }, cfg3, 'y0649');
   ok(ry.tunnels.length === 2 && ry.tunnels[0].pos === 'above' && ry.tunnels[1].insufficient === true, '650根 → 主通道可算 + 长通道标记 insufficient', ry.tunnels);
   ok(ry.notes.some((n) => n.tag === '通道' && /676/.test(n.text)), '带数据不足说明', ry.notes.map((n) => n.tag));
+  // 假日期（无法归周）→ wk=null 不崩，各端按缺失显示
+  ok(ry.wk === null && r2.wk === null, '假日期序列 → wk=null（容错）', { ry: ry.wk, r2: r2.wk });
+}
+
+/* ---------- 周线 evaluate（真实日期） ---------- */
+suite('signals.evaluate 周线块：40 周真实日历日线 → 周RSI/周通道/周标签');
+{
+  const metaW = { ticker: 'WKLY', name: '周线测试', rank: 1, sp500: true, ndx: true };
+  const cfgW = { rsi: { period: 6, overbought: 70, oversold: 30 }, tunnels: [{ key: '短通道', n: [12, 36] }, { key: '长通道', n: [576, 676] }] };
+  // 2026-01-05 是周一：40 周 × 5 个交易日，逐日上涨
+  const wbars = [];
+  for (let wi = 0; wi < 40; wi++) for (let d = 0; d < 5; d++) {
+    const iso = new Date(Date.UTC(2026, 0, 5 + wi * 7 + d)).toISOString().slice(0, 10);
+    wbars.push([iso, 0, 100 + wi * 5 + d, 0, 0, 0]);
+  }
+  const rw = evaluate(metaW, { bars: wbars, adj: 'hfq', source: 'eastmoney' }, cfgW, wbars[wbars.length - 1][0]);
+  ok(rw && rw.wk && rw.wk.bars === 40, '40 周日线 → 40 根周线', rw.wk && rw.wk.bars);
+  ok(rw.wk.rsi6 && rw.wk.rsi6.state === 'overbought', '周线RSI6 超买（逐周上涨）', rw.wk.rsi6);
+  ok(rw.wk.tunnels[0].pos === 'above' && rw.wk.tunnels[0].insufficient === undefined, '周线短通道(12/36周)可算 → above', rw.wk.tunnels[0]);
+  ok(rw.wk.tunnels[1].insufficient === true, '周线长通道(576/676周) → insufficient');
+  ok(rw.wk.asOf === weekEndOf(wbars[199][0]) && rw.wk.asOf === rw.asOf, '周线 asOf = 本周周五标签', rw.wk.asOf);
+  ok(rw.sp500 === true && rw.ndx === true, '成分标志透传到行');
+  ok(rw.notes.some((n) => n.tag === '周RSI6' && /超买/.test(n.text)), '周线超买 notes 在场', rw.notes.map((n) => n.tag));
 }
 
 /* ---------- HTML 生成：内联脚本语法守卫 ---------- */
@@ -270,6 +329,8 @@ suite('report.html：生成物内联脚本可解析（防模板转义破坏页�
       { key: '长通道', n: [576, 676], pos: null, event: null, insufficient: true },
     ],
     live: null, adj: 'hfq', source: 'eastmoney', bars: 2000,
+    wk: { asOf: '2026-09-25', bars: 260, rsi6: { value: 55.5, prev: 61.2, state: 'neutral', cross: null, period: 6 }, tunnels: [{ key: '短通道', n: [144, 169], upper: 2, lower: 1, pos: 'above', event: null, widthPct: 3 }, { key: '主通道', n: [288, 338], pos: 'inside', event: null }, { key: '长通道', n: [576, 676], pos: null, event: null, insufficient: true }], live: null, k: { d: ['2026-09-25'], o: [1], h: [2], l: [0.5], c: [1], e: [[1], [1], [1], [1], [1], [1]] } },
+    sp500: true, ndx: ticker === 'BBB' ? true : false,
     notes: [{ tag: 'RSI6', level: 'warn', text: 'RSI6=72.5 超买（>70），今日新进超买区。' }],
     spark: { closes },
   });
@@ -303,15 +364,25 @@ suite('report.html：生成物内联脚本可解析（防模板转义破坏页�
   ok(html.includes('usmon.watch.v1') && html.includes('toggleWatch') && html.includes('isWatch'), '自选增删状态机（localStorage 叠加层）在场');
   ok(html.includes('id="copy-cfg"') && html.includes('copyCfg'), '复制清单按钮在场');
   ok(html.includes('id="detail-star"') && html.includes('cardstar') && html.includes('stcol'), '弹层/卡片/表格自选开关在场');
-  ok(html.includes('colspan="13"'), '新增自选列后的空态 colspan');
+  ok(html.includes('colspan="15"'), '自选+周线列后的空态 colspan=15');
+  // 周线与成分标注呈现
+  ok(html.includes('<th>周RSI6</th>') && html.includes('<th>周通道</th>') && html.includes('wkTunCell'), '周RSI/周通道列与渲染函数在场');
+  ok(html.includes("drawK(r,'w')") && html.includes('kMode') && html.includes('ct-w'), '日/周图表切换在场');
+  ok(html.includes('idx-badge') && html.includes('成分指数'), '纳指100 徽标与弹层成分行在场');
+  ok(html.includes('周超买') && html.includes("cur==='wob'") && html.includes("cur==='wret'"), '周线 chips 与筛选分支在场');
+  ok(html.includes('周线 = 日线按周重采样'), '页脚口径周线说明在场');
   ok(html.includes('liveQuote') && html.includes('fetchExtra'), '池外新增标的在线报价逻辑在场');
   const jobj = JSON.parse(readFileSync(files.find((f) => f.endsWith('.json')), 'utf8'));
   ok(jobj.groups.watch.includes('BBB'), 'groups.watch 收录自选标的', jobj.groups.watch);
   ok(jobj.rows.find((r) => r.ticker === 'BBB').watch === true && jobj.rows.find((r) => r.ticker === 'BBB').note === '池外ETF', '行级 watch/note 进 JSON');
   ok(jobj.meta.watchCount === 1, 'meta.watchCount 计数');
+  ok(jobj.groups.weekOverbought && Array.isArray(jobj.groups.weekOverbought) && Array.isArray(jobj.groups.weekReturn), 'groups 周线分组在场', jobj.groups.weekOverbought);
+  ok(jobj.rows[0].wk && jobj.rows[0].wk.rsi6 && jobj.rows[0].wk.k === undefined, 'JSON 行带 wk（周线K线数据只进 HTML）');
+  ok(jobj.rows[1].ndx === true && jobj.rows[0].sp500 === true, 'sp500/ndx 成员标志进 JSON');
   const csv = readFileSync(files.find((f) => f.endsWith('.csv')), 'utf8');
   ok(csv.includes('自选备注'), 'CSV 表头含自选备注列');
   ok(/BBB,[^]*池外ETF/.test(csv), 'CSV 行带备注', csv.split('\r\n')[2]);
+  ok(csv.includes('周RSI6') && csv.includes('成分') && csv.includes('周通道'), 'CSV 周线与成分列在场');
 }
 
 /* ---------- 汇总 ---------- */

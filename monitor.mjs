@@ -21,6 +21,7 @@ import { getSeries, eastStatus, yahooStatus, tencentQuotes, anchorSeries } from 
 import { buildUniverse, tvSymbolOf, normalizeWatchlist, splitWatchlist, watchTargetOf } from './lib/universe.mjs';
 import { emaSeries } from './lib/indicators.mjs';
 import { evaluate, summarize } from './lib/signals.mjs';
+import { resampleWeekly } from './lib/weekly.mjs';
 import { lastClosedDate, etNow } from './lib/market.mjs';
 import { consoleReport, writeOutputs } from './lib/report.mjs';
 import { notifyIfEnabled } from './lib/notify.mjs';
@@ -100,7 +101,7 @@ async function main() {
   if (!quiet) console.error(`[${et.date} ${et.hhmm} ET] 最后已收盘交易日: ${marketDate}`);
 
   /* 1. 池子：SP500 候选 → 实时市值前 N */
-  const { universe, candidatesMeta, spmoHoldings, spmoQuote } = await buildUniverse({
+  const { universe, candidatesMeta, spmoHoldings, spmoQuote, ndxMeta, sp500Set, ndxSet } = await buildUniverse({
     topN: cfg.universe.topN,
     candidatesFile: cfg.universe.candidatesFile,
     quoteBatch: cfg.universe.quoteBatch,
@@ -130,6 +131,10 @@ async function main() {
     )));
   }
   if (watchlist.length && !quiet) console.error(`自选/持仓 ${watchlist.length} 只（池内打标 ${watchlist.length - extraWatch.length} · 池外新增 ${extraWatch.length}）`);
+
+  /* 1.6 成分标注：SP500（候选快照）与纳指100（QQQ 成分快照）。ETF（SPMO/QQQ/TLT 等）两者皆非 */
+  for (const t of targets) { t.sp500 = sp500Set.has(t.ticker); t.ndx = ndxSet.has(t.ticker); }
+
   const rows = [];
   const failed = [];
   for (let i = 0; i < targets.length; i++) {
@@ -174,6 +179,28 @@ async function main() {
       c: win.map((b) => +b[2].toFixed(3)),
       e: [144, 169, 288, 338, 576, 676].map(emaSlice),
     };
+    // 周线 K 线：最近 60 周 + 周线六条 EMA（同日线切法），只进 HTML 不进 latest.json
+    if (row.wk) {
+      const wbars = resampleWeekly(closedBars);
+      const wwin = wbars.slice(-60);
+      const wAll = wbars.map((b) => b[2]);
+      const wStartI = wAll.length - wwin.length;
+      const wEmaSlice = (n) => {
+        const seq = emaSeries(wAll, n);
+        return wwin.map((_, i) => {
+          const v = seq[wStartI + i];
+          return v === null ? null : +v.toFixed(3);
+        });
+      };
+      row.wk.k = {
+        d: wwin.map((b) => b[0]),
+        o: wwin.map((b) => +b[1].toFixed(3)),
+        h: wwin.map((b) => +b[3].toFixed(3)),
+        l: wwin.map((b) => +b[4].toFixed(3)),
+        c: wwin.map((b) => +b[2].toFixed(3)),
+        e: [144, 169, 288, 338, 576, 676].map(wEmaSlice),
+      };
+    }
     rows.push(row);
     await sleep(60);
   }
@@ -191,7 +218,8 @@ async function main() {
     topN: cfg.universe.topN,
     extraNote: ' + SPMO',
     candidatesAsOf: candidatesMeta.asOf,
-    universeNote: `SPMO持仓快照 ${spmoHoldings.asOf || '不可用'}（前40大，标记重合）`,
+    ndxAsOf: ndxMeta.asOf || null,
+    universeNote: `SPMO持仓快照 ${spmoHoldings.asOf || '不可用'}（前40大，标记重合） · 纳指100快照 ${ndxMeta.asOf || '不可用'}`,
     srcEast: rows.filter((r) => r.source === 'eastmoney').length,
     srcYahoo: rows.filter((r) => r.source === 'yahoo').length,
     srcTx: rows.filter((r) => r.source === 'tencent').length,

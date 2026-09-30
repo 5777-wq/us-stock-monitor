@@ -1,6 +1,6 @@
 {
   "universe": {
-    "topN": 100,
+    "topN": 150,
     "candidatesFile": "data/sp500-candidates.json",
     "quoteBatch": 60
   },
