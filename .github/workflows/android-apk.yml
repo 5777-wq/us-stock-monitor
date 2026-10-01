@@ -55,14 +55,12 @@ jobs:
       - name: Publish APK into repo app/ (served by GitHub Pages)
         env:
           GH_TOKEN: ${{ github.token }}
-          RUN: ${{ github.run_number }}
         run: |
-          B64=$(base64 -w0 publish/us-stock-monitor.apk)
-          SHA=$(gh api "repos/$GITHUB_REPOSITORY/contents/app/us-stock-monitor.apk" --jq .sha 2>/dev/null || echo "")
-          if [ -n "$SHA" ]; then
-            printf '{"message":"apk: build %s [skip ci]","content":"%s","sha":"%s"}' "$RUN" "$B64" "$SHA" > body.json
-          else
-            printf '{"message":"apk: build %s [skip ci]","content":"%s"}' "$RUN" "$B64" > body.json
-          fi
-          gh api --method PUT "repos/$GITHUB_REPOSITORY/contents/app/us-stock-monitor.apk" --input body.json --jq .commit.sha
+          base64 -w0 publish/us-stock-monitor.apk > apk.b64
+          SHA=$(gh api "repos/$GITHUB_REPOSITORY/contents/app/us-stock-monitor.apk" --jq .sha 2>/dev/null || true)
+          # gh 对 404 会把错误响应体打到 stdout（exit 0），非 40 位 hex 一律视为文件不存在
+          case "$SHA" in *[!0-9a-f]*) SHA="";; esac
+          ARGS=(-f "message=apk: build $GITHUB_RUN_NUMBER [skip ci]" -F "content=@apk.b64")
+          [ -n "$SHA" ] && ARGS+=(-f "sha=$SHA")
+          gh api --method PUT "repos/$GITHUB_REPOSITORY/contents/app/us-stock-monitor.apk" "${ARGS[@]}" --jq .commit.sha
           echo "APK published: https://5777-wq.github.io/us-stock-monitor/app/us-stock-monitor.apk"
