@@ -32,15 +32,17 @@ self.addEventListener('fetch', (e) => {
   const isHtml = req.mode === 'navigate' || HTML_RE.test(url.pathname);
   if (isHtml) {
     // 报告页每天收盘后由 CI 重新生成：网络优先。用默认缓存模式吃 Pages 的 304 协商
-    // （max-age=600 内的陈旧对日线数据无感），断网回退 SW 缓存里的最近一份
+    // （max-age=600 内的陈旧对日线数据无感）。非 200（如 Pages 换部署的瞬时 404/5xx）
+    // 或断网时，回退 SW 缓存里的最近一份，绝不把 GitHub 的 404 页甩给用户
     e.respondWith(
       fetch(req)
         .then((res) => {
           if (res && res.ok) {
             const copy = res.clone();
             caches.open(VER).then((c) => c.put(req, copy));
+            return res;
           }
-          return res;
+          return caches.match(req, { ignoreSearch: true }).then((r) => r || res);
         })
         .catch(() => caches.match(req, { ignoreSearch: true }).then((r) => r || caches.match('./out/report.html')))
     );
