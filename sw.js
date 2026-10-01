@@ -28,11 +28,13 @@ self.addEventListener('fetch', (e) => {
   if (req.method !== 'GET') return;
   const url = new URL(req.url);
   if (url.origin !== self.location.origin) return; // 池外标的的腾讯在线报价等跨域请求直连
+  if (/\.apk$/.test(url.pathname)) return; // APK 下载直连网络（交给浏览器/下载管理器），不入缓存
   const isHtml = req.mode === 'navigate' || HTML_RE.test(url.pathname);
   if (isHtml) {
-    // 报告页每天收盘后由 CI 重新生成，必须拿最新（cache:'reload' 绕过 HTTP 缓存）
+    // 报告页每天收盘后由 CI 重新生成：网络优先。用默认缓存模式吃 Pages 的 304 协商
+    // （max-age=600 内的陈旧对日线数据无感），断网回退 SW 缓存里的最近一份
     e.respondWith(
-      fetch(req, { cache: 'reload' })
+      fetch(req)
         .then((res) => {
           if (res && res.ok) {
             const copy = res.clone();

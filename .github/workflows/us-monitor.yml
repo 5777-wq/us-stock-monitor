@@ -42,5 +42,7 @@ jobs:
             echo "报告无变化，跳过提交"
           else
             git commit -m "monitor: $(date -u +%F) 收盘报告 [skip ci]"
+            # 监控运行期间远端可能有新提交（如 android-apk 的 APK 入库），先变基再推，避免当日报告丢失
+            git pull --rebase origin main
             git push
           fi

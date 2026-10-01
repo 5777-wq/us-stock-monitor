@@ -46,11 +46,15 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          gh release delete latest --yes --cleanup-tag 2>/dev/null || true
-          gh release create latest publish/us-stock-monitor.apk \
-            --title "美股监控 Android build ${{ github.run_number }}" \
-            --notes "App 是 WebView 壳，数据随网站每个交易日自动更新，无需重装。壳本身更新（界面/功能变化）时重新下载安装即可覆盖升级。" \
-            --latest
+          TITLE="美股监控 Android build ${{ github.run_number }}"
+          NOTES="App 是 WebView 壳，数据随网站每个交易日自动更新，无需重装。壳本身更新（界面/功能变化）时重新下载安装即可覆盖升级。"
+          # 已有 latest 就覆盖上传资产+更新标题说明（下载链接永不 404），否则新建
+          if gh release view latest -R "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
+            gh release upload latest -R "$GITHUB_REPOSITORY" publish/us-stock-monitor.apk --clobber
+            gh release edit latest -R "$GITHUB_REPOSITORY" --title "$TITLE" --notes "$NOTES" --latest
+          else
+            gh release create latest -R "$GITHUB_REPOSITORY" publish/us-stock-monitor.apk --title "$TITLE" --notes "$NOTES" --latest
+          fi
 
       - name: Publish APK into repo app/ (served by GitHub Pages)
         env:

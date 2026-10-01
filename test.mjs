@@ -398,6 +398,19 @@ suite('report.html：生成物内联脚本可解析（防模板转义破坏页�
   ok(jobj.rows[0].rsi14 && jobj.rows[0].rsi14.period === 14 && jobj.rows[0].wk.rsi14, '行级 rsi14 与 wk.rsi14 进 JSON');
 }
 
+/* ---------- PWA 资产：manifest/sw.js 守卫 ---------- */
+suite('PWA：manifest 可解析 + sw.js 语法');
+{
+  const { readFileSync } = await import('node:fs');
+  const vm = await import('node:vm');
+  const manifest = JSON.parse(readFileSync('manifest.webmanifest', 'utf8'));
+  ok(manifest.name === '美股监控' && (manifest.icons || []).length >= 3, 'manifest 名称与三枚图标在场', manifest.name);
+  ok(/out\/report\.html/.test(manifest.start_url || ''), 'start_url 直达报告页（跳转页不产生多余历史记录）', manifest.start_url);
+  let swErr = null;
+  try { new vm.Script(readFileSync('sw.js', 'utf8')); } catch (e) { swErr = e; }
+  ok(!swErr, 'sw.js 语法可解析', swErr && String(swErr).slice(0, 200));
+}
+
 /* ---------- 汇总 ---------- */
 console.log(`\n${'═'.repeat(50)}\n通过 ${pass} · 失败 ${fail}${fail ? '  ✗✗✗' : '  ✓✓✓'}`);
 process.exit(fail ? 1 : 0);

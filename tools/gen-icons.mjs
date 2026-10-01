@@ -90,8 +90,9 @@ const specs = [
   ...[[48, 'mdpi'], [72, 'hdpi'], [96, 'xhdpi'], [144, 'xxhdpi'], [192, 'xxxhdpi']]
     .map(([s, d]) => ({ out: `android/app/src/main/res/mipmap-${d}/ic_launcher.png`, size: s })),
   // 自适应图标前景（Android 8+，透明底 + 居中缩小字模；背景色在 colors.xml）
+  // k=0.8：蜡炷最远尖端距中心 0.293 < 安全区半径 0.305（33dp/108dp），任何遮罩都不裁
   ...[[108, 'mdpi'], [162, 'hdpi'], [216, 'xhdpi'], [324, 'xxhdpi'], [432, 'xxxhdpi']]
-    .map(([s, d]) => ({ out: `android/app/src/main/res/mipmap-${d}/ic_launcher_foreground.png`, size: s, rounded: false, bg: 'none', k: 0.88 })),
+    .map(([s, d]) => ({ out: `android/app/src/main/res/mipmap-${d}/ic_launcher_foreground.png`, size: s, rounded: false, bg: 'none', k: 0.8 })),
 ];
 for (const s of specs) {
   const p = join(ROOT, s.out);

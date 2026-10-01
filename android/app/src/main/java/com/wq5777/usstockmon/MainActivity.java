@@ -2,11 +2,14 @@ package com.wq5777.usstockmon;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.DownloadManager;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.view.View;
 import android.webkit.WebChromeClient;
 import android.webkit.WebResourceError;
@@ -15,13 +18,18 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 public class MainActivity extends Activity {
 
     private static final String HOST = "5777-wq.github.io";
-    private static final String START_URL = "https://5777-wq.github.io/us-stock-monitor/";
+    // 直达报告页：根路径跳转页靠 meta-refresh 二次跳转会多一条历史记录，
+    // 返回键会退回跳转页又被刷回报告页，形成回退死循环
+    private static final String START_URL = "https://5777-wq.github.io/us-stock-monitor/out/report.html";
+    private static final String BG_LIGHT = "#F2F5F6";
+    private static final String BG_DARK = "#11191C";
 
     private WebView web;
     private SwipeRefreshLayout swipe;
@@ -44,12 +52,32 @@ public class MainActivity extends Activity {
         st.setUseWideViewPort(true);
         st.setSupportZoom(false);
         st.setMixedContentMode(WebSettings.MIXED_CONTENT_NEVER_ALLOW);
-        web.setBackgroundColor(Color.parseColor("#F2F5F6"));
+        boolean night = (getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK) == Configuration.UI_MODE_NIGHT_MASK;
+        web.setBackgroundColor(Color.parseColor(night ? BG_DARK : BG_LIGHT));
         web.setOverScrollMode(View.OVER_SCROLL_NEVER);
 
         swipe.setOnRefreshListener(() -> {
             mainFrameFailed = false;
             web.reload();
+        });
+
+        // 报告页里的「📱 安卓 App」胶囊等下载链接交给系统下载管理器，
+        // 完成通知点开即进安装器；下载管理器不可用时退回浏览器下载
+        web.setDownloadListener((url, userAgent, contentDisposition, mimeType, contentLength) -> {
+            try {
+                DownloadManager.Request req = new DownloadManager.Request(Uri.parse(url));
+                req.setTitle("美股监控 APK");
+                req.setMimeType("application/vnd.android.package-archive");
+                req.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
+                req.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, "us-stock-monitor.apk");
+                ((DownloadManager) getSystemService(DOWNLOAD_SERVICE)).enqueue(req);
+                Toast.makeText(this, "开始下载新版 APK…", Toast.LENGTH_SHORT).show();
+            } catch (Exception e) {
+                try {
+                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
+                } catch (Exception ignored) {
+                }
+            }
         });
 
         web.setWebViewClient(new WebViewClient() {

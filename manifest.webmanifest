@@ -1,9 +1,10 @@
 {
+  "id": "/us-stock-monitor/",
   "name": "美股监控",
   "short_name": "美股监控",
   "description": "SP500 前150 + SPMO · 日线/周线 RSI + Vegas 三通道 收盘监控",
   "lang": "zh-CN",
-  "start_url": "./index.html",
+  "start_url": "./out/report.html",
   "scope": "./",
   "display": "standalone",
   "background_color": "#f2f5f6",

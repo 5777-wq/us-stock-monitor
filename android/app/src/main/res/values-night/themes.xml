@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- 深色模式：isLightTheme=false 让 WebView 上报 prefers-color-scheme: dark（API 29+ 生效），
+         网站自带 @media(prefers-color-scheme:dark) 全套配色，App 内自动跟随系统进深色 -->
+    <style name="AppTheme" parent="android:Theme.Material.NoActionBar">
+        <item name="android:isLightTheme">false</item>
+        <item name="android:statusBarColor">@color/status_bar_dark</item>
+        <item name="android:windowBackground">@color/window_bg_dark</item>
+    </style>
+</resources>
