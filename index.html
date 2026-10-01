@@ -5,9 +5,27 @@
 <link rel="apple-touch-icon" href="./assets/pwa/apple-touch-icon.png"><link rel="icon" type="image/png" href="./assets/pwa/icon-192.png">
 <script>if('serviceWorker' in navigator)addEventListener('load',function(){navigator.serviceWorker.register('./sw.js')})</script>
 <title>美股监控</title>
-<style>body{font:16px/1.8 system-ui,"Microsoft YaHei",sans-serif;display:grid;place-items:center;min-height:90vh;margin:0}</style>
+<style>
+:root{--bg:#f2f5f6;--surface:#fff;--ink:#16232b;--muted:#708087;--line:#dce5e7;--accent:#147d82}
+@media(prefers-color-scheme:dark){:root{--bg:#11191c;--surface:#182326;--ink:#e8f0f1;--muted:#9aadb1;--line:#304348;--accent:#67c7c2}}
+body{font:15px/1.7 system-ui,-apple-system,"Segoe UI","Microsoft YaHei",sans-serif;margin:0;min-height:100vh;display:grid;place-items:center;background-color:var(--bg);background-image:radial-gradient(700px 260px at 70% -120px,rgba(20,125,130,.10),transparent 70%);color:var(--ink)}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:32px 28px;text-align:center;box-shadow:0 20px 50px rgba(26,57,66,.10);max-width:330px;margin:20px;width:calc(100vw - 40px);box-sizing:border-box}
+.card img{width:72px;height:72px;border-radius:17px;box-shadow:0 8px 22px rgba(20,125,130,.28)}
+h1{font-size:22px;letter-spacing:-.01em;margin:15px 0 5px}
+.sub{color:var(--muted);font-size:12.5px;margin:0 0 20px}
+.btn{display:block;padding:11px 18px;border-radius:999px;text-decoration:none;font-weight:750;font-size:14px;margin-top:10px;transition:transform .15s,filter .15s}
+.btn:hover{transform:translateY(-1px);filter:brightness(1.05)}
+.btn-open{background:linear-gradient(135deg,#1a9a9a,#0f6266);color:#fff;box-shadow:0 6px 16px rgba(15,98,102,.30)}
+.btn-apk{border:1px solid var(--line);color:var(--ink);font-size:13px;font-weight:650}
+.tip{color:var(--muted);font-size:11px;margin-top:14px}
+</style>
 </head><body>
-<div>正在打开最新监控报告…<br><a href="./out/report.html">点这里手动打开 →</a><br>
-<a href="./app/us-stock-monitor.apk" download>📱 下载安卓 App（装到手机桌面，数据同步更新）</a><br>
-<small>数据由 GitHub Actions 每个美股交易日收盘后自动更新</small></div>
+<div class="card">
+<img src="./assets/pwa/icon-192.png" alt="美股监控">
+<h1>美股监控</h1>
+<p class="sub">SP500 前150 + SPMO · 日/周线 RSI6 · Vegas 三通道<br>每个美股交易日收盘后自动更新</p>
+<a class="btn btn-open" href="./out/report.html">进入今日报告 →</a>
+<a class="btn btn-apk" href="./app/us-stock-monitor.apk" download>📱 下载安卓 App（免开网页）</a>
+<div class="tip">手机浏览器打开本站 → 菜单「添加到主屏幕」，也能当 App 用</div>
+</div>
 </body></html>
