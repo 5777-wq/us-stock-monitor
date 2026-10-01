@@ -111,6 +111,16 @@ SP500 候选池：`data/sp500-candidates.json`（快照 + 说明），指数调�
 
 `node test.mjs`——143 条断言：EMA/RSI 手算黄金值对账、与 OpenFinLens technical.js 递推逐点互证（随机序列 40 组）、ET 收盘时钟（含夏冬令时边界）、**日线→周线重采样（周五标签/OHLC 聚合）**、第二周期 RSI14（日/周）**、缓存合并、市值排名与成分标注、自选清单归一化/池内外拆分、live bar 剔除、生成物内联脚本语法守卫（含搜索/★增删/周线列/RSI 切换/图表切换逻辑在场）。
 
+## 安卓 App
+
+手机不开浏览器、桌面图标直达：**[直接下载 APK](https://5777-wq.github.io/us-stock-monitor/app/us-stock-monitor.apk)**（备用：[GitHub Releases](https://github.com/5777-wq/us-stock-monitor/releases/latest)）。报告页右上角和首页跳转页也有「📱 安卓 App」入口。
+
+- **装**：手机浏览器打开下载链接 → 下载完点开 → 系统提示「未知来源应用」时允许一次即可（自家签名的个人应用，无应用商店）。
+- **更新**：App 是 WebView 壳，打开即是线上最新报告——数据每个交易日收盘后自动更新，**无需重装**；壳本身变化（界面/功能）时 `android/` 目录有提交会自动触发 [android-apk workflow](.github/workflows/android-apk.yml) 重构建发布，重装一次 APK 即可。
+- **功能**：下拉刷新、断网显示离线页、系统返回键=网页后退、站外链接跳浏览器；自选清单/RSI 周期等本机设置与网页版互通（同一套 localStorage）。
+- 另加 **PWA**：手机 Chrome/Edge 打开网页 → 菜单「添加到主屏幕」，效果接近（免签免装，iOS 也适用）。
+- 签名 keystore 与密码随仓库走（`android/signing/`，个人自用无保密需求），保证每次 CI 构建签名一致，可覆盖安装升级。
+
 ## 免责声明
 
 仅供个人学习与技术研究。指标只描述事实与常用读法，**不构成投资建议**；数据来自第三方公开接口，有延迟、会出错；据此交易，后果自负。

@@ -353,7 +353,8 @@ suite('report.html：生成物内联脚本可解析（防模板转义破坏页�
   const files = writeOutputs(data, dir, {});
   const html = readFileSync(files.find((f) => f.endsWith('.html')), 'utf8');
   const blocks = [...html.matchAll(/<script>([\s\S]*?)<\/script>/g)].map((m) => m[1]);
-  ok(blocks.length === 3, '三个内联脚本块（lightweight-charts + 数据 + 页面逻辑）', blocks.length);
+  ok(blocks.length === 4, '四个内联脚本块（SW注册 + lightweight-charts + 数据 + 页面逻辑）', blocks.length);
+  ok(blocks[0].includes('serviceWorker'), '首块为 SW 注册脚本');
   let synErr = null;
   try { for (const b of blocks) new vm.Script(b); } catch (e) { synErr = e; }
   ok(!synErr, 'vm.Script 语法校验通过', synErr && String(synErr).slice(0, 200));

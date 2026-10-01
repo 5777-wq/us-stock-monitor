@@ -1,0 +1,47 @@
+plugins {
+    id 'com.android.application'
+}
+
+// CI 里每次构建 versionCode/Name 取 run_number，保证每次发布都可覆盖安装升级
+def ciRun = (System.getenv('GITHUB_RUN_NUMBER') ?: '0') as Integer
+
+android {
+    namespace 'com.wq5777.usstockmon'
+    compileSdk 34
+
+    defaultConfig {
+        applicationId 'com.wq5777.usstockmon'
+        minSdk 24
+        targetSdk 34
+        versionCode ciRun > 0 ? ciRun : 1
+        versionName ciRun > 0 ? "1.${ciRun}" : '1.0-local'
+    }
+
+    // 个人自用签名：keystore 与密码随仓库走（公开仓库、无敏感签名需求），
+    // 保证每次 CI 构建的 APK 签名一致，覆盖安装不要求先卸载
+    signingConfigs {
+        release {
+            storeFile rootProject.file('signing/app.keystore')
+            storeType 'PKCS12'
+            storePassword 'usmon2026'
+            keyAlias 'usstockmon'
+            keyPassword 'usmon2026'
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            signingConfig signingConfigs.release
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
+    }
+}
+
+dependencies {
+    implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
+}

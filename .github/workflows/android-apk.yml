@@ -1,0 +1,68 @@
+# 安卓 App 自动构建：android/ 目录有改动时跑，
+# 产物双通道发布——1) 滚动 Release「latest」（存档） 2) 提交进仓库 app/ 目录随 GitHub Pages 直发（国内下载快）
+name: android-apk
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "android/**"
+      - ".github/workflows/android-apk.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: android-apk
+  cancel-in-progress: false
+
+jobs:
+  apk:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+
+      - uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: "8.9"
+
+      - name: Build release APK
+        run: gradle -p android :app:assembleRelease --no-daemon --stacktrace
+
+      - name: Prepare artifact
+        run: |
+          mkdir -p publish
+          cp android/app/build/outputs/apk/release/app-release.apk publish/us-stock-monitor.apk
+          ls -lh publish
+
+      - name: Publish to rolling release (latest)
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release delete latest --yes --cleanup-tag 2>/dev/null || true
+          gh release create latest publish/us-stock-monitor.apk \
+            --title "美股监控 Android build ${{ github.run_number }}" \
+            --notes "App 是 WebView 壳，数据随网站每个交易日自动更新，无需重装。壳本身更新（界面/功能变化）时重新下载安装即可覆盖升级。" \
+            --latest
+
+      - name: Publish APK into repo app/ (served by GitHub Pages)
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RUN: ${{ github.run_number }}
+        run: |
+          B64=$(base64 -w0 publish/us-stock-monitor.apk)
+          SHA=$(gh api "repos/$GITHUB_REPOSITORY/contents/app/us-stock-monitor.apk" --jq .sha 2>/dev/null || echo "")
+          if [ -n "$SHA" ]; then
+            printf '{"message":"apk: build %s [skip ci]","content":"%s","sha":"%s"}' "$RUN" "$B64" "$SHA" > body.json
+          else
+            printf '{"message":"apk: build %s [skip ci]","content":"%s"}' "$RUN" "$B64" > body.json
+          fi
+          gh api --method PUT "repos/$GITHUB_REPOSITORY/contents/app/us-stock-monitor.apk" --input body.json --jq .commit.sha
+          echo "APK published: https://5777-wq.github.io/us-stock-monitor/app/us-stock-monitor.apk"
