@@ -374,7 +374,7 @@ suite('report.html：生成物内联脚本可解析（防模板转义破坏页�
   ok(html.includes('colspan="10"'), '通道/RSI 收纳后的空态 colspan=10');
   ok(html.includes('<th>信号</th>') && html.includes('sigTags') && html.includes('.tagx.fill-up') && html.includes("'fill-up'"), '信号标签列与实心/描边标签渲染在场');
   // 周线与成分标注呈现
-  ok(html.includes('Vegas 通道 日/周') && html.includes('tunDualCell') && html.includes('rsiDualCell'), '周RSI/通道收纳为日/周双行列（tunDualCell/rsiDualCell）');
+  ok(html.includes('Vegas 通道（日/周）') && html.includes('tunDualCell') && html.includes('rsiDualCell') && html.includes('class="tp '), '周RSI/通道收纳为日/周双行列（文字标注 短上/中内/长—）');
   ok(html.includes("drawK(r,'w')") && html.includes('kMode') && html.includes('ct-w'), '日/周图表切换在场');
   ok(html.includes('idx-badge') && html.includes('成分指数'), '纳指100 徽标与弹层成分行在场');
   ok(html.includes('周超买') && html.includes("cur==='wob'") && html.includes("cur==='wret'"), '周线 chips 与筛选分支在场');
