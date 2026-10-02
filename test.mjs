@@ -404,7 +404,7 @@ suite('PWA：manifest 可解析 + sw.js 语法');
   const { readFileSync } = await import('node:fs');
   const vm = await import('node:vm');
   const manifest = JSON.parse(readFileSync('manifest.webmanifest', 'utf8'));
-  ok(manifest.name === '美股监控' && (manifest.icons || []).length >= 3, 'manifest 名称与三枚图标在场', manifest.name);
+  ok(manifest.name === 'Meridian' && (manifest.icons || []).length >= 3, 'manifest 名称与三枚图标在场', manifest.name);
   ok(/out\/report\.html/.test(manifest.start_url || ''), 'start_url 直达报告页（跳转页不产生多余历史记录）', manifest.start_url);
   let swErr = null;
   try { new vm.Script(readFileSync('sw.js', 'utf8')); } catch (e) { swErr = e; }

@@ -33,7 +33,7 @@ function png(w, h, rgba) {
 }
 
 /* ---------- 图形定义（单位坐标 0..1，字模组居中横跨 26%~74%） ---------- */
-const TOP = [0x1e, 0x8c, 0x91], BOT = [0x0a, 0x4f, 0x53], INK = [0xf2, 0xfb, 0xfa];
+const TOP = [0x2b, 0x57, 0xe8], BOT = [0x06, 0x21, 0x8f], INK = [0xf2, 0xfb, 0xfa];
 const RADIUS = 0.225; // 圆角半径（占边长比例）
 const CANDLES = [ // 每根：body x0,x1,y0,y1 + wick x0,x1,y0,y1
   { bx0: 0.275, bx1: 0.385, by0: 0.44, by1: 0.72, wx0: 0.3225, wx1: 0.3375, wy0: 0.36, wy1: 0.79 },

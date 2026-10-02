@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="accent">#147D82</color>
-    <color name="status_bar">#0F6266</color>
+    <color name="accent">#002FA7</color>
+    <color name="status_bar">#022787</color>
     <color name="window_bg">#F2F5F6</color>
-    <color name="status_bar_dark">#0D1417</color>
+    <color name="status_bar_dark">#0A0F1E</color>
     <color name="window_bg_dark">#11191C</color>
-    <color name="ic_launcher_bg">#147072</color>
+    <color name="ic_launcher_bg">#193CBB</color>
     <color name="line">#DCE5E7</color>
 </resources>
