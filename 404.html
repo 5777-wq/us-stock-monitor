@@ -9,7 +9,11 @@ body{font:15px/1.7 system-ui,-apple-system,"Segoe UI","Microsoft YaHei",sans-ser
 img{width:64px;height:64px;border-radius:15px;box-shadow:0 8px 22px rgba(20,125,130,.28)}
 h1{font-size:19px;margin:14px 0 6px}
 p{color:#708087;font-size:13px;margin:0 0 18px}
-a{display:inline-block;padding:10px 22px;border-radius:999px;background:linear-gradient(135deg,#1a9a9a,#0f6266);color:#fff;text-decoration:none;font-weight:750;font-size:14px}
+a{display:inline-block;padding:10px 22px;border-radius:999px;background:linear-gradient(135deg,#1a9a9a,#0f6266);color:#fff;text-decoration:none;font-weight:750;font-size:14px;transition:transform .2s cubic-bezier(0,0,.2,1)}
+a:active{transform:scale(.96);transition:none}
+@keyframes tg-in{from{opacity:0;transform:translateY(10px) scale(.96)}}
+.card{animation:tg-in .42s cubic-bezier(.22,1.12,.36,1) both}
+@media(prefers-reduced-motion:reduce){.card{animation:none}}
 @media(prefers-color-scheme:dark){body{background-color:#11191c;color:#e8f0f1}.card{background:#182326;border-color:#304348}p{color:#9aadb1}}
 </style>
 </head><body>

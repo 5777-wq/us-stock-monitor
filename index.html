@@ -13,10 +13,15 @@ body{font:15px/1.7 system-ui,-apple-system,"Segoe UI","Microsoft YaHei",sans-ser
 .card img{width:72px;height:72px;border-radius:17px;box-shadow:0 8px 22px rgba(20,125,130,.28)}
 h1{font-size:22px;letter-spacing:-.01em;margin:15px 0 5px}
 .sub{color:var(--muted);font-size:12.5px;margin:0 0 20px}
-.btn{display:block;padding:11px 18px;border-radius:999px;text-decoration:none;font-weight:750;font-size:14px;margin-top:10px;transition:transform .15s,filter .15s}
-.btn:hover{transform:translateY(-1px);filter:brightness(1.05)}
+.btn{display:block;padding:11px 18px;border-radius:999px;text-decoration:none;font-weight:750;font-size:14px;margin-top:10px;transition:transform .2s cubic-bezier(0,0,.2,1),filter .15s;will-change:transform}
+.btn:active{transform:scale(.96);transition:none}
+.btn:hover{filter:brightness(1.05)}
 .btn-open{background:linear-gradient(135deg,#1a9a9a,#0f6266);color:#fff;box-shadow:0 6px 16px rgba(15,98,102,.30)}
 .btn-apk{border:1px solid var(--line);color:var(--ink);font-size:13px;font-weight:650}
+.btn-apk svg{width:17px;height:17px;vertical-align:-3px;margin-right:5px}
+@keyframes tg-in{from{opacity:0;transform:translateY(10px) scale(.98)}}
+.card{animation:tg-in .42s cubic-bezier(.22,1.12,.36,1) both}
+@media(prefers-reduced-motion:reduce){.card{animation:none}.btn,.btn:active{transition:none;transform:none}}
 .tip{color:var(--muted);font-size:11px;margin-top:14px}
 </style>
 </head><body>
@@ -25,7 +30,7 @@ h1{font-size:22px;letter-spacing:-.01em;margin:15px 0 5px}
 <h1>美股监控</h1>
 <p class="sub">SP500 前150 + SPMO · 日/周线 RSI6 · Vegas 三通道<br>每个美股交易日收盘后自动更新</p>
 <a class="btn btn-open" href="./out/report.html">进入今日报告 →</a>
-<a class="btn btn-apk" href="./app/us-stock-monitor.apk" download>📱 下载安卓 App（免开网页）</a>
+<a class="btn btn-apk" href="./app/us-stock-monitor.apk" download><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="7.5" y="3" width="9" height="18" rx="2.5"/><path d="M12 7.5V14"/><path d="M10 12l2 2 2-2"/><path d="M10.5 18.5h3"/></svg>下载安卓 App（免开网页）</a>
 <div class="tip">手机浏览器打开本站 → 菜单「添加到主屏幕」，也能当 App 用</div>
 </div>
 </body></html>

@@ -1,7 +1,7 @@
 /* 美股监控 PWA Service Worker
    报告页(=当日数据)网络优先，断网回退到最近一份；其余同源静态资源缓存优先后台更新。
    改任何被缓存文件的内容时把 VER 号 +1，否则老客户端不更新。 */
-const VER = 'usmon-1';
+const VER = 'usmon-2';
 const SHELL = [
   './',
   './index.html',
