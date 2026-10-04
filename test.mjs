@@ -352,6 +352,13 @@ suite('report.html：生成物内联脚本可解析（防模板转义破坏页�
   const dir = mkdtempSync(path.join(tmpdir(), 'usmon-test-'));
   const files = writeOutputs(data, dir, {});
   const html = readFileSync(files.find((f) => f.endsWith('.html')), 'utf8');
+  ok(!html.includes('"o":['), 'K线数据已拆出报告页（速度：不内联）');
+  const klp = files.find((f) => f.endsWith('klines.json'));
+  ok(!!klp, 'klines.json 随 HTML 一并产出（详情弹层按需拉取）');
+  if (klp) {
+    const kdata = JSON.parse(readFileSync(klp, 'utf8'));
+    ok(!!kdata.AAA && !!kdata.AAA.wk && kdata.AAA.wk.c.length === 1, 'klines.json 含日/周K数据（按 ticker 索引）');
+  }
   const blocks = [...html.matchAll(/<script>([\s\S]*?)<\/script>/g)].map((m) => m[1]);
   ok(blocks.length === 4, '四个内联脚本块（SW注册 + lightweight-charts + 数据 + 页面逻辑）', blocks.length);
   ok(blocks[0].includes('serviceWorker'), '首块为 SW 注册脚本');
