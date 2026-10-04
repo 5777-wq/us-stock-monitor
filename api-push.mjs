@@ -10,7 +10,10 @@ const api = (path, method, body) => {
   return JSON.parse(execSync(args.join(' '), { input: body ? JSON.stringify(body) : undefined, encoding: 'utf8', maxBuffer: 64 * 1024 * 1024 }));
 };
 for (let attempt = 1; attempt <= 3; attempt++) {
-  const files = execSync('git diff --name-only origin/main..HEAD', { encoding: 'utf8' }).split('\n').filter(Boolean);
+  // 只推源码：out/（收盘报告）由 Actions 云端生成、app/（APK）由 android-apk workflow 发布，
+  // 本地这两处是旧副本，绝不能随 API 推送回滚远端最新产物
+  const files = execSync('git diff --name-only origin/main..HEAD', { encoding: 'utf8' }).split('\n').filter(Boolean)
+    .filter((f) => !f.startsWith('out/') && !f.startsWith('app/'));
   if (!files.length) { console.log('本地与远端已一致，无需推送'); process.exit(0); }
   const msg = execSync('git log -1 --format=%B', { encoding: 'utf8' }).trim();
   console.log('attempt', attempt, '- files:', files.length);
