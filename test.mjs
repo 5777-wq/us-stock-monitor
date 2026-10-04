@@ -330,11 +330,11 @@ suite('report.html：生成物内联脚本可解析（防模板转义破坏页�
     rsi6: { value: 72.5, prev: 68.1, state: 'overbought', cross: 'into_ob', period: 6 },
     tunnels: [
       { key: '短通道', n: [12, 36], upper: 1, lower: 0, pos: 'above', event: null, widthPct: 1 },
-      { key: '主通道', n: [144, 169], upper: 1, lower: 0, pos: 'above', event: 'break_up', widthPct: 2 },
+      { key: '中通道', n: [144, 169], upper: 1, lower: 0, pos: 'above', event: 'break_up', widthPct: 2 },
       { key: '长通道', n: [576, 676], pos: null, event: null, insufficient: true },
     ],
     live: null, adj: 'hfq', source: 'eastmoney', bars: 2000,
-    wk: { asOf: '2026-09-25', bars: 260, rsi6: { value: 55.5, prev: 61.2, state: 'neutral', cross: null, period: 6 }, rsi14: { value: 48.2, prev: 51.0, state: 'neutral', cross: null, period: 14 }, tunnels: [{ key: '短通道', n: [144, 169], upper: 2, lower: 1, pos: 'above', event: null, widthPct: 3 }, { key: '主通道', n: [288, 338], pos: 'inside', event: null }, { key: '长通道', n: [576, 676], pos: null, event: null, insufficient: true }], live: null, k: { d: ['2026-09-25'], o: [1], h: [2], l: [0.5], c: [1], e: [[1], [1], [1], [1], [1], [1]] } },
+    wk: { asOf: '2026-09-25', bars: 260, rsi6: { value: 55.5, prev: 61.2, state: 'neutral', cross: null, period: 6 }, rsi14: { value: 48.2, prev: 51.0, state: 'neutral', cross: null, period: 14 }, tunnels: [{ key: '短通道', n: [144, 169], upper: 2, lower: 1, pos: 'above', event: null, widthPct: 3 }, { key: '中通道', n: [288, 338], pos: 'inside', event: null }, { key: '长通道', n: [576, 676], pos: null, event: null, insufficient: true }], live: null, k: { d: ['2026-09-25'], o: [1], h: [2], l: [0.5], c: [1], e: [[1], [1], [1], [1], [1], [1]] } },
     rsi14: { value: 63.4, prev: 60.2, state: 'neutral', cross: null, period: 14 },
     sp500: true, ndx: ticker === 'BBB' ? true : false,
     notes: [{ tag: 'RSI6', level: 'warn', text: 'RSI6=72.5 超买（>70），今日新进超买区。' }],
@@ -342,7 +342,7 @@ suite('report.html：生成物内联脚本可解析（防模板转义破坏页�
   });
   const data = {
     meta: { marketDate: '2026-09-24', generatedAt: 'x', generatedAtLocal: 'x', runAtEt: 'x', topN: 100, extraNote: ' + SPMO', candidatesAsOf: 'x', universeNote: 'x', srcEast: 1, srcTx: 0, srcFail: 0, eastError: null, liveCount: 0, watchCount: 1 },
-    cfg: { rsi: { period: 6, overbought: 70, oversold: 30 }, tunnels: [{ key: '短通道', n: [12, 36] }, { key: '主通道', n: [144, 169] }, { key: '长通道', n: [576, 676] }] },
+    cfg: { rsi: { period: 6, overbought: 70, oversold: 30 }, tunnels: [{ key: '短通道', n: [12, 36] }, { key: '中通道', n: [144, 169] }, { key: '长通道', n: [576, 676] }] },
     spmo: mkRow('SPMO', null), rows: [mkRow('AAA', 1), mkRow('BBB', 2)],
     summary: { overbought: [mkRow('AAA', 1)], oversold: [], obReturn: [mkRow('BBB', 2)], osReturn: [], events: [mkRow('AAA', 1)] },
     failed: [],
