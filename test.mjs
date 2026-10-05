@@ -428,6 +428,11 @@ suite('report.html：生成物内联脚本可解析（防模板转义破坏页�
   ok(html.includes('回落 日'), '手机卡 meta 同步为回落口径（回落 日… · 周…）');
   ok(!html.includes('function tunLine'), '旧六格位置展示（短上/中内/长下×日/周）已从通道列退场');
   ok(html.includes('/^[短中主长]/'), '回落通道标签取键首字（config 改键名不再兜底成 T2）');
+  // 回落场景可达性 [UX-2026-10-05]：KPI 大卡直答今日回落并可点击筛选，chip/行高亮配套
+  ok(html.includes("['今日回落',allRows.filter(hasReentry).length") && html.includes('id="kpi-ret"'), 'KPI 大卡「今日回落」在场（替代信息量低的通道事件卡）');
+  ok(html.includes("data-goto") && html.includes('function setCur') && html.includes("el.onclick=()=>setCur(k)"), 'KPI 卡可点击筛选（与 chips 共用 setCur）');
+  ok(html.includes("ret:{label:'通道回落'") && html.includes("cur==='ret'"), 'chips 有「通道回落」筛选项且 inGroup 支持回落');
+  ok(html.includes("hasReentry(r)?' ret':'')") && html.includes('tr.ret') && html.includes('.mobile-row.ret'), '有回落的表格行/手机卡加绿色左条高亮');
   ok(html.includes("drawK(r,'w')") && html.includes('kMode') && html.includes('ct-w'), '日/周图表切换在场');
   ok(html.includes('idx-badge') && html.includes('成分指数'), '纳指100 徽标与弹层成分行在场');
   ok(html.includes('周超买') && html.includes("cur==='wob'") && html.includes("cur==='wret'"), '周线 chips 与筛选分支在场');
