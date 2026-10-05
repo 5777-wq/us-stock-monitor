@@ -4,7 +4,7 @@
 
 import { emaSeries, rsiSeries, tunnelSnap, rsiSnap, tunnelPos, tunnelEvent } from './lib/indicators.mjs';
 import { lastClosedDate, splitClosed, etNow, tradingDaysBetween } from './lib/market.mjs';
-import { mergeBars, anchorSeries } from './lib/sources.mjs';
+import { mergeBars, anchorSeries, cacheFreshEnough } from './lib/sources.mjs';
 import { rankUniverse, normalizeWatchlist, splitWatchlist, watchTargetOf, loadNdx } from './lib/universe.mjs';
 import { resampleWeekly, weekEndOf } from './lib/weekly.mjs';
 import { evaluate, summarize, stalenessGate } from './lib/signals.mjs';
@@ -351,6 +351,11 @@ suite('signals/market：数据陈旧标记（stale）与发布闸门（staleness
   ok(g2.blocked === true && g2.staleCount === 2 && g2.staleTickers.join(',') === 'X1,X2', '2/30 陈旧（6.7% > 5%）→ 拦截且列出标的', g2);
   ok(stalenessGate(rows30b).dataDate === '2026-10-02', 'dataDate = 行内最大 asOf');
   ok(stalenessGate([]).blocked === false, '空行集不拦截');
+  // 熔断缓存新鲜度判定 [FIX-06]：缓存最后 bar 距「最近收盘日」≤1 交易日才可在熔断时顶上
+  ok(cacheFreshEnough([['2026-10-02', 0, 1, 0, 0, 0]], '2026-10-05') === true, '缓存落后 1 交易日 → 新鲜可用');
+  ok(cacheFreshEnough([['2026-10-02', 0, 1, 0, 0, 0]], '2026-10-06') === false, '缓存落后 2 个交易日 → 不可用（走降级链）');
+  ok(cacheFreshEnough([['f59', 0, 1, 0, 0, 0]], '2026-10-06') === false, '假日期缓存 → 不可用');
+  ok(cacheFreshEnough([], '2026-10-06') === false && cacheFreshEnough(null, 'x') === false, '空/无效缓存 → 不可用');
 }
 
 /* ---------- HTML 生成：内联脚本语法守卫 ---------- */
@@ -470,6 +475,15 @@ suite('report.html：生成物内联脚本可解析（防模板转义破坏页�
   const stHtml = htmlPayload(stData);
   ok(stHtml.includes('class="stale-banner"') && stHtml.includes('数据陈旧') && stHtml.includes('陈旧</span>'), '陈旧 banner + 行级陈旧徽标渲染');
   ok(!normHtml.includes('class="stale-banner"'), '无陈旧数据时不渲染 banner');
+  // 原子落盘 + 空报告守卫 [FIX-06]
+  const { readdirSync } = await import('node:fs');
+  ok(readdirSync(dir).every((f) => !f.endsWith('.tmp')), '落盘原子：目录无 .tmp 残留');
+  const latestPath = files.find((f) => f.endsWith('latest.json'));
+  const before = readFileSync(latestPath, 'utf8');
+  let threw = null;
+  try { writeOutputs({ ...data, spmo: null, rows: [] }, dir, {}); } catch (e) { threw = e; }
+  ok(threw && /拒绝写出/.test(threw.message), '空报告（rows 与 spmo 均空）→ writeOutputs 抛错');
+  ok(readFileSync(latestPath, 'utf8') === before, '抛错路径不触碰已写出的旧文件');
 }
 
 /* ---------- 心跳检查 ---------- */

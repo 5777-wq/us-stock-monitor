@@ -29,6 +29,19 @@ import { notifyIfEnabled } from './lib/notify.mjs';
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
+/* 单标的有限重试 [FIX-06]：全链失败/异常等 500ms 再试一次（多数是瞬时网络抖动）。
+ * 东财侧的节奏与熔断由 sources.eastKline 内部管理（600ms 间隔 + 60s 冷却），这里不额外加压。 */
+async function getSeriesWithRetry(ticker, opts) {
+  let r = null;
+  for (let i = 0; i < 2; i++) {
+    try { r = await getSeries(ticker, opts); }
+    catch { r = null; }
+    if (r && r.bars && r.bars.length) return r;
+    if (i === 0) await sleep(500);
+  }
+  return r;
+}
+
 /* ---------- 参数与配置 ---------- */
 
 function parseArgs(argv) {
@@ -149,7 +162,7 @@ async function main() {
     if (!quiet) console.error(`[${i + 1}/${targets.length}] ${m.ticker} …`);
     let series = null;
     try {
-      series = await getSeries(m.ticker, {
+      series = await getSeriesWithRetry(m.ticker, {
         cacheDir,
         bootstrapLmt: cfg.sources.bootstrapLmt,
         refreshLmt: args.refresh ? cfg.sources.bootstrapLmt : cfg.sources.refreshLmt,
@@ -243,6 +256,12 @@ async function main() {
 
   const data = { meta, cfg, spmo, rows: stockRows, summary, failed, outputs: [] };
 
+  // 全失败保护 [FIX-06]：先于一切写出检查——绝不覆盖本地最后一份好报告
+  if (!rows.length) {
+    console.error('✗ 全部取数失败 —— 检查网络后重试，或删掉 out/cache 后重跑');
+    process.exit(2);
+  }
+
   // 发布闸门 [FIX-04]：陈旧行占比 >5% 视为数据源大面积延迟/停更——只写 preview 排查，
   // 绝不把陈旧数据顶掉上一份好报告；非 0 退出触发 CI 失败告警（见 us-monitor.yml）
   if (gate.blocked && !args.limit) {
@@ -258,11 +277,6 @@ async function main() {
   if (cfg.report.console !== false) console.log(consoleReport(data));
 
   await notifyIfEnabled(cfg.notify, data);
-
-  if (!rows.length) {
-    console.error('✗ 全部取数失败 —— 检查网络后重试，或删掉 out/cache 后重跑');
-    process.exit(2);
-  }
 }
 
 main().catch((e) => { console.error('✗ 运行失败:', e && e.stack || e); process.exit(1); });

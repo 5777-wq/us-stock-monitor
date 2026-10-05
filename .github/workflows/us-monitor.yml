@@ -27,6 +27,16 @@ jobs:
         with:
           node-version: 20
 
+      # K线缓存 [FIX-06]：命中上次 run 的缓存即走增量（120 根/只），全量 bootstrap 只在
+      # 缓存丢失时发生；save 在 job 成功后自动执行，不污染 main 分支
+      - name: Restore kline cache
+        uses: actions/cache@v4
+        with:
+          path: out/cache
+          key: usmon-cache-${{ github.run_id }}
+          restore-keys: |
+            usmon-cache-
+
       - name: Run monitor (101 tickers)
         run: node monitor.mjs --quiet
 
