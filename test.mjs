@@ -459,6 +459,39 @@ suite('report.html：生成物内联脚本可解析（防模板转义破坏页�
   ok(leakHtml.includes('"rsi"') && leakHtml.includes('"tunnels"'), 'cfg 白名单字段 rsi/tunnels 仍在页面数据');
   const leakJson = JSON.parse(readFileSync(files.find((f) => f.endsWith('latest.json')), 'utf8'));
   ok(!JSON.stringify(leakJson).includes('CANARY'), 'latest.json 无 canary（jsonPayload 白名单复核）');
+  // 数据源降级横幅 [FIX-05]：东财失败/腾讯兜底时页面明确提示口径风险，正常时不出现
+  const degData = { ...data, meta: { ...data.meta, eastError: 'WAF 挑战页（HTTP 200 但非 JSON）', srcEast: 1, srcYahoo: 0, srcTx: 3, srcFail: 2, yahooError: null } };
+  const degHtml = htmlPayload(degData);
+  ok(degHtml.includes('数据源降级') && degHtml.includes('WAF 挑战页') && degHtml.includes('数据源错误详情'), '降级横幅 + 错误详情在场');
+  const normHtml = htmlPayload(data);
+  ok(!normHtml.includes('数据源降级'), '数据源健康时不出现降级横幅');
+  // 陈旧 banner [FIX-04]：staleCount>0 或 dataDate≠marketDate 时页头提醒
+  const stData = { ...data, meta: { ...data.meta, staleCount: 1, staleTickers: ['AAA'], dataDate: '2026-01-13' }, rows: data.rows.map((r, i) => i === 0 ? { ...r, stale: true, staleDays: 180 } : r) };
+  const stHtml = htmlPayload(stData);
+  ok(stHtml.includes('class="stale-banner"') && stHtml.includes('数据陈旧') && stHtml.includes('陈旧</span>'), '陈旧 banner + 行级陈旧徽标渲染');
+  ok(!normHtml.includes('class="stale-banner"'), '无陈旧数据时不渲染 banner');
+}
+
+/* ---------- 心跳检查 ---------- */
+suite('tools/check-fresh：陈旧报告非 0 退出，新鲜报告放行');
+{
+  const { writeFileSync, mkdtempSync } = await import('node:fs');
+  const { tmpdir } = await import('node:os');
+  const pathM = await import('node:path');
+  const { spawnSync } = await import('node:child_process');
+  const { fileURLToPath } = await import('node:url');
+  const tool = pathM.join(pathM.dirname(fileURLToPath(import.meta.url)), 'tools', 'check-fresh.mjs');
+  const dir = mkdtempSync(pathM.join(tmpdir(), 'usmon-fresh-'));
+  const fresh = pathM.join(dir, 'latest.json');
+  writeFileSync(fresh, JSON.stringify({ meta: { marketDate: lastClosedDate() } }));
+  const r1 = spawnSync(process.execPath, [tool, fresh], { encoding: 'utf8' });
+  ok(r1.status === 0, '报告日 == 最近收盘日 → 放行', (r1.stdout + r1.stderr).trim());
+  const staleF = pathM.join(dir, 'latest-stale.json');
+  writeFileSync(staleF, JSON.stringify({ meta: { marketDate: '2026-01-13' } }));
+  const r2 = spawnSync(process.execPath, [tool, staleF], { encoding: 'utf8' });
+  ok(r2.status === 1 && /落后/.test(r2.stderr), '报告停在 2026-01-13 → 非 0 退出且报「落后」', { status: r2.status, err: (r2.stderr || '').slice(0, 80) });
+  const r3 = spawnSync(process.execPath, [tool, pathM.join(dir, 'nope.json')], { encoding: 'utf8' });
+  ok(r3.status === 1 && /缺失/.test(r3.stderr), 'latest.json 缺失 → 非 0 退出');
 }
 
 /* ---------- PWA 资产：manifest/sw.js 守卫 ---------- */

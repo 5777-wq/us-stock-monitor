@@ -47,3 +47,34 @@ jobs:
             git pull --rebase -X theirs origin main
             git push
           fi
+
+      # 心跳 [FIX-05]：报告日落后最近收盘日 >1 交易日 → 本步骤非 0 退出 → 触发下方告警
+      - name: Heartbeat check (report freshness)
+        if: always()
+        run: node tools/check-fresh.mjs
+
+      # 失败告警 [FIX-05]：monitor 崩溃 / 测试挂 / 提交失败 / 心跳过期都会走到这里。
+      # 三个通道按已配置的 Secrets 自动选择，未配置则跳过（echo 提示）。
+      - name: Notify on failure
+        if: failure()
+        env:
+          TG_TOKEN: ${{ secrets.NOTIFY_TELEGRAM_TOKEN }}
+          TG_CHAT: ${{ secrets.NOTIFY_TELEGRAM_CHAT_ID }}
+          BARK_URL: ${{ secrets.NOTIFY_BARK_URL }}
+          SC_KEY: ${{ secrets.NOTIFY_SERVERCHAN_KEY }}
+        run: |
+          MSG="Meridian 监控失败：run $GITHUB_RUN_NUMBER（连续无新报告或运行出错），日志 https://github.com/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID"
+          sent=0
+          if [ -n "$TG_TOKEN" ] && [ -n "$TG_CHAT" ]; then
+            curl -s --max-time 15 -X POST "https://api.telegram.org/bot$TG_TOKEN/sendMessage" \
+              -d chat_id="$TG_CHAT" --data-urlencode "text=$MSG" && sent=1
+          fi
+          if [ -n "$BARK_URL" ]; then
+            curl -s --max-time 15 -X POST "${BARK_URL%/}" \
+              --data-urlencode "title=Meridian 监控失败" --data-urlencode "body=$MSG" && sent=1
+          fi
+          if [ -n "$SC_KEY" ]; then
+            curl -s --max-time 15 -X POST "https://sctapi.ftqq.com/$SC_KEY.send" \
+              --data-urlencode "title=Meridian 监控失败" --data-urlencode "desp=$MSG" && sent=1
+          fi
+          [ "$sent" = "1" ] || echo "（未配置 NOTIFY_* Secrets，跳过失败告警推送）"
