@@ -12,6 +12,7 @@ on:
 
 permissions:
   contents: write
+  actions: write
 
 concurrency:
   group: android-apk
@@ -72,3 +73,11 @@ jobs:
           [ -n "$SHA" ] && ARGS+=(-f "sha=$SHA")
           gh api --method PUT "repos/$GITHUB_REPOSITORY/contents/app/us-stock-monitor.apk" "${ARGS[@]}" --jq .commit.sha
           echo "APK published: https://5777-wq.github.io/us-stock-monitor/app/us-stock-monitor.apk"
+
+      # CF 镜像同步 [2026-10-05]：GITHUB_TOKEN 的 push/contents-API 提交不触发 cf-pages
+      # （GitHub 防递归限制），显式 dispatch 让镜像里的 APK 跟着更新
+      - name: Trigger CF Pages mirror sync
+        if: success()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run cf-pages -R "$GITHUB_REPOSITORY" || echo "（CF 镜像触发失败，不影响主流程）"
