@@ -64,6 +64,13 @@ function loadConfig(file) {
   };
   if (!existsSync(p)) return defaults;
   const user = JSON.parse(readFileSync(p, 'utf8'));
+  /* 公开 config.json 出现真实推送密钥 = 泄露通道（本文件进公开仓库，报告页曾整体内嵌 cfg）：
+   * 告警并拒发。密钥的正确去处是 config.local.json 或 CI 的 NOTIFY_* Secrets。 */
+  const pubNotify = (user && user.notify) || {};
+  if (['serverchanSendkey', 'barkUrl', 'telegramToken', 'telegramChatId'].some((k) => typeof pubNotify[k] === 'string' && pubNotify[k])) {
+    console.error('✗ 安全防护：config.json 里出现 notify 推送密钥（会随公开仓库泄露）——已禁用推送。密钥请放 config.local.json 或 NOTIFY_* 环境变量。');
+    user.notify = { ...(user.notify || {}), enabled: false };
+  }
   const merge = (d, u) => {
     if (!u) return d;
     const o = Array.isArray(d) ? [...d] : { ...d };

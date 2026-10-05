@@ -404,6 +404,23 @@ suite('report.html：生成物内联脚本可解析（防模板转义破坏页�
   ok(html.includes('th-rsi') && html.includes('th-wkrsi'), 'RSI 表头动态 id 在场');
   ok(csv.includes('RSI14状态') && csv.includes('周RSI14状态'), 'CSV RSI14 日/周列在场');
   ok(jobj.rows[0].rsi14 && jobj.rows[0].rsi14.period === 14 && jobj.rows[0].wk.rsi14, '行级 rsi14 与 wk.rsi14 进 JSON');
+  // token 裁剪 [FIX-03]：notify 密钥 / sources 代理绝不内嵌进公开 HTML，cfg 只留白名单字段
+  const { htmlPayload } = await import('./lib/report.mjs');
+  const leakData = {
+    ...data,
+    cfg: {
+      ...data.cfg,
+      notify: { enabled: true, onlySignals: true, serverchanSendkey: 'CANARY_TOKEN_123', barkUrl: 'https://api.day.app/CANARY_KEY', telegramToken: '111:CANARY_TG', telegramChatId: '4242' },
+      sources: { bootstrapLmt: 2000, refreshLmt: 120, eastProxy: 'https://canary-proxy.example.workers.dev' },
+      watchlist: { tickers: ['SPMO'], note: 'CANARY_NOTE' },
+      universe: { topN: 150, candidatesFile: 'data/sp500-candidates.json', quoteBatch: 60 },
+    },
+  };
+  const leakHtml = htmlPayload(leakData);
+  ok(!leakHtml.includes('CANARY_TOKEN_123') && !leakHtml.includes('CANARY_KEY') && !leakHtml.includes('CANARY_TG') && !leakHtml.includes('canary-proxy'), 'notify 密钥与 sources 代理不进 HTML（canary 全负）');
+  ok(leakHtml.includes('"rsi"') && leakHtml.includes('"tunnels"'), 'cfg 白名单字段 rsi/tunnels 仍在页面数据');
+  const leakJson = JSON.parse(readFileSync(files.find((f) => f.endsWith('latest.json')), 'utf8'));
+  ok(!JSON.stringify(leakJson).includes('CANARY'), 'latest.json 无 canary（jsonPayload 白名单复核）');
 }
 
 /* ---------- PWA 资产：manifest/sw.js 守卫 ---------- */

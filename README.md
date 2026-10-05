@@ -83,7 +83,7 @@ schtasks /Create /TN "US-Monitor" /TR "\"D:\57的vibe coding内容\global-fin-da
 
 ## 推送通知（可选，默认关）
 
-`config.json` → `notify`，三选多：
+**密钥只写进 `config.local.json`**（已被 .gitignore 排除，绝不进公开仓库/Pages；**绝对不要写进 config.json**——报告页会把配置内嵌进 HTML 随仓库公开）。CI 里也可用 GitHub Secrets（`NOTIFY_SERVERCHAN_KEY` / `NOTIFY_BARK_URL` / `NOTIFY_TELEGRAM_TOKEN` / `NOTIFY_TELEGRAM_CHAT_ID`），优先级高于配置文件：
 
 ```json
 "notify": {
