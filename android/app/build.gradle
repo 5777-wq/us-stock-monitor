@@ -5,6 +5,15 @@ plugins {
 // CI 里每次构建 versionCode/Name 取 run_number，保证每次发布都可覆盖安装升级
 def ciRun = (System.getenv('GITHUB_RUN_NUMBER') ?: '0') as Integer
 
+// 签名凭据只从 GitHub Secrets 注入的环境变量读取（2026-10-05 轮换，旧随库明文 keystore 已废弃删除）。
+// 本地构建没有 Secrets 时退 debug 签名，仅供自装调试；正式 APK 一律由 CI 产出。
+def ksB64 = System.getenv('ANDROID_KEYSTORE_BASE64')
+def ksFile = rootProject.file('signing/release-from-secret.jks')
+if (ksB64) {
+    ksFile.parentFile.mkdirs()
+    ksFile.setBytes(java.util.Base64.getDecoder().decode(ksB64))
+}
+
 android {
     namespace 'com.wq5777.usstockmon'
     compileSdk 34
@@ -17,22 +26,22 @@ android {
         versionName ciRun > 0 ? "1.${ciRun}" : '1.0-local'
     }
 
-    // 个人自用签名：keystore 与密码随仓库走（公开仓库、无敏感签名需求），
-    // 保证每次 CI 构建的 APK 签名一致，覆盖安装不要求先卸载
     signingConfigs {
         release {
-            storeFile rootProject.file('signing/app.keystore')
-            storeType 'PKCS12'
-            storePassword 'usmon2026'
-            keyAlias 'usstockmon'
-            keyPassword 'usmon2026'
+            if (ksB64) {
+                storeFile ksFile
+                storeType 'PKCS12'
+                storePassword System.getenv('ANDROID_STORE_PASSWORD')
+                keyAlias System.getenv('ANDROID_KEY_ALIAS') ?: 'usstockmon'
+                keyPassword System.getenv('ANDROID_KEY_PASSWORD')
+            }
         }
     }
 
     buildTypes {
         release {
             minifyEnabled false
-            signingConfig signingConfigs.release
+            signingConfig ksB64 ? signingConfigs.release : signingConfigs.debug
         }
     }
 

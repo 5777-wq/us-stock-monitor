@@ -34,6 +34,10 @@ jobs:
           gradle-version: "8.9"
 
       - name: Build release APK
+        env:
+          ANDROID_KEYSTORE_BASE64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
+          ANDROID_STORE_PASSWORD: ${{ secrets.ANDROID_STORE_PASSWORD }}
+          ANDROID_KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
         run: gradle -p android :app:assembleRelease --no-daemon --stacktrace
 
       - name: Prepare artifact
@@ -47,7 +51,7 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           TITLE="Meridian Android build ${{ github.run_number }}"
-          NOTES="App 是 WebView 壳，数据随网站每个交易日自动更新，无需重装。壳本身更新（界面/功能变化）时重新下载安装即可覆盖升级。"
+          NOTES="App 是 WebView 壳，数据随网站每个交易日自动更新，无需重装。壳本身更新（界面/功能变化）时重新下载安装即可覆盖升级。注意：2026-10-05 起更换签名，旧版（build <2026-10-05）升级需先卸载再安装。"
           # 已有 latest 就覆盖上传资产+更新标题说明（下载链接永不 404），否则新建
           if gh release view latest -R "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
             gh release upload latest -R "$GITHUB_REPOSITORY" publish/us-stock-monitor.apk --clobber
