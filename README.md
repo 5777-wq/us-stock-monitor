@@ -79,7 +79,7 @@ schtasks /Create /TN "US-Monitor" /TR "\"D:\57的vibe coding内容\global-fin-da
 
 ## 手机上看（已上线）
 
-**线上地址：<https://5777-wq.github.io/us-stock-monitor/>**（仓库公开 + GitHub Pages，Actions 每个美股交易日收盘后自动更新报告）。仓库当前为 public——免费 `github.io` 域名只给公开仓库；若改回 private，Pages 会停（私有仓库用 Pages 需 GitHub Pro）。也可本地 `out/report.html` 双击看。
+**线上地址：<https://5777-wq.github.io/us-stock-monitor/>**（仓库公开 + GitHub Pages，Actions 每个美股交易日收盘后自动更新报告）。**Cloudflare 镜像：<https://meridian-4is.pages.dev>**（cf-pages workflow 每次 main 更新自动直传同步，国内访问 github.io 慢/失败时用这个；两个入口是独立域名，PWA/自选设置各自独立保存）。仓库当前为 public——免费 `github.io` 域名只给公开仓库；若改回 private，Pages 会停（私有仓库用 Pages 需 GitHub Pro）。也可本地 `out/report.html` 双击看。
 
 ## 推送通知（可选，默认关）
 

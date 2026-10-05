@@ -10,3 +10,4 @@ config.local.json
 android/signing/
 *.jks
 *.keystore
+cf-dist/

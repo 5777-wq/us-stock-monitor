@@ -1,0 +1,50 @@
+# Cloudflare Pages 镜像部署：main 每次更新（监控报告/APK/源码）自动把站点产物
+# 直传 meridian-4is.pages.dev（国内访问 github.io 慢时的备用入口）。
+# 需要仓库 Secret：CLOUDFLARE_API_TOKEN（Cloudflare 仪表板→My Profile→API Tokens，
+# 模板 "Cloudflare Pages — Edit" 即可）。未配置时跳过部署不报错。
+# 站点文件白名单与仓库根 404.html 的 /us-stock-monitor/ 路径改写见 assemble 步骤。
+name: cf-pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: cf-pages
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Assemble site (tracked files only)
+        run: |
+          mkdir -p cf-dist
+          git ls-files -- index.html 404.html sw.js manifest.webmanifest assets/ app/ out/ | while read f; do
+            mkdir -p "cf-dist/$(dirname "$f")"
+            cp "$f" "cf-dist/$f"
+          done
+          # CF 部署在根路径：404 跳转去掉 GitHub Pages 的 /us-stock-monitor/ 前缀
+          sed 's#/us-stock-monitor/#/#g' 404.html > cf-dist/404.html
+          ls -la cf-dist
+
+      - name: Deploy to Cloudflare Pages
+        if: env.CF_TOKEN_SET == 'true'
+        env:
+          CF_TOKEN_SET: ${{ secrets.CLOUDFLARE_API_TOKEN != '' }}
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: 6489b5e23ac04b90e2eeb8605f33d91e
+        run: npx --yes wrangler@4.147.0 pages deploy cf-dist --project-name=meridian --branch=main --commit-dirty=true
+
+      - name: Skipped (no token)
+        if: env.CF_TOKEN_SET != 'true'
+        env:
+          CF_TOKEN_SET: ${{ secrets.CLOUDFLARE_API_TOKEN != '' }}
+        run: echo "未配置 CLOUDFLARE_API_TOKEN Secret，跳过 Cloudflare Pages 部署（线上镜像保持上次版本）"
