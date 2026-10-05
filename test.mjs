@@ -3,11 +3,11 @@
  * （两份独立转录互证，抓转写错误）。 */
 
 import { emaSeries, rsiSeries, tunnelSnap, rsiSnap, tunnelPos, tunnelEvent } from './lib/indicators.mjs';
-import { lastClosedDate, splitClosed, etNow } from './lib/market.mjs';
+import { lastClosedDate, splitClosed, etNow, tradingDaysBetween } from './lib/market.mjs';
 import { mergeBars, anchorSeries } from './lib/sources.mjs';
 import { rankUniverse, normalizeWatchlist, splitWatchlist, watchTargetOf, loadNdx } from './lib/universe.mjs';
 import { resampleWeekly, weekEndOf } from './lib/weekly.mjs';
-import { evaluate, summarize } from './lib/signals.mjs';
+import { evaluate, summarize, stalenessGate } from './lib/signals.mjs';
 
 let pass = 0, fail = 0;
 const ok = (cond, name, extra) => {
@@ -313,6 +313,44 @@ suite('signals.evaluate 周线块：40 周真实日历日线 → 周RSI/周通�
   ok(rw.wk.asOf === weekEndOf(wbars[199][0]) && rw.wk.asOf === rw.asOf, '周线 asOf = 本周周五标签', rw.wk.asOf);
   ok(rw.sp500 === true && rw.ndx === true, '成分标志透传到行');
   ok(rw.notes.some((n) => n.tag === '周RSI6' && /超买/.test(n.text)), '周线超买 notes 在场', rw.notes.map((n) => n.tag));
+}
+
+/* ---------- 数据新鲜度：stale 标记 + 发布闸门 ---------- */
+suite('signals/market：数据陈旧标记（stale）与发布闸门（stalenessGate）');
+{
+  // 交易日距离：周五→下周一=1、周五→下周五=5、跨周末的倒挂/非法日期=0
+  ok(tradingDaysBetween('2026-10-02', '2026-10-05') === 1, '周五→下周一 = 1 个交易日', tradingDaysBetween('2026-10-02', '2026-10-05'));
+  ok(tradingDaysBetween('2026-10-02', '2026-10-09') === 5, '周五→下周五 = 5 个交易日', tradingDaysBetween('2026-10-02', '2026-10-09'));
+  ok(tradingDaysBetween('2026-10-09', '2026-10-02') === 0, '日期倒挂返回 0');
+  ok(tradingDaysBetween('d059', '2026-10-02') === 0, '非法日期返回 0（假日期 fixture 不误标）');
+  // 60 个工作日 ending 2026-01-13（MMC 实测场景：报告日 2026-10-02，数据停在 1 月）
+  const days = [];
+  for (let t = Date.UTC(2026, 0, 13); days.length < 60; t -= 86400000) {
+    const w = new Date(t).getUTCDay();
+    if (w !== 0 && w !== 6) days.push(new Date(t).toISOString().slice(0, 10));
+  }
+  days.reverse();
+  const sBars = days.map((d, i) => [d, 0, 100 + i, 0, 0, 0]);
+  const cfgS = { rsi: { period: 6, overbought: 70, oversold: 30 }, tunnels: [{ key: '主通道', n: [12, 36] }] };
+  const metaS = { ticker: 'STALE', name: '陈旧测试', rank: 1 };
+  const rStale = evaluate(metaS, { bars: sBars, adj: 'hfq', source: 'eastmoney' }, cfgS, '2026-10-02');
+  ok(rStale.stale === true && rStale.staleDays > 100, '最后一根 2026-01-13 vs 报告日 2026-10-02 → stale', { stale: rStale.stale, staleDays: rStale.staleDays });
+  ok(rStale.notes.some((n) => n.tag === '数据' && /数据陈旧/.test(n.text)), '陈旧行带「数据陈旧」note');
+  const rFresh = evaluate(metaS, { bars: sBars, adj: 'hfq', source: 'eastmoney' }, cfgS, '2026-01-13');
+  ok(rFresh.stale === undefined, '最后一根 == 报告日 → 不标 stale');
+  const rLag1 = evaluate(metaS, { bars: sBars, adj: 'hfq', source: 'eastmoney' }, cfgS, '2026-01-14');
+  ok(rLag1.stale === undefined, '落后 1 个交易日 → 不标（正常延迟容忍）');
+  const rFake = evaluate(metaS, { bars: sBars.map((b, i) => ['f' + i, 0, 100 + i, 0, 0, 0]), adj: 'hfq', source: 'eastmoney' }, cfgS, 'z999');
+  ok(rFake.stale === undefined, '假日期（解析失败）不误标 stale');
+  // 闸门：30 行 1 陈旧（3.3%）放行；2 陈旧（6.7%）拦截；dataDate 取最大 asOf
+  const mkRow = (t, asOf, stale) => ({ ticker: t, asOf, stale: stale || undefined });
+  const rows30 = Array.from({ length: 30 }, (_, i) => mkRow('N' + i, '2026-10-02'));
+  ok(stalenessGate(rows30).blocked === false, '1/30 陈旧（3.3% ≤ 5%）→ 放行', stalenessGate(rows30).staleRatio);
+  const rows30b = [...rows30.slice(0, 29), mkRow('X1', '2026-01-13', true), mkRow('X2', '2026-01-13', true)];
+  const g2 = stalenessGate(rows30b);
+  ok(g2.blocked === true && g2.staleCount === 2 && g2.staleTickers.join(',') === 'X1,X2', '2/30 陈旧（6.7% > 5%）→ 拦截且列出标的', g2);
+  ok(stalenessGate(rows30b).dataDate === '2026-10-02', 'dataDate = 行内最大 asOf');
+  ok(stalenessGate([]).blocked === false, '空行集不拦截');
 }
 
 /* ---------- HTML 生成：内联脚本语法守卫 ---------- */

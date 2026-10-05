@@ -20,7 +20,7 @@ import { fileURLToPath } from 'node:url';
 import { getSeries, eastStatus, yahooStatus, tencentQuotes, anchorSeries } from './lib/sources.mjs';
 import { buildUniverse, tvSymbolOf, normalizeWatchlist, splitWatchlist, watchTargetOf } from './lib/universe.mjs';
 import { emaSeries } from './lib/indicators.mjs';
-import { evaluate, summarize } from './lib/signals.mjs';
+import { evaluate, summarize, stalenessGate } from './lib/signals.mjs';
 import { resampleWeekly } from './lib/weekly.mjs';
 import { lastClosedDate, etNow } from './lib/market.mjs';
 import { consoleReport, writeOutputs } from './lib/report.mjs';
@@ -216,9 +216,13 @@ async function main() {
   const stockRows = rows.filter((r) => r.ticker !== 'SPMO');
   const summary = summarize([spmo, ...stockRows].filter(Boolean));
   const es = eastStatus();
+  const gate = stalenessGate([spmo, ...stockRows].filter(Boolean));
 
   const meta = {
     marketDate,
+    dataDate: gate.dataDate,
+    staleCount: gate.staleCount,
+    staleTickers: gate.staleTickers.length > 12 ? gate.staleTickers.slice(0, 12).concat(['…']) : gate.staleTickers,
     generatedAt: new Date().toISOString(),
     generatedAtLocal: new Date().toLocaleString('zh-CN', { hour12: false }),
     runAtEt: `${et.date} ${et.hhmm} ET`,
@@ -238,6 +242,15 @@ async function main() {
   };
 
   const data = { meta, cfg, spmo, rows: stockRows, summary, failed, outputs: [] };
+
+  // 发布闸门 [FIX-04]：陈旧行占比 >5% 视为数据源大面积延迟/停更——只写 preview 排查，
+  // 绝不把陈旧数据顶掉上一份好报告；非 0 退出触发 CI 失败告警（见 us-monitor.yml）
+  if (gate.blocked && !args.limit) {
+    writeOutputs(data, path.join(outDir, 'preview'), { csv: cfg.report.csv, html: cfg.report.html && !args.noHtml });
+    console.error(`✗ 陈旧数据闸门：${gate.staleCount}/${rows.length} 行（${(gate.staleRatio * 100).toFixed(1)}%）落后报告日 >1 个交易日——正式报告未发布（已写 out/preview）。stale 标的：${gate.staleTickers.join(' ')}`);
+    process.exit(3);
+  }
+
   // --limit 是试跑：写 out/preview，绝不覆盖正式报告（曾发生试跑快照顶掉全量报告）
   const outputs = writeOutputs(data, args.limit ? path.join(outDir, 'preview') : outDir, { csv: cfg.report.csv, html: cfg.report.html && !args.noHtml });
   data.outputs = outputs.map((p) => path.relative(HERE, p));
