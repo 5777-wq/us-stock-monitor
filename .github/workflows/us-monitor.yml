@@ -51,7 +51,8 @@ jobs:
           if git diff --cached --quiet; then
             echo "报告无变化，跳过提交"
           else
-            git commit -m "monitor: $(date -u +%F) 收盘报告 [skip ci]"
+            # 无 [skip ci]：提交要触发 cf-pages 镜像同步（us-monitor 只由定时/手动触发，不会自激）
+            git commit -m "monitor: $(date -u +%F) 收盘报告"
             # 监控运行期间远端可能有新提交（如另一次监控/APK入库）；out/ 冲突时取本地——
             # 本地这份永远是刚生成的最新报告
             git pull --rebase -X theirs origin main
