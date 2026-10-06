@@ -8,6 +8,7 @@ import { mergeBars, anchorSeries, cacheFreshEnough } from './lib/sources.mjs';
 import { rankUniverse, normalizeWatchlist, splitWatchlist, watchTargetOf, loadNdx } from './lib/universe.mjs';
 import { resampleWeekly, weekEndOf } from './lib/weekly.mjs';
 import { evaluate, summarize, stalenessGate } from './lib/signals.mjs';
+import { obDaysRun, aboveDaysRun, extensionPct, volumeRatio, signalHistory, statsOf } from './lib/analytics.mjs';
 
 let pass = 0, fail = 0;
 const ok = (cond, name, extra) => {
@@ -358,6 +359,48 @@ suite('signals/market：数据陈旧标记（stale）与发布闸门（staleness
   ok(cacheFreshEnough([], '2026-10-06') === false && cacheFreshEnough(null, 'x') === false, '空/无效缓存 → 不可用');
 }
 
+/* ---------- 专业级分析层：钝化/扩展度/量比/历史信号统计 ---------- */
+suite('analytics：obDaysRun / aboveDaysRun / extensionPct / volumeRatio');
+{
+  const rise = Array.from({ length: 26 }, (_, i) => 100 + i);          // 26 根连涨 → RSI6 从第7根起 =100
+  const fall = Array.from({ length: 26 }, (_, i) => 200 - i);          // 连跌 → RSI6 =0
+  ok(obDaysRun(rise, 6, 70) === 20, '连涨序列末尾连续超买 20 天', obDaysRun(rise, 6, 70));
+  ok(obDaysRun(fall, 6, 70) === 0, '连跌序列不超买 → 0');
+  // 线性上扬 200 根：EMA12/36 均在 i>=36 才齐（b=E36 首值在 35），末段持续在通道上方
+  const trend = Array.from({ length: 200 }, (_, i) => 100 + i);
+  ok(aboveDaysRun(trend, [12, 36]) === 165, '线性上扬 → 末尾连续在通道上方 165 天（=200-35，EMA36 首值在 i=35）', aboveDaysRun(trend, [12, 36]));
+  const ext = extensionPct(trend, [12, 36]);
+  ok(ext !== null && ext > 0 && ext < 20, '扩展度为正且量级合理（收盘在 EMA max 上方）', ext);
+  // 量比：前 24 根量 100、末根 300 → 3.0；零量（Yahoo 源）→ null
+  const vbars = (v) => Array.from({ length: 25 }, (_, i) => ['2026-01-' + String(i + 1).padStart(2, '0'), 0, 100, 0, 0, v]);
+  ok(volumeRatio(vbars(100).slice(0, 24).concat([['2026-01-25', 0, 100, 0, 0, 300]])) === 3.0, '量比 300/100 = 3.0');
+  ok(volumeRatio(vbars(0)) === null, '零成交量数据源 → null（如实降级）');
+  ok(volumeRatio(vbars(100).slice(0, 10)) === null, 'bars 不足 21 根 → null');
+}
+suite('analytics：signalHistory 三大信号历史扫描（黄金值）');
+{
+  const cfgA = { rsi: { period: 6, overbought: 70, oversold: 30 }, tunnels: [{ key: '短通道', n: [10, 30] }] };
+  // 超买回落+通道回落同日：40 根连涨（RSI=100，EMA10≈134.6/EMA30≈124.6）→ 跌到 130（轨内，RSI≈40）→ 5 根走平
+  const obr = [...Array.from({ length: 40 }, (_, i) => 100 + i), 130, 130, 130, 130, 130, 130];
+  const h1 = signalHistory(obr, cfgA, 5);
+  ok(h1.obr.length === 1 && h1.obr[0] === 0, '超买回落捕获 1 次，5 日后收益 0%（走平）', h1.obr);
+  ok(h1.ret.length === 1 && h1.ret[0] === 0, '同日构成通道回落（自上方回到轨内，非跌破下轨）', h1.ret);
+  const s1 = statsOf(h1.obr);
+  ok(s1.n === 1 && s1.up === 0 && s1.avg === 0 && s1.med === 0, 'statsOf 摘要正确（n/up/avg/med）', s1);
+  // 超卖回升：镜像序列
+  const osr = [...Array.from({ length: 40 }, (_, i) => 200 - i), 170, 170, 170, 170, 170, 170];
+  const h2 = signalHistory(osr, cfgA, 5);
+  ok(h2.osr.length === 1 && h2.osr[0] === 0, '超卖回升捕获 1 次（镜像黄金值）', h2.osr);
+  // 无信号序列：纯线性上扬（RSI 恒 100 不穿越）
+  const flatOb = Array.from({ length: 45 }, (_, i) => 100 + i);
+  const h3 = signalHistory(flatOb, cfgA, 5);
+  ok(h3.obr.length === 0 && h3.osr.length === 0, '持续超买无回落穿越 → obr/osr 零样本');
+  // statsOf 空样本与偶数中位
+  ok(statsOf([]).n === 0 && statsOf([]).up === null, '空样本 → n=0 且统计位 null');
+  const s4 = statsOf([1, -2, 3, 4]);
+  ok(s4.n === 4 && s4.up === 75 && s4.avg === 1.5 && s4.med === 2, '偶数样本中位 = 中间两值均值，up 只数 >0', s4);
+}
+
 /* ---------- HTML 生成：内联脚本语法守卫 ---------- */
 suite('report.html：生成物内联脚本可解析（防模板转义破坏页面脚本）');
 {
@@ -384,7 +427,7 @@ suite('report.html：生成物内联脚本可解析（防模板转义破坏页�
     spark: { closes },
   });
   const data = {
-    meta: { marketDate: '2026-09-24', generatedAt: 'x', generatedAtLocal: 'x', runAtEt: 'x', topN: 100, extraNote: ' + SPMO', candidatesAsOf: 'x', universeNote: 'x', srcEast: 1, srcTx: 0, srcFail: 0, eastError: null, liveCount: 0, watchCount: 1 },
+    meta: { marketDate: '2026-09-24', generatedAt: 'x', generatedAtLocal: 'x', runAtEt: 'x', topN: 100, extraNote: ' + SPMO', candidatesAsOf: 'x', universeNote: 'x', srcEast: 1, srcTx: 0, srcFail: 0, eastError: null, liveCount: 0, watchCount: 1, breadth: { up: 118, down: 35, upPct: 77, rsiMed: 61.5 }, sigStats: { obr: { n: 1240, up: 44.2, avg: -1.15, med: -0.8 }, osr: { n: 210, up: 57.1, avg: 1.9, med: 1.2 }, ret: { n: 890, up: 46.5, avg: -0.7, med: -0.4 }, horizonDays: 5, tickers: 153 } },
     cfg: { rsi: { period: 6, overbought: 70, oversold: 30 }, tunnels: [{ key: '短通道', n: [12, 36] }, { key: '中通道', n: [144, 169] }, { key: '长通道', n: [576, 676] }] },
     spmo: mkRow('SPMO', null), rows: [mkRow('AAA', 1), mkRow('BBB', 2)],
     summary: { overbought: [mkRow('AAA', 1)], oversold: [], obReturn: [mkRow('BBB', 2)], osReturn: [], events: [mkRow('AAA', 1)] },
@@ -433,6 +476,10 @@ suite('report.html：生成物内联脚本可解析（防模板转义破坏页�
   ok(html.includes("data-goto") && html.includes('function setCur') && html.includes("el.onclick=()=>setCur(k)"), 'KPI 卡可点击筛选（与 chips 共用 setCur）');
   ok(html.includes("ret:{label:'通道回落'") && html.includes("cur==='ret'"), 'chips 有「通道回落」筛选项且 inGroup 支持回落');
   ok(html.includes("hasReentry(r)?' ret':'')") && html.includes('tr.ret') && html.includes('.mobile-row.ret'), '有回落的表格行/手机卡加绿色左条高亮');
+  // 专业级上下文 [2026-10-05]：市场宽度 KPI + 信号历史验证块 + 详情四行
+  ok(html.includes('市场宽度') && html.includes('信号历史验证') && html.includes('超买回落 <b'), 'KPI 市场宽度卡 + Method 面板信号历史验证块在场');
+  ok(html.includes('钝化背景') && html.includes('扩展度') && html.includes('量能（vs 20日均量）') && html.includes('本标的历史信号'), '详情弹层带 钝化/扩展度/量能/历史信号 四行');
+  ok(html.includes("r.obDays>1") && html.includes("'天</span>"), 'RSI 单元格带连续超买天数缀（>1 天才显示）');
   ok(html.includes("drawK(r,'w')") && html.includes('kMode') && html.includes('ct-w'), '日/周图表切换在场');
   ok(html.includes('idx-badge') && html.includes('成分指数'), '纳指100 徽标与弹层成分行在场');
   ok(html.includes('周超买') && html.includes("cur==='wob'") && html.includes("cur==='wret'"), '周线 chips 与筛选分支在场');

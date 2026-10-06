@@ -21,6 +21,7 @@ import { getSeries, eastStatus, yahooStatus, tencentQuotes, anchorSeries } from 
 import { buildUniverse, tvSymbolOf, normalizeWatchlist, splitWatchlist, watchTargetOf } from './lib/universe.mjs';
 import { emaSeries } from './lib/indicators.mjs';
 import { evaluate, summarize, stalenessGate } from './lib/signals.mjs';
+import { rowContext, signalHistory, statsOf } from './lib/analytics.mjs';
 import { resampleWeekly } from './lib/weekly.mjs';
 import { lastClosedDate, etNow } from './lib/market.mjs';
 import { consoleReport, writeOutputs } from './lib/report.mjs';
@@ -157,6 +158,8 @@ async function main() {
 
   const rows = [];
   const failed = [];
+  // 历史信号统计的全池原始样本（信号后5日收益），最后汇总进 meta.sigStats
+  const pooled = { obr: [], osr: [], ret: [] };
   for (let i = 0; i < targets.length; i++) {
     const m = targets[i];
     if (!quiet) console.error(`[${i + 1}/${targets.length}] ${m.ticker} …`);
@@ -181,6 +184,17 @@ async function main() {
     // 报表 K 线用：最近 90 根已收盘 bar + 六条 EMA（服务端对全量历史算好再切片，
     // 长通道 EMA576/676 不可能从 90 根窗口现场算）——只进 HTML，不进 latest.json
     const closedBars = series.bars.filter((b) => b[0] <= marketDate);
+    // 专业级上下文 [2026-10-05]：钝化背景（连续超买/通道上方天数）、扩展度、量比、
+    // 以及本标的历史上三大信号出现后 5 日收益的统计——只描述事实，不预测
+    try {
+      Object.assign(row, rowContext(closedBars, cfg));
+      const hist = signalHistory(closedBars.map((b) => b[2]), cfg, 5);
+      row.sigHist = { obr: statsOf(hist.obr), osr: statsOf(hist.osr), ret: statsOf(hist.ret) };
+      pooled.obr.push(...hist.obr); pooled.osr.push(...hist.osr); pooled.ret.push(...hist.ret);
+      if (row.obDays >= 5) {
+        row.notes.push({ tag: 'RSI6', level: 'info', text: `RSI6 已连续 ${row.obDays} 个交易日收在超买区（>${cfg.rsi.overbought}）——趋势钝化背景，持续超买本身不是离场信号，但回落信号出现时值得更高关注。` });
+      }
+    } catch (e) { console.error(`  ⚠ 上下文统计失败 ${m.ticker}: ${e.message}`); }
     const win = closedBars.slice(-90);
     const allCloses = closedBars.map((b) => b[2]);
     const startI = allCloses.length - win.length;
@@ -252,6 +266,16 @@ async function main() {
     yahooError: (() => { const ys = yahooStatus(); return ys.fails && ys.lastError ? ys.lastError : null; })(),
     liveCount: rows.filter((r) => r.live).length,
     watchCount: rows.filter((r) => r.watch).length,
+    // 市场宽度 [2026-10-05]：当日涨跌家数 + RSI6 中位——一眼读市场状态
+    breadth: (() => {
+      const up = rows.filter((r) => Number.isFinite(r.chgPct) && r.chgPct > 0).length;
+      const down = rows.filter((r) => Number.isFinite(r.chgPct) && r.chgPct < 0).length;
+      const rsis = rows.map((r) => r.rsi6 && r.rsi6.value).filter(Number.isFinite).sort((a, b) => a - b);
+      const rsiMed = rsis.length ? +rsis[Math.floor(rsis.length / 2)].toFixed(1) : null;
+      return { up, down, upPct: rows.length ? Math.round((up / rows.length) * 100) : null, rsiMed };
+    })(),
+    // 历史信号验证（全池汇总）：信号出现后 5 日收益分布
+    sigStats: { obr: statsOf(pooled.obr), osr: statsOf(pooled.osr), ret: statsOf(pooled.ret), horizonDays: 5, tickers: rows.length },
   };
 
   const data = { meta, cfg, spmo, rows: stockRows, summary, failed, outputs: [] };
