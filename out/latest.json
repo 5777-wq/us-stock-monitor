@@ -2,26 +2,26 @@
  "version": 1,
  "strategy": "SPMO 攒股 + SP500前150 增强 · 日线+周线 RSI6 超买超卖 + Vegas 三通道",
  "meta": {
-  "marketDate": "2026-11-25",
+  "marketDate": "2026-11-26",
   "dataDate": "2026-11-25",
   "staleCount": 2,
   "staleTickers": [
    "MMC",
    "WBD"
   ],
-  "generatedAt": "2026-11-26T03:46:48.554Z",
-  "generatedAtLocal": "2026/11/26 03:46:48",
-  "runAtEt": "2026-11-25 22:42 ET",
+  "generatedAt": "2026-11-27T03:44:35.101Z",
+  "generatedAtLocal": "2026/11/27 03:44:35",
+  "runAtEt": "2026-11-26 22:44 ET",
   "topN": 150,
   "extraNote": " + SPMO",
   "candidatesAsOf": "2026-09-25",
   "ndxAsOf": "2025-12-19",
   "universeNote": "SPMO持仓快照 2026-09-16（前40大，标记重合） · 纳指100快照 2025-12-19",
-  "srcEast": 151,
-  "srcYahoo": 1,
+  "srcEast": 149,
+  "srcYahoo": 3,
   "srcTx": 1,
   "srcFail": 0,
-  "eastError": null,
+  "eastError": "curl(22)",
   "yahooError": "curl(22)",
   "liveCount": 0,
   "watchCount": 3,
@@ -33,19 +33,19 @@
   },
   "sigStats": {
    "obr": {
-    "n": 18116,
+    "n": 18115,
     "up": 55.3,
     "avg": 0.38,
     "med": 0.34
    },
    "osr": {
-    "n": 12851,
+    "n": 12852,
     "up": 54.6,
     "avg": 0.17,
     "med": 0.32
    },
    "ret": {
-    "n": 6540,
+    "n": 6542,
     "up": 54.1,
     "avg": 0.41,
     "med": 0.3
@@ -94,17 +94,17 @@
   "sp500": false,
   "asOf": "2026-11-25",
   "close": 120.52,
-  "chgPct": -0.8235879034175664,
+  "chgPct": -0.8229098090849263,
   "rsi6": {
-   "value": 34.76957348056048,
-   "prev": 36.75545004210211,
+   "value": 34.77117123034887,
+   "prev": 36.755363841052315,
    "state": "neutral",
    "cross": null,
    "period": 6
   },
   "rsi14": {
-   "value": 35.1843462079668,
-   "prev": 36.11710457988558,
+   "value": 35.18529611253605,
+   "prev": 36.11726995047039,
    "state": "neutral",
    "cross": null,
    "period": 14
@@ -116,11 +116,11 @@
      144,
      169
     ],
-    "upper": 139.6663872561163,
-    "lower": 138.92016183240165,
+    "upper": 139.29258964827432,
+    "lower": 138.4188752204789,
     "pos": "below",
     "event": null,
-    "widthPct": 0.5357225078929113
+    "widthPct": 0.6292246005820024
    },
    {
     "key": "中通道",
@@ -128,11 +128,11 @@
      288,
      338
     ],
-    "upper": 133.53245688409285,
-    "lower": 130.99427508792007,
+    "upper": 132.54905028714902,
+    "lower": 129.8733418932323,
     "pos": "below",
     "event": null,
-    "widthPct": 1.9190361422083573
+    "widthPct": 2.0392378650961462
    },
    {
     "key": "长通道",
@@ -140,26 +140,26 @@
      576,
      676
     ],
-    "upper": 119.46717136990054,
-    "lower": 115.16957835949054,
+    "upper": 118.00527788548972,
+    "lower": 113.65020854089947,
     "pos": "above",
     "event": null,
-    "widthPct": 3.663188324392027
+    "widthPct": 3.759953551520235
    }
   ],
   "wk": {
    "asOf": "2026-11-27",
    "bars": 424,
    "rsi6": {
-    "value": 28.30745639633946,
-    "prev": 23.17954902221217,
+    "value": 28.330784200277776,
+    "prev": 23.204844940432565,
     "state": "oversold",
     "cross": null,
     "period": 6
    },
    "rsi14": {
-    "value": 36.08245146185857,
-    "prev": 33.733348804417545,
+    "value": 36.34704861543902,
+    "prev": 34.01391947149122,
     "state": "neutral",
     "cross": null,
     "period": 14
@@ -171,11 +171,11 @@
       144,
       169
      ],
-     "upper": 114.21902422547724,
-     "lower": 109.58152015931027,
+     "upper": 112.7041305337028,
+     "lower": 108.03455829953415,
      "pos": "above",
      "event": null,
-     "widthPct": 4.144318843294284
+     "widthPct": 4.230859808808954
     },
     {
      "key": "中通道",
@@ -183,11 +183,11 @@
       288,
       338
      ],
-     "upper": 92.53805141471456,
-     "lower": 85.36270042743325,
+     "upper": 91.03164669895871,
+     "lower": 83.9465346743665,
      "pos": "above",
      "event": null,
-     "widthPct": 8.066689896451958
+     "widthPct": 8.0982805615927
     },
     {
      "key": "长通道",
@@ -206,8 +206,8 @@
   "adj": "hfq",
   "anchored": true,
   "tvSymbol": "AMEX:SPMO",
-  "source": "eastmoney",
-  "bars": 2038,
+  "source": "yahoo",
+  "bars": 2037,
   "notes": [
    {
     "tag": "周RSI6",
@@ -215,25 +215,24 @@
     "text": "周线RSI6=28.3 超卖（<30）。周线超卖常对应波段低位，弱势里同样会钝化。"
    }
   ],
-  "extPct": -13.71,
-  "volRatio": 1.08,
+  "extPct": -13.48,
   "sigHist": {
    "obr": {
-    "n": 132,
-    "up": 65.2,
-    "avg": 0.8,
-    "med": 0.95
+    "n": 131,
+    "up": 64.9,
+    "avg": 0.73,
+    "med": 0.9
    },
    "osr": {
-    "n": 87,
-    "up": 54,
-    "avg": 0.15,
-    "med": 0.38
+    "n": 88,
+    "up": 54.5,
+    "avg": 0.21,
+    "med": 0.57
    },
    "ret": {
-    "n": 35,
-    "up": 60,
-    "avg": 0.29,
+    "n": 37,
+    "up": 59.5,
+    "avg": 0.23,
     "med": 1.24
    }
   }
@@ -249,17 +248,17 @@
    "ndx": true,
    "asOf": "2026-11-25",
    "close": 355.58,
-   "chgPct": 0.4137626175946263,
+   "chgPct": 0.42646934222045907,
    "rsi6": {
-    "value": 62.35512588692509,
-    "prev": 59.71069815455605,
+    "value": 62.35449176649949,
+    "prev": 59.709509612984206,
     "state": "neutral",
     "cross": null,
     "period": 6
    },
    "rsi14": {
-    "value": 58.04414407200504,
-    "prev": 56.85723413957407,
+    "value": 58.04306744630516,
+    "prev": 56.855596746941245,
     "state": "neutral",
     "cross": null,
     "period": 14
@@ -271,11 +270,11 @@
       144,
       169
      ],
-     "upper": 321.75999948073667,
-     "lower": 317.02498086462174,
+     "upper": 320.7657501158874,
+     "lower": 315.89594044682303,
      "pos": "above",
      "event": null,
-     "widthPct": 1.4825078114876604
+     "widthPct": 1.5297950987942102
     },
     {
      "key": "中通道",
@@ -283,11 +282,11 @@
       288,
       338
      ],
-     "upper": 298.2740523835674,
-     "lower": 291.80807124849764,
+     "upper": 296.6230003784429,
+     "lower": 289.9824902241152,
      "pos": "above",
      "event": null,
-     "widthPct": 2.191552963940146
+     "widthPct": 2.2640463687124965
     },
     {
      "key": "长通道",
@@ -295,26 +294,26 @@
       576,
       676
      ],
-     "upper": 267.321927241289,
-     "lower": 258.83459047896196,
+     "upper": 264.8784804350491,
+     "lower": 256.2020342612113,
      "pos": "above",
      "event": null,
-     "widthPct": 3.226164259677437
+     "widthPct": 3.3301748690009387
     }
    ],
    "wk": {
     "asOf": "2026-11-27",
-    "bars": 424,
+    "bars": 423,
     "rsi6": {
-     "value": 65.38848931029403,
-     "prev": 53.88769426549673,
+     "value": 65.3833972475417,
+     "prev": 53.87521725826073,
      "state": "neutral",
      "cross": null,
      "period": 6
     },
     "rsi14": {
-     "value": 64.59074075094148,
-     "prev": 60.01668773786021,
+     "value": 64.58925862418653,
+     "prev": 60.0099297202811,
      "state": "neutral",
      "cross": null,
      "period": 14
@@ -326,11 +325,11 @@
        144,
        169
       ],
-      "upper": 258.0549329970076,
-      "lower": 248.5810948206461,
+      "upper": 255.4070810030952,
+      "lower": 245.74066345362124,
       "pos": "above",
       "event": null,
-      "widthPct": 3.739899121335798
+      "widthPct": 3.8577116853845586
      },
      {
       "key": "中通道",
@@ -338,11 +337,11 @@
        288,
        338
       ],
-      "upper": 210.46995455126705,
-      "lower": 194.84414518807384,
+      "upper": 207.08725728282315,
+      "lower": 191.2498147925026,
       "pos": "above",
       "event": null,
-      "widthPct": 7.710469176000653
+      "widthPct": 7.951779334927517
      },
      {
       "key": "长通道",
@@ -361,29 +360,28 @@
    "adj": "hfq",
    "anchored": true,
    "tvSymbol": "NASDAQ:AAPL",
-   "source": "eastmoney",
-   "bars": 2038,
+   "source": "yahoo",
+   "bars": 2034,
    "notes": [],
    "aboveDays": 162,
-   "extPct": 10.51,
-   "volRatio": 1.07,
+   "extPct": 10.85,
    "sigHist": {
     "obr": {
      "n": 146,
      "up": 60.3,
-     "avg": 0.57,
-     "med": 0.89
+     "avg": 0.6,
+     "med": 0.92
     },
     "osr": {
      "n": 89,
      "up": 51.7,
-     "avg": -0.19,
+     "avg": -0.28,
      "med": 0.03
     },
     "ret": {
      "n": 35,
      "up": 51.4,
-     "avg": 0.54,
+     "avg": 0.57,
      "med": 0.01
     }
    }
@@ -12065,7 +12063,7 @@
    "ticker": "LOW",
    "name": "劳氏",
    "rank": 78,
-   "mcapUsd": 132212380000,
+   "mcapUsd": 132210941000,
    "spmoPct": null,
    "sp500": true,
    "asOf": "2026-11-25",
@@ -17494,7 +17492,7 @@
    "ticker": "MMC",
    "name": "威达信",
    "rank": 113,
-   "mcapUsd": 89506499000,
+   "mcapUsd": 89506557000,
    "spmoPct": null,
    "sp500": true,
    "asOf": "2026-01-13",
@@ -17617,7 +17615,7 @@
     {
      "tag": "数据",
      "level": "warn",
-     "text": "数据陈旧：最后一根收盘 bar 为 2026-01-13，落后报告日 226 个交易日，请勿按当期信号使用。"
+     "text": "数据陈旧：最后一根收盘 bar 为 2026-01-13，落后报告日 227 个交易日，请勿按当期信号使用。"
     },
     {
      "tag": "口径",
@@ -17626,7 +17624,7 @@
     }
    ],
    "stale": true,
-   "staleDays": 226,
+   "staleDays": 227,
    "extPct": -7.63,
    "volRatio": 0.9,
    "sigHist": {
@@ -20535,7 +20533,7 @@
    "ticker": "TGT",
    "name": "塔吉特",
    "rank": 133,
-   "mcapUsd": 77969957000,
+   "mcapUsd": 77971251000,
    "spmoPct": null,
    "sp500": true,
    "asOf": "2026-11-25",
@@ -20691,9 +20689,180 @@
    }
   },
   {
+   "ticker": "WBD",
+   "name": "华纳兄弟探索",
+   "rank": 134,
+   "mcapUsd": 77706165000,
+   "spmoPct": null,
+   "sp500": true,
+   "asOf": "2026-10-06",
+   "close": 30.95,
+   "chgPct": 0,
+   "rsi6": {
+    "value": 81.55856815900509,
+    "prev": 81.55856815900509,
+    "state": "overbought",
+    "cross": null,
+    "period": 6
+   },
+   "rsi14": {
+    "value": 75.22299401348951,
+    "prev": 75.2229940134895,
+    "state": "overbought",
+    "cross": null,
+    "period": 14
+   },
+   "tunnels": [
+    {
+     "key": "短通道",
+     "n": [
+      144,
+      169
+     ],
+     "upper": 27.349303495434228,
+     "lower": 26.904331794136166,
+     "pos": "above",
+     "event": null,
+     "widthPct": 1.6403387493689388
+    },
+    {
+     "key": "中通道",
+     "n": [
+      288,
+      338
+     ],
+     "upper": 24.565157038030183,
+     "lower": 23.651892957613654,
+     "pos": "above",
+     "event": null,
+     "widthPct": 3.788137517741285
+    },
+    {
+     "key": "长通道",
+     "n": [
+      576,
+      676
+     ],
+     "upper": 20.670904095986312,
+     "lower": 19.970550933546985,
+     "pos": "above",
+     "event": null,
+     "widthPct": 3.4464964993521785
+    }
+   ],
+   "wk": {
+    "asOf": "2026-10-09",
+    "bars": 417,
+    "rsi6": {
+     "value": 80.95166565701408,
+     "prev": 80.9004305151795,
+     "state": "overbought",
+     "cross": null,
+     "period": 6
+    },
+    "rsi14": {
+     "value": 71.09975738553098,
+     "prev": 71.06450548595254,
+     "state": "overbought",
+     "cross": null,
+     "period": 14
+    },
+    "tunnels": [
+     {
+      "key": "短通道",
+      "n": [
+       144,
+       169
+      ],
+      "upper": 20.016808706344825,
+      "lower": 19.55856033949064,
+      "pos": "above",
+      "event": null,
+      "widthPct": 2.315826120653231
+     },
+     {
+      "key": "中通道",
+      "n": [
+       288,
+       338
+      ],
+      "upper": 21.5695852023631,
+      "lower": 20.5667167239742,
+      "pos": "above",
+      "event": null,
+      "widthPct": 4.760116253875893
+     },
+     {
+      "key": "长通道",
+      "n": [
+       576,
+       676
+      ],
+      "pos": null,
+      "event": null,
+      "insufficient": true
+     }
+    ],
+    "live": null
+   },
+   "live": null,
+   "adj": "hfq",
+   "anchored": true,
+   "tvSymbol": "NASDAQ:WBD",
+   "source": "yahoo",
+   "bars": 2002,
+   "notes": [
+    {
+     "tag": "数据",
+     "level": "warn",
+     "text": "数据陈旧：最后一根收盘 bar 为 2026-10-06，落后报告日 37 个交易日，请勿按当期信号使用。"
+    },
+    {
+     "tag": "RSI6",
+     "level": "warn",
+     "text": "RSI6=81.6 超买（>70）。策略语境：超买常是做T减仓的观察信号，强趋势里会持续钝化。"
+    },
+    {
+     "tag": "周RSI6",
+     "level": "warn",
+     "text": "周线RSI6=81.0 超买（>70）。周线口径的超买常对应波段高位，强趋势里同样会钝化。"
+    },
+    {
+     "tag": "RSI6",
+     "level": "info",
+     "text": "RSI6 已连续 12 个交易日收在超买区（>70）——趋势钝化背景，持续超买本身不是离场信号，但回落信号出现时值得更高关注。"
+    }
+   ],
+   "stale": true,
+   "staleDays": 37,
+   "obDays": 12,
+   "aboveDays": 44,
+   "extPct": 13.17,
+   "sigHist": {
+    "obr": {
+     "n": 80,
+     "up": 52.5,
+     "avg": 0.22,
+     "med": 0.34
+    },
+    "osr": {
+     "n": 113,
+     "up": 50.4,
+     "avg": -0.13,
+     "med": 0.14
+    },
+    "ret": {
+     "n": 30,
+     "up": 50,
+     "avg": 0.67,
+     "med": -0.42
+    }
+   }
+  },
+  {
    "ticker": "SNPS",
    "name": "新思科技",
-   "rank": 134,
+   "rank": 135,
    "mcapUsd": 77630089000,
    "spmoPct": null,
    "sp500": true,
@@ -20841,177 +21010,6 @@
      "up": 63.9,
      "avg": 0.81,
      "med": 0.82
-    }
-   }
-  },
-  {
-   "ticker": "WBD",
-   "name": "华纳兄弟探索",
-   "rank": 135,
-   "mcapUsd": 77595881000,
-   "spmoPct": null,
-   "sp500": true,
-   "asOf": "2026-10-06",
-   "close": 30.95,
-   "chgPct": 0,
-   "rsi6": {
-    "value": 81.55856815900509,
-    "prev": 81.55856815900509,
-    "state": "overbought",
-    "cross": null,
-    "period": 6
-   },
-   "rsi14": {
-    "value": 75.22299401348951,
-    "prev": 75.2229940134895,
-    "state": "overbought",
-    "cross": null,
-    "period": 14
-   },
-   "tunnels": [
-    {
-     "key": "短通道",
-     "n": [
-      144,
-      169
-     ],
-     "upper": 27.349303495434228,
-     "lower": 26.904331794136166,
-     "pos": "above",
-     "event": null,
-     "widthPct": 1.6403387493689388
-    },
-    {
-     "key": "中通道",
-     "n": [
-      288,
-      338
-     ],
-     "upper": 24.565157038030183,
-     "lower": 23.651892957613654,
-     "pos": "above",
-     "event": null,
-     "widthPct": 3.788137517741285
-    },
-    {
-     "key": "长通道",
-     "n": [
-      576,
-      676
-     ],
-     "upper": 20.670904095986312,
-     "lower": 19.970550933546985,
-     "pos": "above",
-     "event": null,
-     "widthPct": 3.4464964993521785
-    }
-   ],
-   "wk": {
-    "asOf": "2026-10-09",
-    "bars": 417,
-    "rsi6": {
-     "value": 80.95166565701408,
-     "prev": 80.9004305151795,
-     "state": "overbought",
-     "cross": null,
-     "period": 6
-    },
-    "rsi14": {
-     "value": 71.09975738553098,
-     "prev": 71.06450548595254,
-     "state": "overbought",
-     "cross": null,
-     "period": 14
-    },
-    "tunnels": [
-     {
-      "key": "短通道",
-      "n": [
-       144,
-       169
-      ],
-      "upper": 20.016808706344825,
-      "lower": 19.55856033949064,
-      "pos": "above",
-      "event": null,
-      "widthPct": 2.315826120653231
-     },
-     {
-      "key": "中通道",
-      "n": [
-       288,
-       338
-      ],
-      "upper": 21.5695852023631,
-      "lower": 20.5667167239742,
-      "pos": "above",
-      "event": null,
-      "widthPct": 4.760116253875893
-     },
-     {
-      "key": "长通道",
-      "n": [
-       576,
-       676
-      ],
-      "pos": null,
-      "event": null,
-      "insufficient": true
-     }
-    ],
-    "live": null
-   },
-   "live": null,
-   "adj": "hfq",
-   "anchored": true,
-   "tvSymbol": "NASDAQ:WBD",
-   "source": "yahoo",
-   "bars": 2002,
-   "notes": [
-    {
-     "tag": "数据",
-     "level": "warn",
-     "text": "数据陈旧：最后一根收盘 bar 为 2026-10-06，落后报告日 36 个交易日，请勿按当期信号使用。"
-    },
-    {
-     "tag": "RSI6",
-     "level": "warn",
-     "text": "RSI6=81.6 超买（>70）。策略语境：超买常是做T减仓的观察信号，强趋势里会持续钝化。"
-    },
-    {
-     "tag": "周RSI6",
-     "level": "warn",
-     "text": "周线RSI6=81.0 超买（>70）。周线口径的超买常对应波段高位，强趋势里同样会钝化。"
-    },
-    {
-     "tag": "RSI6",
-     "level": "info",
-     "text": "RSI6 已连续 12 个交易日收在超买区（>70）——趋势钝化背景，持续超买本身不是离场信号，但回落信号出现时值得更高关注。"
-    }
-   ],
-   "stale": true,
-   "staleDays": 36,
-   "obDays": 12,
-   "aboveDays": 44,
-   "extPct": 13.17,
-   "sigHist": {
-    "obr": {
-     "n": 80,
-     "up": 52.5,
-     "avg": 0.22,
-     "med": 0.34
-    },
-    "osr": {
-     "n": 113,
-     "up": 50.4,
-     "avg": -0.13,
-     "med": 0.14
-    },
-    "ret": {
-     "n": 30,
-     "up": 50,
-     "avg": 0.67,
-     "med": -0.42
     }
    }
   },
@@ -22401,10 +22399,163 @@
    }
   },
   {
+   "ticker": "SLB",
+   "name": "斯伦贝谢",
+   "rank": 145,
+   "mcapUsd": 71616957000,
+   "spmoPct": null,
+   "sp500": true,
+   "asOf": "2026-11-25",
+   "close": 48.52,
+   "chgPct": 1.943631467142648,
+   "rsi6": {
+    "value": 51.010291366827204,
+    "prev": 33.326949605505376,
+    "state": "neutral",
+    "cross": null,
+    "period": 6
+   },
+   "rsi14": {
+    "value": 45.00728025178518,
+    "prev": 37.053305134200635,
+    "state": "neutral",
+    "cross": null,
+    "period": 14
+   },
+   "tunnels": [
+    {
+     "key": "短通道",
+     "n": [
+      144,
+      169
+     ],
+     "upper": 49.59189217998263,
+     "lower": 49.358542363777985,
+     "pos": "below",
+     "event": null,
+     "widthPct": 0.4716499069065643
+    },
+    {
+     "key": "中通道",
+     "n": [
+      288,
+      338
+     ],
+     "upper": 48.14918026491499,
+     "lower": 47.73472567902687,
+     "pos": "above",
+     "event": "break_up",
+     "widthPct": 0.8644924960199788
+    },
+    {
+     "key": "长通道",
+     "n": [
+      576,
+      676
+     ],
+     "upper": 46.448429236634155,
+     "lower": 46.06202158431383,
+     "pos": "above",
+     "event": null,
+     "widthPct": 0.8353816220573956
+    }
+   ],
+   "wk": {
+    "asOf": "2026-11-27",
+    "bars": 423,
+    "rsi6": {
+     "value": 43.361099656649756,
+     "prev": 32.22212605124513,
+     "state": "neutral",
+     "cross": null,
+     "period": 6
+    },
+    "rsi14": {
+     "value": 46.86813825083476,
+     "prev": 42.351647447532926,
+     "state": "neutral",
+     "cross": null,
+     "period": 14
+    },
+    "tunnels": [
+     {
+      "key": "短通道",
+      "n": [
+       144,
+       169
+      ],
+      "upper": 46.02173051641264,
+      "lower": 45.59205494406142,
+      "pos": "above",
+      "event": null,
+      "widthPct": 0.9380151037129705
+     },
+     {
+      "key": "中通道",
+      "n": [
+       288,
+       338
+      ],
+      "upper": 42.91977439514373,
+      "lower": 42.190468821308656,
+      "pos": "above",
+      "event": null,
+      "widthPct": 1.7137903647632804
+     },
+     {
+      "key": "长通道",
+      "n": [
+       576,
+       676
+      ],
+      "pos": null,
+      "event": null,
+      "insufficient": true
+     }
+    ],
+    "live": null
+   },
+   "live": null,
+   "adj": "hfq",
+   "anchored": true,
+   "tvSymbol": "SLB",
+   "source": "eastmoney",
+   "bars": 2032,
+   "notes": [
+    {
+     "tag": "中通道",
+     "level": "info",
+     "text": "中通道（EMA288/338）收盘向上突破出通道（站上上轨）。"
+    }
+   ],
+   "extPct": -2.16,
+   "volRatio": 0.86,
+   "sigHist": {
+    "obr": {
+     "n": 104,
+     "up": 48.1,
+     "avg": 0.15,
+     "med": -0.13
+    },
+    "osr": {
+     "n": 96,
+     "up": 60.4,
+     "avg": 0.41,
+     "med": 0.9
+    },
+    "ret": {
+     "n": 39,
+     "up": 48.7,
+     "avg": -0.34,
+     "med": -0.59
+    }
+   }
+  },
+  {
    "ticker": "INTU",
    "name": "财捷",
-   "rank": 145,
-   "mcapUsd": 71738156000,
+   "rank": 146,
+   "mcapUsd": 71589894000,
    "spmoPct": null,
    "sp500": true,
    "ndx": true,
@@ -22556,159 +22707,6 @@
      "up": 62,
      "avg": 0.53,
      "med": 0.73
-    }
-   }
-  },
-  {
-   "ticker": "SLB",
-   "name": "斯伦贝谢",
-   "rank": 146,
-   "mcapUsd": 71616957000,
-   "spmoPct": null,
-   "sp500": true,
-   "asOf": "2026-11-25",
-   "close": 48.52,
-   "chgPct": 1.943631467142648,
-   "rsi6": {
-    "value": 51.010291366827204,
-    "prev": 33.326949605505376,
-    "state": "neutral",
-    "cross": null,
-    "period": 6
-   },
-   "rsi14": {
-    "value": 45.00728025178518,
-    "prev": 37.053305134200635,
-    "state": "neutral",
-    "cross": null,
-    "period": 14
-   },
-   "tunnels": [
-    {
-     "key": "短通道",
-     "n": [
-      144,
-      169
-     ],
-     "upper": 49.59189217998263,
-     "lower": 49.358542363777985,
-     "pos": "below",
-     "event": null,
-     "widthPct": 0.4716499069065643
-    },
-    {
-     "key": "中通道",
-     "n": [
-      288,
-      338
-     ],
-     "upper": 48.14918026491499,
-     "lower": 47.73472567902687,
-     "pos": "above",
-     "event": "break_up",
-     "widthPct": 0.8644924960199788
-    },
-    {
-     "key": "长通道",
-     "n": [
-      576,
-      676
-     ],
-     "upper": 46.448429236634155,
-     "lower": 46.06202158431383,
-     "pos": "above",
-     "event": null,
-     "widthPct": 0.8353816220573956
-    }
-   ],
-   "wk": {
-    "asOf": "2026-11-27",
-    "bars": 423,
-    "rsi6": {
-     "value": 43.361099656649756,
-     "prev": 32.22212605124513,
-     "state": "neutral",
-     "cross": null,
-     "period": 6
-    },
-    "rsi14": {
-     "value": 46.86813825083476,
-     "prev": 42.351647447532926,
-     "state": "neutral",
-     "cross": null,
-     "period": 14
-    },
-    "tunnels": [
-     {
-      "key": "短通道",
-      "n": [
-       144,
-       169
-      ],
-      "upper": 46.02173051641264,
-      "lower": 45.59205494406142,
-      "pos": "above",
-      "event": null,
-      "widthPct": 0.9380151037129705
-     },
-     {
-      "key": "中通道",
-      "n": [
-       288,
-       338
-      ],
-      "upper": 42.91977439514373,
-      "lower": 42.190468821308656,
-      "pos": "above",
-      "event": null,
-      "widthPct": 1.7137903647632804
-     },
-     {
-      "key": "长通道",
-      "n": [
-       576,
-       676
-      ],
-      "pos": null,
-      "event": null,
-      "insufficient": true
-     }
-    ],
-    "live": null
-   },
-   "live": null,
-   "adj": "hfq",
-   "anchored": true,
-   "tvSymbol": "SLB",
-   "source": "eastmoney",
-   "bars": 2032,
-   "notes": [
-    {
-     "tag": "中通道",
-     "level": "info",
-     "text": "中通道（EMA288/338）收盘向上突破出通道（站上上轨）。"
-    }
-   ],
-   "extPct": -2.16,
-   "volRatio": 0.86,
-   "sigHist": {
-    "obr": {
-     "n": 104,
-     "up": 48.1,
-     "avg": 0.15,
-     "med": -0.13
-    },
-    "osr": {
-     "n": 96,
-     "up": 60.4,
-     "avg": 0.41,
-     "med": 0.9
-    },
-    "ret": {
-     "n": 39,
-     "up": 48.7,
-     "avg": -0.34,
-     "med": -0.59
     }
    }
   },
